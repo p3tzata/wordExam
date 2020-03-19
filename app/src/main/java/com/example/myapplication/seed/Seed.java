@@ -9,11 +9,15 @@ import com.example.myapplication.entity.Profile;
 import com.example.myapplication.entity.Translation;
 import com.example.myapplication.entity.TranslationWordRelation;
 import com.example.myapplication.entity.Word;
+import com.example.myapplication.entity.dto.WordCreationDTO;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.LanguageService;
 import com.example.myapplication.service.ProfileService;
 import com.example.myapplication.service.TranslationService;
+import com.example.myapplication.service.TranslationWordRelationService;
 import com.example.myapplication.service.WordService;
+
+import org.modelmapper.ModelMapper;
 
 public class Seed extends Application {
 
@@ -21,6 +25,7 @@ public class Seed extends Application {
     private LanguageService languageService;
     private TranslationService translationService;
     private WordService wordService;
+    private TranslationWordRelationService translationWordRelationService;
 
 
     public Seed(){
@@ -28,6 +33,7 @@ public class Seed extends Application {
         this.languageService = FactoryUtil.createLanguageService(this);
         this.translationService = FactoryUtil.createTranslationService(this);
         this.wordService = FactoryUtil.createWordService(this);
+        this.translationWordRelationService=FactoryUtil.createTranslationWordRelationService(this);
     }
 
 
@@ -50,13 +56,13 @@ public class Seed extends Application {
         translation.setNativeLanguageID(1L);
         translation.setForeignLanguageID(2L);
 
-        Word outstandingWord = new Word();
-        outstandingWord.setWordString("outstanding");
-        outstandingWord.setLanguageID(2L);
-        outstandingWord.setProfileID(1L);
+        Word foreignWord = new Word();
+        foreignWord.setWordString("void");
+        foreignWord.setLanguageID(2L);
+        foreignWord.setProfileID(1L);
 
         Word word1 = new Word();
-        word1.setWordString("неизплатен");
+        word1.setWordString("празнота");
         word1.setLanguageID(1L);
         word1.setProfileID(1L);
 
@@ -64,6 +70,8 @@ public class Seed extends Application {
         word2.setWordString("превъзходен");
         word2.setLanguageID(1L);
         word2.setProfileID(1L);
+
+
 
 
 
@@ -75,10 +83,13 @@ public class Seed extends Application {
                 languageService.insert(bulgarianLanguage);
                 languageService.insert(englishLanguage);
                 translationService.insert(translation);
-                wordService.insert(outstandingWord);
+                Long foreignWordID = wordService.insert(foreignWord);
                 wordService.insert(word1);
                 wordService.insert(word2);
-
+                ModelMapper modelMapper = FactoryUtil.createModelMapper();
+                WordCreationDTO wordCreationDTO = modelMapper.map(word1, WordCreationDTO.class);
+                Word word = wordService.findByID(foreignWordID);
+               // translationWordRelationService.createWordRelation(word,wordCreationDTO);
                 return null;
             }
 

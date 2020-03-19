@@ -12,9 +12,7 @@ public class TranslationWordRelationRepository extends CrudRepository<Translatio
         super.setDao(super.getAppDatabase().translationWordRelationDao());
     }
 
-    public TranslationWordRelation findTranslationWordRelationByDstWordID(Long ID) {
-        return getDao().findTranslationWordRelationByDstWordID(ID);
-    }
+
 
 
 }

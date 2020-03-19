@@ -30,5 +30,12 @@ public abstract class WordDao implements NameableCrudDao<Word> {
     @Query("SELECT * FROM word p order by p.wordString")
     abstract public List<Word> findAllOrderAlphabetic();
 
+    @Query("SELECT * FROM word p where p.wordString=:wordString and p.profileID=:profileID and p.languageID=:languageID")
+    abstract public Word findByWordStringAndProfileIDAndLanguageID(String wordString,Long profileID,Long languageID);
+
+
+    @Query("SELECT * FROM word p where p.wordString like '%'||:wordStringContain||'%'  and p.profileID=:profileID and p.languageID=:languageID")
+    abstract public List<Word> findByWordStringContainsAndProfileIDAndLanguageID(String wordStringContain,Long profileID,Long languageID);
+
 
 }

@@ -11,9 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.UpdateWordActivity;
-import com.example.myapplication.entity.WordOld;
+import com.example.myapplication.entity.Word;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder>  {
@@ -22,8 +21,8 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
 
     private final LayoutInflater mInflater;
     private Context context;
-    private List<WordOld> mWordOlds; // Cached copy of words
-    private List<WordOld> mWordsFull; // Cached copy of words
+    private List<Word> mWords; // Cached copy of words
+    private List<Word> mWordsFull; // Cached copy of words
 
     public WordListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -41,18 +40,18 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
 
     @Override
     public void onBindViewHolder(WordViewHolder holder, int position) {
-        if (mWordOlds != null) {
-            WordOld current = mWordOlds.get(position);
-            holder.wordItemView.setText(current.getWord());
+        if (mWords != null) {
+            Word current = mWords.get(position);
+            holder.wordItemView.setText(current.getWordString());
         } else {
             // Covers the case of data not being ready yet.
             holder.wordItemView.setText("No Word");
         }
     }
 
-    public void setWords(List<WordOld> wordOlds){
-        mWordOlds = wordOlds;
-        mWordsFull = new ArrayList<>(wordOlds);
+    public void setWords(List<Word> words){
+        mWords = words;
+
         notifyDataSetChanged();
     }
 
@@ -60,8 +59,8 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
     // mWords has not been updated (means initially, it's null, and we can't return null).
     @Override
     public int getItemCount() {
-        if (mWordOlds != null)
-            return mWordOlds.size();
+        if (mWords != null)
+            return mWords.size();
         else return 0;
     }
 
@@ -74,16 +73,17 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
 
         private WordViewHolder(View itemView) {
             super(itemView);
-            wordItemView = itemView.findViewById(R.id.textView);
+            wordItemView = itemView.findViewById(R.id.tx_word_item);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            WordOld wordOld = mWordOlds.get(getAdapterPosition());
+            Word word = mWords.get(getAdapterPosition());
 
             Intent intent = new Intent(context, UpdateWordActivity.class);
-            intent.putExtra("word_id", wordOld.getId());
+            intent.putExtra("word_id", word.getWordID());
+
 
             context.startActivity(intent);
 

@@ -6,19 +6,20 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(indices = {@Index(value = "wordRelationID"), @Index(value = "wordID"),
-                   @Index(unique = true, value = {"wordRelationID","wordID"}) },
-        foreignKeys = @ForeignKey(entity = Word.class, parentColumns = "wordID", childColumns = "wordID"))
+@Entity(indices = {@Index(value = "foreignWordID"), @Index(value = "nativeWordID"),
+                   @Index(unique = true, value = {"foreignWordID","nativeWordID"}) },
+        foreignKeys = {@ForeignKey(entity = Word.class, parentColumns = "wordID", childColumns = "foreignWordID"),
+                @ForeignKey(entity = Word.class, parentColumns = "wordID", childColumns = "nativeWordID") })
 public class TranslationWordRelation {
 
     @PrimaryKey
     private Long translationWordRelationID;
 
     @NonNull
-    private Long wordRelationID;
+    private Long foreignWordID;
 
     @NonNull
-    private Long wordID;
+    private Long nativeWordID;
 
     public TranslationWordRelation() {
     }
@@ -32,20 +33,20 @@ public class TranslationWordRelation {
     }
 
     @NonNull
-    public Long getWordRelationID() {
-        return wordRelationID;
+    public Long getForeignWordID() {
+        return foreignWordID;
     }
 
-    public void setWordRelationID(@NonNull Long wordRelationID) {
-        this.wordRelationID = wordRelationID;
+    public void setForeignWordID(@NonNull Long foreignWordID) {
+        this.foreignWordID = foreignWordID;
     }
 
     @NonNull
-    public Long getWordID() {
-        return wordID;
+    public Long getNativeWordID() {
+        return nativeWordID;
     }
 
-    public void setWordID(@NonNull Long wordID) {
-        this.wordID = wordID;
+    public void setNativeWordID(@NonNull Long nativeWordID) {
+        this.nativeWordID = nativeWordID;
     }
 }

@@ -3,8 +3,10 @@ package com.example.myapplication.entity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "language")
-public class Language {
+public class Language implements Serializable {
 
     @PrimaryKey
     private Long languageID;

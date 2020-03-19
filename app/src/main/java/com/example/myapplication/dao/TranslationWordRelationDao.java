@@ -16,19 +16,17 @@ import java.util.List;
 public abstract class TranslationWordRelationDao implements CrudDao<TranslationWordRelation> {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract  public  Long insert(Language entity);
+    abstract  public  Long insert(TranslationWordRelation entity);
 
     @Update
-    abstract public  void update(Language entity);
+    abstract public  void update(TranslationWordRelation entity);
 
     @Delete
-    abstract public  void delete(Language entity);
+    abstract public  void delete(TranslationWordRelation entity);
 
     @Query("SELECT * FROM translationwordrelation l where l.translationWordRelationID=:ID")
     abstract public TranslationWordRelation findByID(Long ID);
 
-    @Query("SELECT * FROM translationwordrelation t where t.wordID=:ID")
-    abstract public TranslationWordRelation findTranslationWordRelationByDstWordID (Long ID);
 
 
 

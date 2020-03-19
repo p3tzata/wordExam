@@ -17,7 +17,7 @@ import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.WordOld;
 
 @Database(entities = {WordOld.class, Profile.class, Language.class, Translation.class, Word.class, TranslationWordRelation.class},
-        version = 13, exportSchema = false)
+        version = 14, exportSchema = false)
 public abstract class WordRoomDatabase extends RoomDatabase {
 
     public abstract WordOldDao wordOldDao();

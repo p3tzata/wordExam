@@ -6,6 +6,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "translation",
         indices = {@Index(value = "nativeLanguageID") ,
                    @Index(value = "foreignLanguageID"),
@@ -18,7 +20,7 @@ import androidx.room.PrimaryKey;
             @ForeignKey(entity = Profile.class, parentColumns = "profileID", childColumns = "profileID"),
         }
 )
-public class Translation {
+public class Translation implements Serializable {
 
     @PrimaryKey
     private Long translationID;

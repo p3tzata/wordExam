@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,8 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.myapplication.activity.ListAllWordActivity;
-import com.example.myapplication.activity.NewWordActivity;
+import com.example.myapplication.R;
 import com.example.myapplication.seed.Seed;
 import com.example.myapplication.service.WordOldService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -49,6 +48,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(activity2Intent);
             }
         });
+
+        final Button bnt_Dictionaries = findViewById(R.id.btn_listAllDictinary);
+        bnt_Dictionaries.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+
+                Intent activity2Intent = new Intent(getApplicationContext(), ListAllDictionary.class);
+                startActivity(activity2Intent);
+            }
+        });
+
+
 
         final Button btn_deleteAllWords = findViewById(R.id.btn_deleteAll);
         btn_deleteAllWords.setOnClickListener(new View.OnClickListener() {

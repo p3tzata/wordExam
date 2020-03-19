@@ -2,52 +2,60 @@ package com.example.myapplication.service;
 
 import android.app.Application;
 
-import com.example.myapplication.entity.Translation;
 import com.example.myapplication.entity.TranslationWordRelation;
 import com.example.myapplication.entity.Word;
-import com.example.myapplication.repository.TranslationRepository;
+import com.example.myapplication.entity.dto.WordCreationDTO;
+import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.repository.TranslationWordRelationRepository;
 
-import java.util.List;
+import org.modelmapper.ModelMapper;
 
 
 public class TranslationWordRelationService extends CrudService<TranslationWordRelationRepository, TranslationWordRelation> {
 
-
+    private WordService wordService;
 
     public TranslationWordRelationService(Application application) {
         super(application,new TranslationWordRelationRepository(application));
+        this.wordService=FactoryUtil.createWordService(application);
     }
 
-    public boolean createRelation(Word attachToDstWord, List<Word> attachSrcWordList) {
-        TranslationWordRelation translationWordRelation = findTranslationWordRelationByDstWordID(attachToDstWordID);
-        Long wordRelationID=null;
+    public boolean createWordRelation(Word foreignWord, WordCreationDTO wordCreationDTO) {
 
-        if (translationWordRelation!=null) {
-            wordRelationID=translationWordRelation.getWordRelationID();
+        Word nativeWord = findOrCreateWord(wordCreationDTO);
+
+        TranslationWordRelation translationWordRelation = new TranslationWordRelation();
+        translationWordRelation.setForeignWordID(foreignWord.getWordID());
+        translationWordRelation.setNativeWordID(nativeWord.getWordID());
+        if (super.getRepository().inset(translationWordRelation)!=null) {
+            return true;
         } else {
-            wordRelationID=Max;
-            TranslationWordRelation newDstTranslationWordRelation = new TranslationWordRelation();
-            newDstTranslationWordRelation.setWordID(attachToDstWord.getWordID());
-            newDstTranslationWordRelation.setWordRelationID(wordRelationID);
-            super.insert(newDstTranslationWordRelation);
+            return false;
         }
 
-        for (int i = 0; i < attachSrcWordList.size(); i++) {
 
-            TranslationWordRelation newTranslationWordRelation = new TranslationWordRelation();
-            newTranslationWordRelation.setWordID(attachSrcWordList.get(i).getWordID());
-            newTranslationWordRelation.setWordRelationID(wordRelationID);
-            super.insert(newTranslationWordRelation);
 
-        }
-        
-        return true;
+
     }
 
+    private Word findOrCreateWord(WordCreationDTO wordCreationDTO) {
 
-    private TranslationWordRelation findTranslationWordRelationByDstWordID(Long ID) {
-        return getRepository().findTranslationWordRelationByDstWordID(ID);
+        Word word = this.wordService.
+                findByWordStringAndProfileIDAndLanguageID(wordCreationDTO.getWordString(),
+                        wordCreationDTO.getProfileID(), wordCreationDTO.getLanguageID());
+
+        if (word==null) {
+            ModelMapper modelMapper = FactoryUtil.createModelMapper();
+            Word creationWord = modelMapper.map(wordCreationDTO, Word.class);
+            Long wordID=this.wordService.insert(creationWord);
+            word = this.wordService.findByID(wordID);
+        }
+
+        return word;
+
+
+
+
     }
 
 

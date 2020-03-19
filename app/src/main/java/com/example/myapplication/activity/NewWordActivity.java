@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.entity.WordOld;
 import com.example.myapplication.service.WordOldService;
