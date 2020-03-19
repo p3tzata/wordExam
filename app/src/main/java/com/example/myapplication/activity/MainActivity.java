@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -13,12 +16,13 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.seed.Seed;
 import com.example.myapplication.service.WordOldService;
+import com.example.myapplication.utitliy.MenuUtility;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
     private WordOldService wordOldService;
-
+    private Menu mOptionsMenu;
 
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
@@ -76,6 +80,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        this.mOptionsMenu=menu;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        MenuUtility.checkIsEditMode(this,mOptionsMenu);
+        return super.onPrepareOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+       return MenuUtility.onOptionsItemSelected(this,item);
+    }
 
     private void deleteAllWords() {
         class deleteAll extends AsyncTask<Void, Void, Integer> {

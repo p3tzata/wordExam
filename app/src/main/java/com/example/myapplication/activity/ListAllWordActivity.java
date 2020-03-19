@@ -39,21 +39,20 @@ public class ListAllWordActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getSupportActionBar().setTitle("English" + " Lang");
+
 
         Intent i = getIntent();
         this.translationAndLanguages = (TranslationAndLanguages) i.getSerializableExtra("translationAndLanguages");
         this.fromLanguageID = (Long) i.getSerializableExtra("translationFromLanguageID");
 
+        String formatTitle="Search %s word";
+
         if (fromLanguageID.equals(translationAndLanguages.getForeignLanguage().getLanguageID())) {
-            getSupportActionBar().setTitle(translationAndLanguages.getForeignLanguage().getLanguageName() + " Lang");
+            getSupportActionBar().setTitle(String.format(formatTitle,translationAndLanguages.getForeignLanguage().getLanguageName()));
         } else {
-            getSupportActionBar().setTitle(translationAndLanguages.getNativeLanguage().getLanguageName() + " Lang");
+            getSupportActionBar().setTitle(String.format(formatTitle,translationAndLanguages.getNativeLanguage().getLanguageName()));
         }
 
-
-        Toast.makeText(getApplicationContext(), "TranslationName:"+translationAndLanguages.getTranslation().getTranslationDesc(),Toast.LENGTH_LONG).show();
-        Toast.makeText(getApplicationContext(), "FromLanguageID:"+ fromLanguageID,Toast.LENGTH_LONG).show();
 
         Toast.makeText(getApplicationContext(), "Please use search bar...",Toast.LENGTH_LONG).show();
 
@@ -85,7 +84,7 @@ public class ListAllWordActivity extends AppCompatActivity {
             case android.R.id.home:
               //  finish();
                // return true;
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, ListAllDictionary.class);
                 startActivity(intent);
                 return true;
 
