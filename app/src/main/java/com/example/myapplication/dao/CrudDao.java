@@ -17,7 +17,7 @@ public interface CrudDao<Type> {
 
     Type findByID(Long ID);
     Long insert(Type entity);
-    void update(Type entity);
+    Integer update(Type entity);
     void delete(Type entity);
 
 

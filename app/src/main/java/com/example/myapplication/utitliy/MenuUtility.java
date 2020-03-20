@@ -68,5 +68,16 @@ public class MenuUtility {
         }
     }
 
+    public static boolean isEditMode(Context context) {
+        SharedPreferences sharedpreferences;
+        sharedpreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        boolean isEditMode = sharedpreferences.getBoolean("isEditMode", false);
+
+        return isEditMode;
+
+    }
+
+
+
 
 }

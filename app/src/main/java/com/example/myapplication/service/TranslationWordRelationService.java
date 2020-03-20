@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.example.myapplication.entity.TranslationWordRelation;
 import com.example.myapplication.entity.Word;
+import com.example.myapplication.entity.dto.ForeignWithNativeWords;
 import com.example.myapplication.entity.dto.WordCreationDTO;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.repository.TranslationWordRelationRepository;
@@ -19,6 +20,11 @@ public class TranslationWordRelationService extends CrudService<TranslationWordR
         super(application,new TranslationWordRelationRepository(application));
         this.wordService=FactoryUtil.createWordService(application);
     }
+
+    public ForeignWithNativeWords translateFromForeign(Long foreignWordID){
+        return super.getRepository().translateFromForeign(foreignWordID);
+    }
+
 
     public boolean createWordRelation(Word foreignWord, WordCreationDTO wordCreationDTO) {
 

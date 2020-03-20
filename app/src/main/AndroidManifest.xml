@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ListAllDictionary"></activity>
+        <activity android:name=".activity.ShowForeignWordActivity"></activity>
+        <activity android:name=".activity.ShowNativeWordActivity" />
+        <activity android:name=".activity.ListAllDictionary" />
         <activity android:name=".activity.UpdateWordActivity" />
         <activity
             android:name=".activity.ListAllWordActivity"

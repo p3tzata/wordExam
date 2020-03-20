@@ -18,7 +18,7 @@ public abstract class LanguageDao implements NameableCrudDao<Language> {
     abstract  public  Long insert(Language entity);
 
     @Update
-    abstract public  void update(Language entity);
+    abstract public  Integer update(Language entity);
 
     @Delete
     abstract public  void delete(Language entity);

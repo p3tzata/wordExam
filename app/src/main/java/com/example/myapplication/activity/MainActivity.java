@@ -24,24 +24,13 @@ public class MainActivity extends AppCompatActivity {
     private WordOldService wordOldService;
     private Menu mOptionsMenu;
 
-    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.wordOldService = new ViewModelProvider(this).get(WordOldService.class);
         setContentView(R.layout.activity_main);
-
-
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, NewWordActivity.class);
-                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
-            }
-        });
 
 
         final Button button = findViewById(R.id.button_ViewAllWord);

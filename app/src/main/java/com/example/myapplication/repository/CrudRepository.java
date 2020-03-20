@@ -31,8 +31,8 @@ public abstract class CrudRepository<Dao extends CrudDao,T> {
         return (T) daoObject.findByID(ID);
     }
 
-    public void update(T entity) {
-        daoObject.update(entity);
+    public Integer update(T entity) {
+        return daoObject.update(entity);
     }
 
     public Long inset(T entity) {

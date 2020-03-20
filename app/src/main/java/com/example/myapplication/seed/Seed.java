@@ -57,17 +57,17 @@ public class Seed extends Application {
         translation.setForeignLanguageID(2L);
 
         Word foreignWord = new Word();
-        foreignWord.setWordString("void");
+        foreignWord.setWordString("father");
         foreignWord.setLanguageID(2L);
         foreignWord.setProfileID(1L);
 
         Word word1 = new Word();
-        word1.setWordString("празнота");
+        word1.setWordString("татко");
         word1.setLanguageID(1L);
         word1.setProfileID(1L);
 
         Word word2 = new Word();
-        word2.setWordString("превъзходен");
+        word2.setWordString("баща");
         word2.setLanguageID(1L);
         word2.setProfileID(1L);
 
@@ -88,8 +88,10 @@ public class Seed extends Application {
                 wordService.insert(word2);
                 ModelMapper modelMapper = FactoryUtil.createModelMapper();
                 WordCreationDTO wordCreationDTO = modelMapper.map(word1, WordCreationDTO.class);
+                WordCreationDTO wordCreationDTO2 = modelMapper.map(word2, WordCreationDTO.class);
                 Word word = wordService.findByID(foreignWordID);
-               // translationWordRelationService.createWordRelation(word,wordCreationDTO);
+                translationWordRelationService.createWordRelation(word,wordCreationDTO);
+                translationWordRelationService.createWordRelation(word,wordCreationDTO2);
                 return null;
             }
 

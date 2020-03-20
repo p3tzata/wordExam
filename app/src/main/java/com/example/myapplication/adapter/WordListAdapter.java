@@ -3,6 +3,7 @@ package com.example.myapplication.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.SurfaceControl;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -10,8 +11,15 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.ListAllWordActivity;
+import com.example.myapplication.activity.NewWordActivity;
+import com.example.myapplication.activity.ShowForeignWordActivity;
+import com.example.myapplication.activity.ShowNativeWordActivity;
 import com.example.myapplication.activity.UpdateWordActivity;
+import com.example.myapplication.entity.Translation;
 import com.example.myapplication.entity.Word;
+import com.example.myapplication.entity.dto.TranslationAndLanguages;
+import com.example.myapplication.utitliy.MenuUtility;
 
 import java.util.List;
 
@@ -22,7 +30,8 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
     private final LayoutInflater mInflater;
     private Context context;
     private List<Word> mWords; // Cached copy of words
-    private List<Word> mWordsFull; // Cached copy of words
+    private TranslationAndLanguages translationAndLanguages;
+    private Long fromLanguageID;
 
     public WordListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
@@ -49,9 +58,10 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
         }
     }
 
-    public void setWords(List<Word> words){
+    public void setWords(List<Word> words, TranslationAndLanguages translationAndLanguages, Long fromLanguageID){
         mWords = words;
-
+        this.translationAndLanguages=translationAndLanguages;
+        this.fromLanguageID=fromLanguageID;
         notifyDataSetChanged();
     }
 
@@ -79,13 +89,26 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
 
         @Override
         public void onClick(View v) {
+            Intent activity2Intent=null;
             Word word = mWords.get(getAdapterPosition());
+            if (MenuUtility.isEditMode(context) && fromLanguageID.equals(translationAndLanguages.getForeignLanguage().getLanguageID())) {
+                activity2Intent = new Intent(context, UpdateWordActivity.class);
+            } else {
 
-            Intent intent = new Intent(context, UpdateWordActivity.class);
-            intent.putExtra("word_id", word.getWordID());
+                if (WordListAdapter.this.translationAndLanguages.getForeignLanguage().getLanguageID().equals(
+                        WordListAdapter.this.fromLanguageID)) {
+                    activity2Intent = new Intent(context, ShowForeignWordActivity.class);
+                } else {
+                    activity2Intent = new Intent(context, ShowNativeWordActivity.class);
+                }
+
+            }
+            activity2Intent.putExtra("translationAndLanguages", WordListAdapter.this.translationAndLanguages);
+            activity2Intent.putExtra("translationFromLanguageID", WordListAdapter.this.fromLanguageID);
+            activity2Intent.putExtra("word", word);
+            context.startActivity(activity2Intent);
 
 
-            context.startActivity(intent);
 
         }
     }

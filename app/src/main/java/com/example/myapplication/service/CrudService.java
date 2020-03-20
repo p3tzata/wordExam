@@ -24,6 +24,8 @@ public abstract class CrudService<R extends CrudRepository,T> extends AndroidVie
         return repository.inset(entity);
     }
 
+    public Integer update(T entity) {return repository.update(entity);}
+
     public T findByID(Long ID) {
         return (T) repository.findByID(ID);
     }

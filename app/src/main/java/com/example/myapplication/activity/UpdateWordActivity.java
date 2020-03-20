@@ -12,35 +12,51 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.entity.WordOld;
-import com.example.myapplication.service.WordOldService;
+import com.example.myapplication.entity.TranslationWordRelation;
+import com.example.myapplication.entity.Word;
+import com.example.myapplication.entity.dto.ForeignWithNativeWords;
+import com.example.myapplication.entity.dto.TranslationAndLanguages;
 
+import com.example.myapplication.factory.FactoryUtil;
+import com.example.myapplication.service.TranslationWordRelationService;
+import com.example.myapplication.service.WordService;
+
+import java.util.List;
 
 
 public class UpdateWordActivity extends AppCompatActivity {
-    private WordOldService wordOldService;
+    private WordService wordService;
+    private TranslationWordRelationService translationWordRelationService;
     private EditText editTextName;
-    private WordOld wordOld;
-
+    private Word word;
+    private TranslationAndLanguages translationAndLanguages;
+    private Long fromLanguageID;
+    private ForeignWithNativeWords foreignWithNativeWords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        this.wordOldService = new ViewModelProvider(this).get(WordOldService.class);
+        this.wordService = new ViewModelProvider(this).get(WordService.class);
+        this.translationWordRelationService = FactoryUtil.createTranslationWordRelationService(getApplication());
         setContentView(R.layout.activity_update_word);
+        Intent intent = getIntent();
+        this.translationAndLanguages = (TranslationAndLanguages) intent.getSerializableExtra("translationAndLanguages");
+        this.fromLanguageID = (Long) intent.getSerializableExtra("translationFromLanguageID");
+        Toast.makeText(getApplicationContext(), "translationAndLanguages" + this.translationAndLanguages.getForeignLanguage().getLanguageName()   , Toast.LENGTH_LONG).show();
 
-        editTextName = (EditText) findViewById(R.id.editTextName);
-        final Long word_id = (Long) getIntent().getSerializableExtra("word_id");
-        getWordFromDB(word_id);
+        editTextName = (EditText) findViewById(R.id.et_wordString);
+        final Word word = (Word) getIntent().getSerializableExtra("word");
+        getWordFromDB(word);
+        getNativeWords(word);
 
 
 
         /**/
-        findViewById(R.id.btn_Update).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_UpdateForeignWord).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                exportFormToEntiy(wordOld);
+                exportFormToEntiy(word);
                 updateWord();
             }
         });
@@ -48,14 +64,14 @@ public class UpdateWordActivity extends AppCompatActivity {
 
     }
 
-    private void exportFormToEntiy(WordOld wordOld) {
-        wordOld.setmWord(editTextName.getText().toString());
+    private void exportFormToEntiy(Word word) {
+        word.setWordString(editTextName.getText().toString());
 
 
     }
 
     private void loadForm() {
-        editTextName.setText(this.wordOld.getWord());
+        editTextName.setText(this.word.getWordString());
     }
 
     @Override
@@ -69,19 +85,42 @@ public class UpdateWordActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void getWordFromDB(Long word_id) {
-        class GetTasks extends AsyncTask<Void, Void, WordOld> {
+    private void getNativeWords(Word foreignWord) {
+        class GetTasks extends AsyncTask<Void, Void, ForeignWithNativeWords> {
 
             @Override
-            protected WordOld doInBackground(Void... voids) {
-                UpdateWordActivity.this.wordOld = wordOldService.findById(word_id);
-                return wordOld;
+            protected ForeignWithNativeWords doInBackground(Void... voids) {
+                ForeignWithNativeWords translationWordFromForeign = translationWordRelationService.translateFromForeign(foreignWord.getWordID());
+                return translationWordFromForeign;
             }
 
             @Override
-            protected void onPostExecute(WordOld word) {
+            protected void onPostExecute(ForeignWithNativeWords foreignWithNativeWords) {
+                super.onPostExecute(foreignWithNativeWords);
+                UpdateWordActivity.this.foreignWithNativeWords = foreignWithNativeWords;
+
+            }
+        }
+
+        GetTasks gt = new GetTasks();
+        gt.execute();
+    }
+
+
+
+    private void getWordFromDB(Word word) {
+        class GetTasks extends AsyncTask<Void, Void, Word> {
+
+            @Override
+            protected Word doInBackground(Void... voids) {
+                UpdateWordActivity.this.word = wordService.findByID(word.getWordID());
+                return word;
+            }
+
+            @Override
+            protected void onPostExecute(Word word) {
                 super.onPostExecute(word);
-                UpdateWordActivity.this.wordOld = word;
+                UpdateWordActivity.this.word = word;
                 loadForm();
 
             }
@@ -98,7 +137,7 @@ public class UpdateWordActivity extends AppCompatActivity {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                wordOldService.update(wordOld);
+                wordService.update(word);
                 return null;
             }
 

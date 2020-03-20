@@ -21,7 +21,7 @@ public abstract class TranslationDao implements NameableCrudDao<Translation> {
     abstract  public  Long insert(Translation entity);
 
     @Update
-    abstract public  void update(Translation entity);
+    abstract public  Integer update(Translation entity);
 
     @Delete
     abstract public  void delete(Translation entity);

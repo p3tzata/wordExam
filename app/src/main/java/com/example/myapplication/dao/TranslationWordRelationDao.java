@@ -5,10 +5,13 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.example.myapplication.entity.Language;
 import com.example.myapplication.entity.TranslationWordRelation;
+import com.example.myapplication.entity.dto.ForeignWithNativeWords;
+
 
 import java.util.List;
 
@@ -19,13 +22,18 @@ public abstract class TranslationWordRelationDao implements CrudDao<TranslationW
     abstract  public  Long insert(TranslationWordRelation entity);
 
     @Update
-    abstract public  void update(TranslationWordRelation entity);
+    abstract public  Integer update(TranslationWordRelation entity);
 
     @Delete
     abstract public  void delete(TranslationWordRelation entity);
 
     @Query("SELECT * FROM translationwordrelation l where l.translationWordRelationID=:ID")
     abstract public TranslationWordRelation findByID(Long ID);
+
+    @Transaction
+    @Query("SELECT * FROM word l where l.wordID=:foreignWordID")
+    abstract public ForeignWithNativeWords translateFromForeign(Long foreignWordID);
+
 
 
 

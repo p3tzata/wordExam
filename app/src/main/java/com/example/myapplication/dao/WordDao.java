@@ -19,7 +19,7 @@ public abstract class WordDao implements NameableCrudDao<Word> {
     public abstract Long insert(Word entity);
 
     @Update
-    public abstract void update(Word entity);
+    public abstract Integer update(Word entity);
 
     @Delete
     public abstract void delete(Word entity);

@@ -5,12 +5,15 @@ import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -21,6 +24,8 @@ import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.WordService;
+import com.example.myapplication.utitliy.MenuUtility;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -29,7 +34,8 @@ public class ListAllWordActivity extends AppCompatActivity {
     private WordService wordService;
     TranslationAndLanguages translationAndLanguages;
     Long fromLanguageID;
-
+    SharedPreferences sharedPreferences;
+    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +44,6 @@ public class ListAllWordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_all_word);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
 
         Intent i = getIntent();
         this.translationAndLanguages = (TranslationAndLanguages) i.getSerializableExtra("translationAndLanguages");
@@ -56,25 +60,32 @@ public class ListAllWordActivity extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(), "Please use search bar...",Toast.LENGTH_LONG).show();
 
-        getWords(null);
 
-        /*
-        SearchView sv_word= (SearchView) findViewById(R.id.sv_word);
-        sv_word.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+        FloatingActionButton fab_newWord = findViewById(R.id.fab_newWord);
 
+
+        fab_newWord.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextChange(String newText) {
-                getWords(newText);
-                return false;
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), NewWordActivity.class);
+                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
-        */
 
+        getWords(null);
 
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        FloatingActionButton fab_newWord = findViewById(R.id.fab_newWord);
+        boolean isEditMode = MenuUtility.isEditMode(this);
+        if (isEditMode && fromLanguageID.equals(translationAndLanguages.getForeignLanguage().getLanguageID())) {
+            fab_newWord.show();
+        } else {
+            fab_newWord.hide();
+        }
 
     }
 
@@ -149,7 +160,7 @@ public class ListAllWordActivity extends AppCompatActivity {
 
                 WordListAdapter adapter = new WordListAdapter(getApplicationContext());
 
-                adapter.setWords(tasks);
+                adapter.setWords(tasks,ListAllWordActivity.this.translationAndLanguages,ListAllWordActivity.this.fromLanguageID);
                 RecyclerView recyclerView = findViewById(R.id.recyclerview);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 

@@ -19,7 +19,7 @@ public abstract class ProfileDao implements NameableCrudDao<Profile> {
     public abstract Long insert(Profile entity);
 
     @Update
-    public abstract void update(Profile entity);
+    public abstract Integer update(Profile entity);
 
     @Delete
     public abstract void delete(Profile entity);
