@@ -10,9 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.ListAllDictionary;
 import com.example.myapplication.activity.ListAllWordActivity;
-import com.example.myapplication.activity.UpdateWordActivity;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
 
 import java.util.List;

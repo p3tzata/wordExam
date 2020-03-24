@@ -35,6 +35,11 @@ public abstract class TranslationWordRelationDao implements CrudDao<TranslationW
     abstract public ForeignWithNativeWords translateFromForeign(Long foreignWordID);
 
 
+    @Query("SELECT * FROM translationwordrelation l where l.foreignWordID=:foreignWordID" +
+            " and l.nativeWordID=:nativeWordID")
+    abstract public TranslationWordRelation findByForeignWordIDAndNativeWordID(Long foreignWordID, Long nativeWordID);
+
+
 
 
 

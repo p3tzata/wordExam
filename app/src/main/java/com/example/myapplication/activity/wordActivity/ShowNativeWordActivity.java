@@ -1,4 +1,4 @@
-package com.example.myapplication.activity;
+package com.example.myapplication.activity.wordActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

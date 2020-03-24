@@ -3,7 +3,6 @@ package com.example.myapplication.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.SurfaceControl;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -11,12 +10,10 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.ListAllWordActivity;
-import com.example.myapplication.activity.NewWordActivity;
-import com.example.myapplication.activity.ShowForeignWordActivity;
-import com.example.myapplication.activity.ShowNativeWordActivity;
-import com.example.myapplication.activity.UpdateWordActivity;
-import com.example.myapplication.entity.Translation;
+import com.example.myapplication.activity.wordActivity.ShowForeignWordActivity;
+import com.example.myapplication.activity.wordActivity.ShowNativeWordActivity;
+import com.example.myapplication.activity.wordActivity.UpdateWordActivity;
+import com.example.myapplication.activity.wordActivity.UpdateWordMenuActivity;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
 import com.example.myapplication.utitliy.MenuUtility;
@@ -92,7 +89,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
             Intent activity2Intent=null;
             Word word = mWords.get(getAdapterPosition());
             if (MenuUtility.isEditMode(context) && fromLanguageID.equals(translationAndLanguages.getForeignLanguage().getLanguageID())) {
-                activity2Intent = new Intent(context, UpdateWordActivity.class);
+                activity2Intent = new Intent(context, UpdateWordMenuActivity.class);
             } else {
 
                 if (WordListAdapter.this.translationAndLanguages.getForeignLanguage().getLanguageID().equals(

@@ -5,7 +5,6 @@ import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -19,6 +18,7 @@ import android.widget.Toast;
 
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.wordActivity.NewWordActivity;
 import com.example.myapplication.adapter.WordListAdapter;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;

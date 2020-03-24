@@ -10,13 +10,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.seed.Seed;
 import com.example.myapplication.service.WordOldService;
 import com.example.myapplication.utitliy.MenuUtility;
+import com.example.myapplication.utitliy.Session;
+import com.example.myapplication.utitliy.SessionNameAttribute;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +30,10 @@ public class MainActivity extends AppCompatActivity {
     private WordOldService wordOldService;
     private Menu mOptionsMenu;
 
-
+    ListView mainListMenu;
+    TextView menuListItem;
+    String[] mainListMenuOptions = new String[]{"Dictionaries","Item1"};
+    Class<?>[] mainListMenuOptionsNavigate = new Class[]{ListAllDictionary.class,ListAllDictionary.class};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +41,39 @@ public class MainActivity extends AppCompatActivity {
         this.wordOldService = new ViewModelProvider(this).get(WordOldService.class);
         setContentView(R.layout.activity_main);
 
+        mainListMenu=(ListView)findViewById(R.id.mainListMenu);
+        menuListItem=(TextView)findViewById(R.id.menuListItem);
 
-        final Button button = findViewById(R.id.button_ViewAllWord);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, mainListMenuOptions);
+        mainListMenu.setAdapter(adapter);
 
-                Intent activity2Intent = new Intent(getApplicationContext(), ListAllWordActivity.class);
-                startActivity(activity2Intent);
+        mainListMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                // TODO Auto-generated method stub
+                /*
+                String value=adapter.getItem(position);
+                Toast.makeText(getApplicationContext(),String.valueOf(position),Toast.LENGTH_SHORT).show();
+                */
+                Session.setLongAttribute(MainActivity.this, SessionNameAttribute.ProfileID,1L);
+
+                long profileID = Session.getLongAttribute(MainActivity.this, SessionNameAttribute.ProfileID, 0);
+
+                if (profileID==0) {
+                    Toast.makeText(getApplicationContext(),"Please select Profile",Toast.LENGTH_SHORT).show();
+                } else {
+
+                    Intent activity2Intent = new Intent(getApplicationContext(), mainListMenuOptionsNavigate[position]);
+                    startActivity(activity2Intent);
+                }
             }
         });
 
+        /* */
+
+
+/*
         final Button bnt_Dictionaries = findViewById(R.id.btn_listAllDictinary);
         bnt_Dictionaries.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -51,19 +83,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-        final Button btn_deleteAllWords = findViewById(R.id.btn_deleteAll);
-        btn_deleteAllWords.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-
-                deleteAllWords();
-            }
-        });
-
+*/
 
         Seed seed = new Seed();
-        seed.seedDB();
+        //seed.seedDB();
 
 
     }

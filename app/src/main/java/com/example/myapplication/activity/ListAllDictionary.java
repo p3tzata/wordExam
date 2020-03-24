@@ -21,6 +21,8 @@ import com.example.myapplication.entity.dto.TranslationAndLanguages;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.TranslationService;
 import com.example.myapplication.utitliy.MenuUtility;
+import com.example.myapplication.utitliy.Session;
+import com.example.myapplication.utitliy.SessionNameAttribute;
 
 import java.util.List;
 
@@ -81,7 +83,8 @@ public class ListAllDictionary extends AppCompatActivity {
             protected List<TranslationAndLanguages> doInBackground(Void... voids) {
                 //  wordService.insert(new Word("cska"));
                 List<TranslationAndLanguages> allTranslationByProfile =null;
-                allTranslationByProfile = translationService.findAllTransAndLangByProfile(1L);
+                long profileID = Session.getLongAttribute(ListAllDictionary.this, SessionNameAttribute.ProfileID, 0);
+                allTranslationByProfile = translationService.findAllTransAndLangByProfile(profileID);
                 return allTranslationByProfile;
             }
 

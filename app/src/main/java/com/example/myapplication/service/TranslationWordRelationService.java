@@ -64,5 +64,12 @@ public class TranslationWordRelationService extends CrudService<TranslationWordR
 
     }
 
+    private void deleteNativeTranslation(Word foreignWord,Word word) {
+
+
+
+
+    }
+
 
 }

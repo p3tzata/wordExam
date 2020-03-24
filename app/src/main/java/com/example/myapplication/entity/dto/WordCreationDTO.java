@@ -49,4 +49,7 @@ public class WordCreationDTO {
     public void setProfileID(@NonNull Long profileID) {
         this.profileID = profileID;
     }
+
+
+
 }

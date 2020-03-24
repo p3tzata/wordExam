@@ -1,4 +1,4 @@
-package com.example.myapplication.activity;
+package com.example.myapplication.activity.wordActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.entity.TranslationWordRelation;
+import com.example.myapplication.activity.ListAllWordActivity;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.ForeignWithNativeWords;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
@@ -20,8 +20,6 @@ import com.example.myapplication.entity.dto.TranslationAndLanguages;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.TranslationWordRelationService;
 import com.example.myapplication.service.WordService;
-
-import java.util.List;
 
 
 public class UpdateWordActivity extends AppCompatActivity {

@@ -9,14 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ShowForeignWordActivity"></activity>
-        <activity android:name=".activity.ShowNativeWordActivity" />
+        <activity android:name=".activity.wordActivity.UpdateWordTranslation"
+            android:windowSoftInputMode="adjustPan" ></activity>
+        <activity android:name=".activity.wordActivity.UpdateWordMenuActivity" />
+        <activity android:name=".activity.wordActivity.ShowForeignWordActivity" />
+        <activity android:name=".activity.wordActivity.ShowNativeWordActivity" />
         <activity android:name=".activity.ListAllDictionary" />
-        <activity android:name=".activity.UpdateWordActivity" />
+        <activity android:name=".activity.wordActivity.UpdateWordActivity" />
         <activity
             android:name=".activity.ListAllWordActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.NewWordActivity" />
+        <activity android:name=".activity.wordActivity.NewWordActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,5 +28,5 @@
             </intent-filter>
         </activity>
     </application>
-
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 </manifest>

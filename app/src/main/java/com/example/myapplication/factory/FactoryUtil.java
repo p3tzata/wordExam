@@ -35,8 +35,11 @@ public class FactoryUtil {
     }
 
 
-    static public ModelMapper createModelMapper() {
-        return new ModelMapper();
+    static public ModelMapper createModelMapper()
+    {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        return modelMapper;
     }
 
 

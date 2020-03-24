@@ -17,28 +17,34 @@ public class MenuUtility {
         sharedpreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
 
 
-        boolean isEditMode = sharedpreferences.getBoolean("isEditMode", false);
+        //boolean isEditMode = sharedpreferences.getBoolean("isEditMode", false);
+        boolean isEditMode = Session.getBooleanAttribute(context,SessionNameAttribute.IsEditMode,false);
+
 
         SharedPreferences.Editor editor = sharedpreferences.edit();
         if (isEditMode) {
-            editor.putBoolean("isEditMode",false);
-            editor.apply();
+            //editor.putBoolean("isEditMode",false);
+            //editor.apply();
+            Session.setBooleanAttribute(context,SessionNameAttribute.IsEditMode,false);
+
             editModeMenuItem.setTitle("Edit Mode");
             Toast.makeText(context.getApplicationContext(),"Read mode",Toast.LENGTH_LONG).show();
         } else {
-            editor.putBoolean("isEditMode",true);
-            editor.apply();
+            //editor.putBoolean("isEditMode",true);
+            //editor.apply();
+            Session.setBooleanAttribute(context,SessionNameAttribute.IsEditMode,true);
             editModeMenuItem.setTitle("Read Mode");
             Toast.makeText(context.getApplicationContext(),"Edit mode",Toast.LENGTH_LONG).show();
         }
     }
 
     static public void checkIsEditMode(Context context, Menu menu){
-        SharedPreferences sharedpreferences;
-        sharedpreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        //SharedPreferences sharedpreferences;
+        //sharedpreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
         MenuItem editModeMenuItem = menu.findItem(R.id.item_editMode);
 
-        boolean isEditMode = sharedpreferences.getBoolean("isEditMode", false);
+        //boolean isEditMode = sharedpreferences.getBoolean("isEditMode", false);
+        boolean isEditMode =Session.getBooleanAttribute(context, SessionNameAttribute.IsEditMode,false);
 
         if (isEditMode) {
             editModeMenuItem.setTitle("Read Mode");
@@ -69,10 +75,10 @@ public class MenuUtility {
     }
 
     public static boolean isEditMode(Context context) {
-        SharedPreferences sharedpreferences;
-        sharedpreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
-        boolean isEditMode = sharedpreferences.getBoolean("isEditMode", false);
-
+        //SharedPreferences sharedpreferences;
+        //sharedpreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        //boolean isEditMode = sharedpreferences.getBoolean("isEditMode", false);
+        boolean isEditMode =Session.getBooleanAttribute(context, SessionNameAttribute.IsEditMode,false);
         return isEditMode;
 
     }
