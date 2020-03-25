@@ -20,10 +20,12 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 
 import com.example.myapplication.adapter.UpdWordBasicPartOfSpeechListAdapter;
+import com.example.myapplication.adapter.WordFormSpinAdapter;
 import com.example.myapplication.adapter.WordTranslateListAdapter;
 import com.example.myapplication.adapter.partOfSpeechSpinAdapter;
 import com.example.myapplication.entity.PartOfSpeech;
 import com.example.myapplication.entity.Word;
+import com.example.myapplication.entity.WordForm;
 import com.example.myapplication.entity.WordPartOfSpeech;
 import com.example.myapplication.entity.dto.ForeignWithNativeWords;
 import com.example.myapplication.entity.dto.ForeignWordWithDefPartOfSpeech;
@@ -32,6 +34,7 @@ import com.example.myapplication.entity.dto.TranslationAndLanguages;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.PartOfSpeechService;
 import com.example.myapplication.service.TranslationWordRelationService;
+import com.example.myapplication.service.WordFormService;
 import com.example.myapplication.service.WordPartOfSpeechService;
 import com.example.myapplication.service.WordService;
 
@@ -42,12 +45,14 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
     private WordService wordService;
     private TranslationWordRelationService translationWordRelationService;
     private PartOfSpeechService partOfSpeechService;
+    private WordFormService wordFormServiceService;
     private WordPartOfSpeechService wordPartOfSpeechService;
     private EditText editTextName;
     private Word word;
     private TranslationAndLanguages translationAndLanguages;
     private Long fromLanguageID;
     private ForeignWithNativeWords foreignWithNativeWords;
+    private WordFormSpinAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.wordService = new ViewModelProvider(this).get(WordService.class);
         this.translationWordRelationService = FactoryUtil.createTranslationWordRelationService(getApplication());
+        this.wordFormServiceService = FactoryUtil.createWordFormService(getApplication());
         this.partOfSpeechService=FactoryUtil.createPartOfSpeechService(getApplication());
         this.wordPartOfSpeechService=FactoryUtil.createWordPartOfSpeechService(getApplication());
         setContentView(R.layout.activity_update_word);
@@ -67,6 +73,7 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
         final Word word = (Word) getIntent().getSerializableExtra("word");
         getWordFromDB(word);
         getNativeWords(word);
+        getAllWordForm(translationAndLanguages.getForeignLanguage().getLanguageID());
         getAllPartOfSpeech(translationAndLanguages.getForeignLanguage().getLanguageID());
         getDefinedPartOfSpeech(word);
 
@@ -86,6 +93,17 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
 
     private void exportFormToEntiy(Word word) {
         word.setWordString(editTextName.getText().toString());
+        Spinner spn_item = (Spinner) findViewById(R.id.spn_wordForm);
+        int selectedItemPosition = spn_item.getSelectedItemPosition();
+        WordForm wordForm = adapter.getItem(selectedItemPosition);
+
+
+        if (!wordForm.getWordFormID().equals(-1L)) {
+            word.setWordFormID(wordForm.getWordFormID());
+        } else {
+            word.setWordFormID(null);
+        }
+
 
 
     }
@@ -226,6 +244,74 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
         GetTasks gt = new GetTasks();
         gt.execute();
     }
+
+    private void getAllWordForm(Long languageID) {
+        class GetTasks extends AsyncTask<Void, Void, List<WordForm>> {
+
+            @Override
+            protected List<WordForm> doInBackground(Void... voids) {
+
+                List<WordForm> wordForms = wordFormServiceService.findAllByLanguageID(languageID);
+                return wordForms;
+            }
+
+            @Override
+            protected void onPostExecute(List<WordForm> items) {
+                super.onPostExecute(items);
+                WordForm wordForm = new WordForm();
+
+                wordForm.setWordFormID(-1L);
+                wordForm.setWordFormName("Select word form");
+
+                items.add(0,wordForm);
+
+
+                adapter = new WordFormSpinAdapter(UpdateWordBasicActivity.this,
+                        //android.R.layout.simple_spinner_item,
+                        R.layout.spinner_item,
+                        items);
+                Spinner spn_item = (Spinner) findViewById(R.id.spn_wordForm);
+                spn_item.setAdapter(adapter); // Set the custom adapter to the spinner
+                // You can create an anonymous listener to handle the event when is selected an spinner item
+                int spinnerPosition = 0;
+                if (word.getWordFormID() != null) {
+                    for (int i=0;i<items.size();i++) {
+                        if (items.get(i).getWordFormID().equals(word.getWordFormID())) {
+                            spinnerPosition=i;
+                            break;
+                        }
+                    }
+
+                    spn_item.setSelection(spinnerPosition);
+                }
+
+                spn_item.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view,
+                                               int position, long id) {
+                        // Here you get the current item (a User object) that is selected by its position
+
+
+
+
+
+
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapter) {  }
+                });
+
+
+            }
+        }
+
+        GetTasks gt = new GetTasks();
+        gt.execute();
+    }
+
+
+
 
     private void getDefinedPartOfSpeech(Word word) {
         class GetTasks extends AsyncTask<Void, Void, ForeignWordWithDefPartOfSpeech> {

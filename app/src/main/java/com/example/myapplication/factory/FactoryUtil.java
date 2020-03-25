@@ -10,6 +10,7 @@ import com.example.myapplication.service.ProfileService;
 import com.example.myapplication.service.TranslationService;
 
 import com.example.myapplication.service.TranslationWordRelationService;
+import com.example.myapplication.service.WordFormService;
 import com.example.myapplication.service.WordPartOfSpeechService;
 import com.example.myapplication.service.WordService;
 
@@ -35,6 +36,10 @@ public class FactoryUtil {
 
     static public HelpSentenceService createHelpSentenceService(Application application) {
         return new HelpSentenceService(application);
+    }
+
+    static public WordFormService createWordFormService(Application application) {
+        return new WordFormService(application);
     }
 
 

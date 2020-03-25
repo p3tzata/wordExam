@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(indices = {@Index("languageID"),@Index("profileID"),
+@Entity(indices = {@Index("languageID"),@Index("profileID"),@Index("wordFormID"),
         @Index(unique = true, value = {"wordString","languageID","profileID"})},
         foreignKeys = {@ForeignKey(entity = Language.class, parentColumns = "languageID", childColumns = "languageID"),
                 @ForeignKey(entity = Profile.class, parentColumns = "profileID", childColumns = "profileID")})
@@ -26,7 +26,18 @@ public class Word implements Serializable {
     @NonNull
     private Long profileID;
 
+    private Long wordFormID;
+
     public Word() {
+    }
+
+
+    public Long getWordFormID() {
+        return wordFormID;
+    }
+
+    public void setWordFormID(Long wordFormID) {
+        this.wordFormID = wordFormID;
     }
 
     @NonNull

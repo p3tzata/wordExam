@@ -10,6 +10,7 @@ import com.example.myapplication.entity.Profile;
 import com.example.myapplication.entity.Translation;
 import com.example.myapplication.entity.TranslationWordRelation;
 import com.example.myapplication.entity.Word;
+import com.example.myapplication.entity.WordForm;
 import com.example.myapplication.entity.WordPartOfSpeech;
 import com.example.myapplication.entity.dto.WordCreationDTO;
 import com.example.myapplication.factory.FactoryUtil;
@@ -18,6 +19,7 @@ import com.example.myapplication.service.PartOfSpeechService;
 import com.example.myapplication.service.ProfileService;
 import com.example.myapplication.service.TranslationService;
 import com.example.myapplication.service.TranslationWordRelationService;
+import com.example.myapplication.service.WordFormService;
 import com.example.myapplication.service.WordPartOfSpeechService;
 import com.example.myapplication.service.WordService;
 
@@ -32,7 +34,7 @@ public class Seed extends Application {
     private TranslationWordRelationService translationWordRelationService;
     private PartOfSpeechService partOfSpeechService;
     private WordPartOfSpeechService wordPartOfSpeechService;
-
+    private WordFormService wordFormService;
     public Seed(){
         this.profileService = FactoryUtil.createProfileService(this);
         this.languageService = FactoryUtil.createLanguageService(this);
@@ -41,6 +43,7 @@ public class Seed extends Application {
         this.translationWordRelationService=FactoryUtil.createTranslationWordRelationService(this);
         this.partOfSpeechService=FactoryUtil.createPartOfSpeechService(this);
         this.wordPartOfSpeechService=FactoryUtil.createWordPartOfSpeechService(this);
+        this.wordFormService=FactoryUtil.createWordFormService(this);
     }
 
 
@@ -94,6 +97,19 @@ public class Seed extends Application {
         wordPartOfSpeech1.setWordID(1L);
         wordPartOfSpeech1.setPartOfSpeechID(2L);
 
+        WordForm wordForm = new WordForm();
+        wordForm.setLanguageID(2L);
+        wordForm.setWordFormName("Past tense");
+
+        WordForm wordForm1 = new WordForm();
+        wordForm1.setLanguageID(2L);
+        wordForm1.setWordFormName("Past Perfect tense");
+
+        WordForm wordForm2 = new WordForm();
+        wordForm2.setLanguageID(2L);
+        wordForm2.setWordFormName("Plural");
+
+
 
 
         class SaveTask extends AsyncTask<Void, Void, Void> {
@@ -121,6 +137,10 @@ public class Seed extends Application {
 
                 Long insert = wordPartOfSpeechService.insert(wordPartOfSpeech);
                 Long insert1 = wordPartOfSpeechService.insert(wordPartOfSpeech1);
+
+                wordFormService.insert(wordForm);
+                wordFormService.insert(wordForm1);
+
                 String debug=null;
                 return null;
 

@@ -26,7 +26,7 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
     private WordService wordService;
     ListView mainListMenu;
     TextView menuListItem;
-    String[] mainListMenuOptions = new String[]{"Basics",
+    String[] mainListMenuOptions = new String[]{"Basic",
             "Translation",
             "Help sentence"};
     Class<?>[] mainListMenuOptionsNavigate = new Class[]{UpdateWordBasicActivity.class,
