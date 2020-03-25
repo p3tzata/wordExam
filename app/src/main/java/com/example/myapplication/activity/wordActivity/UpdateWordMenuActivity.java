@@ -1,8 +1,10 @@
 package com.example.myapplication.activity.wordActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,13 +18,20 @@ import com.example.myapplication.R;
 import com.example.myapplication.activity.ListAllWordActivity;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
+import com.example.myapplication.service.WordService;
+import com.example.myapplication.utitliy.MenuUtility;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class UpdateWordMenuActivity extends AppCompatActivity {
-
+    private WordService wordService;
     ListView mainListMenu;
     TextView menuListItem;
-    String[] mainListMenuOptions = new String[]{"Basics", "Translation"};
-    Class<?>[] mainListMenuOptionsNavigate = new Class[]{UpdateWordBasicActivity.class, UpdateWordTranslationActivity.class};
+    String[] mainListMenuOptions = new String[]{"Basics",
+            "Translation",
+            "Help sentence"};
+    Class<?>[] mainListMenuOptionsNavigate = new Class[]{UpdateWordBasicActivity.class,
+            UpdateWordTranslationActivity.class,
+            UpdateWordHelpSentenceActivity.class};
     Word word;
     private TranslationAndLanguages translationAndLanguages;
     private Long fromLanguageID;
@@ -31,14 +40,14 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_word_menu);
-
+        this.wordService = new ViewModelProvider(this).get(WordService.class);
         this.word = (Word) getIntent().getSerializableExtra("word");
         this.translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
         this.fromLanguageID = (Long) getIntent().getSerializableExtra("translationFromLanguageID");
         getSupportActionBar().setTitle(word.getWordString());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Toast.makeText(getApplicationContext(), word.getWordString(), Toast.LENGTH_LONG).show();
+
 
         mainListMenu = (ListView) findViewById(R.id.updateWordListMenu);
         menuListItem = (TextView) findViewById(R.id.menuListItem);
@@ -66,6 +75,16 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
 
 
     @Override
+    public void onResume(){
+        super.onResume();
+        getWordFromDB(word.getWordID());
+        getSupportActionBar().setTitle(word.getWordString());
+    }
+
+
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -80,7 +99,27 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
     }
 
 
+    private void getWordFromDB(Long wordID) {
+        class GetTasks extends AsyncTask<Void, Void, Word> {
 
+            @Override
+            protected Word doInBackground(Void... voids) {
+                word = wordService.findByID(wordID);
+                return word;
+            }
+
+            @Override
+            protected void onPostExecute(Word word) {
+                super.onPostExecute(word);
+                UpdateWordMenuActivity.this.word = word;
+
+
+            }
+        }
+
+        GetTasks gt = new GetTasks();
+        gt.execute();
+    }
 
 
 

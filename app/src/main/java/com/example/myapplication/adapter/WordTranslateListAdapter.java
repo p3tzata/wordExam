@@ -94,7 +94,7 @@ public class WordTranslateListAdapter extends RecyclerView.Adapter<WordTranslate
         public void onClick(View v) {
 
             PopupMenu popupMenu = new PopupMenu(context, v);
-            popupMenu.inflate(R.menu.delete_menu);
+            popupMenu.inflate(R.menu.menu_delete);
             //adding click listener
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override

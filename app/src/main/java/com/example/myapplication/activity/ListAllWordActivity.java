@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 
 import com.example.myapplication.R;
@@ -58,16 +57,19 @@ public class ListAllWordActivity extends AppCompatActivity {
         }
 
 
-        Toast.makeText(getApplicationContext(), "Please use search bar...",Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "Please use search bar...",Toast.LENGTH_LONG).show();
 
 
-        FloatingActionButton fab_newWord = findViewById(R.id.fab_newWord);
+        FloatingActionButton fab_newWord = findViewById(R.id.fab_newItem);
 
 
         fab_newWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), NewWordActivity.class);
+                intent.putExtra("translationAndLanguages",translationAndLanguages);
+                intent.putExtra("translationFromLanguageID",translationAndLanguages.getForeignLanguage().getLanguageID());
+
                 startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -79,7 +81,7 @@ public class ListAllWordActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        FloatingActionButton fab_newWord = findViewById(R.id.fab_newWord);
+        FloatingActionButton fab_newWord = findViewById(R.id.fab_newItem);
         boolean isEditMode = MenuUtility.isEditMode(this);
         if (isEditMode && fromLanguageID.equals(translationAndLanguages.getForeignLanguage().getLanguageID())) {
             fab_newWord.show();

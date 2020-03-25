@@ -14,10 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.wordActivity.UpdateWordBasicActivity;
-import com.example.myapplication.activity.wordActivity.UpdateWordTranslationActivity;
 import com.example.myapplication.entity.PartOfSpeech;
-import com.example.myapplication.entity.Word;
-import com.example.myapplication.entity.dto.TranslationAndLanguages;
 import com.example.myapplication.service.TranslationWordRelationService;
 
 import java.util.List;
@@ -92,7 +89,7 @@ public class UpdWordBasicPartOfSpeechListAdapter extends RecyclerView.Adapter<Up
         public void onClick(View v) {
 
             PopupMenu popupMenu = new PopupMenu(context, v);
-            popupMenu.inflate(R.menu.delete_menu);
+            popupMenu.inflate(R.menu.menu_delete);
             //adding click listener
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override

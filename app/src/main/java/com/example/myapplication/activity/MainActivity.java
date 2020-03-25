@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         mainListMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                // TODO Auto-generated method stub
+
                 /*
                 String value=adapter.getItem(position);
                 Toast.makeText(getApplicationContext(),String.valueOf(position),Toast.LENGTH_SHORT).show();
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 */
 
         Seed seed = new Seed();
-        seed.seedDB();
+        //seed.seedDB();
 
 
     }

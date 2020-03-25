@@ -3,6 +3,7 @@ package com.example.myapplication.factory;
 import android.app.Application;
 
 import com.example.myapplication.entity.TranslationWordRelation;
+import com.example.myapplication.service.HelpSentenceService;
 import com.example.myapplication.service.LanguageService;
 import com.example.myapplication.service.PartOfSpeechService;
 import com.example.myapplication.service.ProfileService;
@@ -31,6 +32,11 @@ public class FactoryUtil {
     static public WordService createWordService(Application application) {
         return new WordService(application);
     }
+
+    static public HelpSentenceService createHelpSentenceService(Application application) {
+        return new HelpSentenceService(application);
+    }
+
 
     static public TranslationWordRelationService createTranslationWordRelationService(Application application) {
         return new TranslationWordRelationService(application);

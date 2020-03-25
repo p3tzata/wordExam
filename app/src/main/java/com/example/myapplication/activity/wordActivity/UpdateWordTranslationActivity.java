@@ -48,7 +48,7 @@ public class UpdateWordTranslationActivity extends AppCompatActivity {
 
         getWords(word);
 
-        FloatingActionButton fab_newWord = findViewById(R.id.fab_newWord);
+        FloatingActionButton fab_newWord = findViewById(R.id.fab_newItem);
         fab_newWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

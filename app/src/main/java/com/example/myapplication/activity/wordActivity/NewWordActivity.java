@@ -14,37 +14,41 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.MainActivity;
+import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.WordOld;
+import com.example.myapplication.entity.dto.TranslationAndLanguages;
 import com.example.myapplication.service.WordOldService;
+import com.example.myapplication.service.WordService;
 
 public class NewWordActivity extends AppCompatActivity {
 
     public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
+    TranslationAndLanguages translationAndLanguages;
+    Long fromLanguageID;
 
     private EditText mEditWordView;
 
-    private WordOldService wordOldService;
+    private WordService wordService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        this.wordOldService = new ViewModelProvider(this).get(WordOldService.class);
+        this.wordService = new ViewModelProvider(this).get(WordService.class);
+        Intent i = getIntent();
+        translationAndLanguages = (TranslationAndLanguages) i.getSerializableExtra("translationAndLanguages");
+        fromLanguageID = (Long) i.getSerializableExtra("translationFromLanguageID");
+
         setContentView(R.layout.activity_new_word);
         mEditWordView = findViewById(R.id.edit_word);
 
         final Button btn_save = findViewById(R.id.btn_save);
         btn_save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                saveWord(false);
+                saveWord();
             }
         });
-        final Button btn_saveCls = findViewById(R.id.btn_saveCls);
-        btn_saveCls.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                saveWord(true);
-            }
-        });
+
 
 
     }
@@ -60,7 +64,7 @@ public class NewWordActivity extends AppCompatActivity {
     }
 
 
-    private void saveWord(boolean isClose) {
+    private void saveWord() {
         final String sWordText = mEditWordView.getText().toString().trim();
 
         if (sWordText.isEmpty()) {
@@ -71,32 +75,40 @@ public class NewWordActivity extends AppCompatActivity {
 
 
 
-        class SaveTask extends AsyncTask<Void, Void, Void> {
+        class SaveTask extends AsyncTask<Void, Void, Word> {
 
             @Override
-            protected Void doInBackground(Void... voids) {
+            protected Word doInBackground(Void... voids) {
 
                 //creating a task
-                WordOld wordOld = new WordOld(sWordText);
+                Word word = new Word();
+                word.setWordString(sWordText);
+                word.setLanguageID(translationAndLanguages.getForeignLanguage().getLanguageID());
+                word.setProfileID(translationAndLanguages.getTranslation().getProfileID());
 
                 //adding to database
-                wordOldService.insert(wordOld);
+                Long wordID = wordService.insert(word);
+                Word wordInserted = wordService.findByID(wordID);
 
-                return null;
+                return wordInserted;
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
+            protected void onPostExecute(Word word) {
+                super.onPostExecute(word);
                 finish();
 
 
-                if (isClose) {
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                } else {
-                    //mEditWordView.setText("");
-                    startActivity(new Intent(getApplicationContext(), NewWordActivity.class));
-                }
+
+
+                Intent i = getIntent();
+
+
+                Intent intent = new Intent(getApplicationContext(), UpdateWordBasicActivity.class);
+                intent.putExtra("translationAndLanguages",translationAndLanguages);
+                intent.putExtra("translationFromLanguageID",translationAndLanguages.getForeignLanguage().getLanguageID());
+                intent.putExtra("word",word);
+                startActivity(intent);
 
                 Toast.makeText(getApplicationContext(), "Word Saved", Toast.LENGTH_LONG).show();
             }

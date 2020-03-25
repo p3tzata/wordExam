@@ -6,18 +6,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Telephony;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.ListAllWordActivity;
+
 import com.example.myapplication.adapter.UpdWordBasicPartOfSpeechListAdapter;
 import com.example.myapplication.adapter.WordTranslateListAdapter;
 import com.example.myapplication.adapter.partOfSpeechSpinAdapter;
@@ -76,6 +77,7 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
             public void onClick(View view) {
                 exportFormToEntiy(word);
                 updateWord();
+                String debug=null;
             }
         });
 
@@ -152,6 +154,9 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
 
             @Override
             protected Void doInBackground(Void... voids) {
+
+
+
                 wordService.update(word);
                 return null;
             }
@@ -160,8 +165,8 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
                 Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_LONG).show();
-                finish();
-                startActivity(new Intent(UpdateWordBasicActivity.this, ListAllWordActivity.class));
+                //finish();
+                //startActivity(new Intent(UpdateWordBasicActivity.this, ListAllWordActivity.class));
             }
         }
 
@@ -191,7 +196,8 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
 
 
                 partOfSpeechSpinAdapter adapter = new partOfSpeechSpinAdapter(UpdateWordBasicActivity.this,
-                        android.R.layout.simple_spinner_item,
+                        //android.R.layout.simple_spinner_item,
+                        R.layout.spinner_item,
                         partOfSpeeches);
                 Spinner spn_partOfSpeech = (Spinner) findViewById(R.id.spn_partOfSpeech);
                 spn_partOfSpeech.setAdapter(adapter); // Set the custom adapter to the spinner
@@ -202,6 +208,8 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> adapterView, View view,
                                                int position, long id) {
                         // Here you get the current item (a User object) that is selected by its position
+
+
                         PartOfSpeech partOfSpeech = adapter.getItem(position);
                         if (!partOfSpeech.getPartOfSpeechID().equals(-1L)) {
                             createDefPartOfSpeech(partOfSpeech);

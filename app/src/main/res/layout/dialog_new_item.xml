@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dip"
             android:gravity="center"
-            android:text="Tranlation"
+            android:text="Item"
 
             android:textColor="#000000" />
 
@@ -28,8 +28,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dip"
+            android:inputType="textMultiLine" />
 
-            android:inputType="textEmailAddress" />
+
 
         <Button
             android:id="@+id/btn_dialog_newItem"
@@ -38,7 +39,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="15dip"
 
-            android:text="Add" />
+            android:text="Save" />
 
     </LinearLayout>
 

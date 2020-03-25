@@ -17,6 +17,8 @@
         <activity android:name=".activity.ListAllDictionary" />
         <activity android:name=".activity.wordActivity.UpdateWordBasicActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.wordActivity.UpdateWordHelpSentenceActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.ListAllWordActivity"
             android:windowSoftInputMode="adjustPan" />
