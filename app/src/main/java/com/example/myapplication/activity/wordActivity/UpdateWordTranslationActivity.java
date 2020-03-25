@@ -11,10 +11,9 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.ListAllWordActivity;
-import com.example.myapplication.adapter.WordListAdapter;
 import com.example.myapplication.adapter.WordTranslateListAdapter;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.ForeignWithNativeWords;
@@ -28,7 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class UpdateWordTranslation extends AppCompatActivity {
+public class UpdateWordTranslationActivity extends AppCompatActivity {
     private TranslationWordRelationService translationWordRelationService;
     private TranslationAndLanguages translationAndLanguages;
     private Long fromLanguageID;
@@ -38,7 +37,7 @@ public class UpdateWordTranslation extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        UpdateWordTranslation updateWordTranslation = this;
+        UpdateWordTranslationActivity updateWordTranslationActivity = this;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_word_translation);
@@ -96,8 +95,8 @@ public class UpdateWordTranslation extends AppCompatActivity {
                // ForeignWithNativeWords translationWordFromForeign = translationWordRelationService.translateFromForeign(foreignWord.getWordID());
                 WordCreationDTO wordCreationDTO = new WordCreationDTO();
                 wordCreationDTO.setWordString(translation);
-                wordCreationDTO.setLanguageID(UpdateWordTranslation.this.translationAndLanguages.getNativeLanguage().getLanguageID());
-                wordCreationDTO.setProfileID(Session.getLongAttribute(UpdateWordTranslation.this, SessionNameAttribute.ProfileID,0L));
+                wordCreationDTO.setLanguageID(UpdateWordTranslationActivity.this.translationAndLanguages.getNativeLanguage().getLanguageID());
+                wordCreationDTO.setProfileID(Session.getLongAttribute(UpdateWordTranslationActivity.this, SessionNameAttribute.ProfileID,0L));
 
                 translationWordRelationService.createWordRelation(word,wordCreationDTO);
                 return null;
@@ -135,9 +134,9 @@ public class UpdateWordTranslation extends AppCompatActivity {
                 super.onPostExecute(tasks);
 
 
-                WordTranslateListAdapter adapter = new WordTranslateListAdapter(UpdateWordTranslation.this);
+                WordTranslateListAdapter adapter = new WordTranslateListAdapter(UpdateWordTranslationActivity.this);
 
-                adapter.setWords(tasks.getNativeWords(), null,null);
+                adapter.setItems(tasks.getNativeWords(), null,null);
                 RecyclerView recyclerView = findViewById(R.id.recyclerview);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
@@ -151,8 +150,23 @@ public class UpdateWordTranslation extends AppCompatActivity {
 
 
 
+    public void deleteRelation(Word nativeWord) {
+        class GetTasks extends AsyncTask<Void, Void, Void> {
 
+            @Override
+            protected Void doInBackground(Void... voids) {
+                translationWordRelationService.deleteNativeTranslation(UpdateWordTranslationActivity.this.word,nativeWord);
+                return null;
+            }
 
+            @Override
+            protected void onPostExecute(Void voiD) {
+                Toast.makeText(UpdateWordTranslationActivity.this.getApplicationContext(),"Successfully delete",Toast.LENGTH_SHORT).show();
+                getWords(UpdateWordTranslationActivity.this.word);
+            }
+        }
 
-
+        GetTasks gt = new GetTasks();
+        gt.execute();
+    }
 }

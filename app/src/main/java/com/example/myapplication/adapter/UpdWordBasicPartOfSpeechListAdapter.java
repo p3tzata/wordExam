@@ -13,14 +13,16 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.wordActivity.UpdateWordBasicActivity;
 import com.example.myapplication.activity.wordActivity.UpdateWordTranslationActivity;
+import com.example.myapplication.entity.PartOfSpeech;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
 import com.example.myapplication.service.TranslationWordRelationService;
 
 import java.util.List;
 
-public class WordTranslateListAdapter extends RecyclerView.Adapter<WordTranslateListAdapter.ItemViewHolder>  {
+public class UpdWordBasicPartOfSpeechListAdapter extends RecyclerView.Adapter<UpdWordBasicPartOfSpeechListAdapter.ItemViewHolder>  {
 
 
 
@@ -28,17 +30,15 @@ public class WordTranslateListAdapter extends RecyclerView.Adapter<WordTranslate
     private Context context;
 
 
-    private List<Word> mItems; // Cached copy of words
-    private TranslationAndLanguages translationAndLanguages;
+    private List<PartOfSpeech> mItems; // Cached copy of words
+
     private Long fromLanguageID;
 
     private TranslationWordRelationService translationWordRelationService;
 
-    public WordTranslateListAdapter(Context context) {
+    public UpdWordBasicPartOfSpeechListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         this.context=context;
-
-
     }
 
 
@@ -53,18 +53,16 @@ public class WordTranslateListAdapter extends RecyclerView.Adapter<WordTranslate
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         if (mItems != null) {
-            Word current = mItems.get(position);
-            holder.wordItemView.setText(current.getWordString());
+            PartOfSpeech current = mItems.get(position);
+            holder.wordItemView.setText(current.getName());
         } else {
             // Covers the case of data not being ready yet.
             holder.wordItemView.setText("No Word");
         }
     }
 
-    public void setItems(List<Word> words, TranslationAndLanguages translationAndLanguages, Long fromLanguageID){
-        mItems = words;
-        this.translationAndLanguages=translationAndLanguages;
-        this.fromLanguageID=fromLanguageID;
+    public void setItems(List<PartOfSpeech> items){
+        mItems = items;
         notifyDataSetChanged();
     }
 
@@ -102,12 +100,12 @@ public class WordTranslateListAdapter extends RecyclerView.Adapter<WordTranslate
                     switch (item.getItemId()) {
                         case R.id.menu_delete:
 
-                            Word nativeWord = mItems.get(getAdapterPosition());
+                            PartOfSpeech selectedPartOfSpeech = mItems.get(getAdapterPosition());
                             String debug=null;
 
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                            builder.setMessage(nativeWord.getWordString());
+                            builder.setMessage(selectedPartOfSpeech.getName());
 
                             //Setting message manually and performing action on button click
                             builder
@@ -115,10 +113,11 @@ public class WordTranslateListAdapter extends RecyclerView.Adapter<WordTranslate
                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             //finish();
+                                            
+                                            if (context instanceof UpdateWordBasicActivity) {
+                                                UpdateWordBasicActivity context = (UpdateWordBasicActivity) UpdWordBasicPartOfSpeechListAdapter.this.context;
 
-                                            if (context instanceof UpdateWordTranslationActivity) {
-                                                UpdateWordTranslationActivity context = (UpdateWordTranslationActivity) WordTranslateListAdapter.this.context;
-                                                context.deleteRelation(nativeWord);
+                                                context.deleteDefPartOfSpeech(selectedPartOfSpeech);
                                             }
 
 

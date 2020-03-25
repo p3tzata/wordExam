@@ -9,13 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.wordActivity.UpdateWordTranslation"
+        <activity android:name=".activity.wordActivity.UpdateWordTranslationActivity"
             android:windowSoftInputMode="adjustPan" ></activity>
         <activity android:name=".activity.wordActivity.UpdateWordMenuActivity" />
         <activity android:name=".activity.wordActivity.ShowForeignWordActivity" />
         <activity android:name=".activity.wordActivity.ShowNativeWordActivity" />
         <activity android:name=".activity.ListAllDictionary" />
-        <activity android:name=".activity.wordActivity.UpdateWordActivity" />
+        <activity android:name=".activity.wordActivity.UpdateWordBasicActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.ListAllWordActivity"
             android:windowSoftInputMode="adjustPan" />

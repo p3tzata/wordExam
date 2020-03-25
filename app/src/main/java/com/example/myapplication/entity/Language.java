@@ -13,6 +13,8 @@ public class Language implements Serializable {
 
     private String languageName;
 
+    private String definitionUrl;
+
     public Language() {
     }
 
@@ -30,5 +32,13 @@ public class Language implements Serializable {
 
     public void setLanguageName(String languageName) {
         this.languageName = languageName;
+    }
+
+    public String getDefinitionUrl() {
+        return definitionUrl;
+    }
+
+    public void setDefinitionUrl(String definitionUrl) {
+        this.definitionUrl = definitionUrl;
     }
 }

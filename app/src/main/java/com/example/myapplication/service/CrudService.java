@@ -26,6 +26,8 @@ public abstract class CrudService<R extends CrudRepository,T> extends AndroidVie
 
     public Integer update(T entity) {return repository.update(entity);}
 
+    public void delete(T entity) {repository.delete(entity);}
+
     public T findByID(Long ID) {
         return (T) repository.findByID(ID);
     }

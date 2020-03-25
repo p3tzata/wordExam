@@ -5,16 +5,20 @@ import android.os.AsyncTask;
 
 
 import com.example.myapplication.entity.Language;
+import com.example.myapplication.entity.PartOfSpeech;
 import com.example.myapplication.entity.Profile;
 import com.example.myapplication.entity.Translation;
 import com.example.myapplication.entity.TranslationWordRelation;
 import com.example.myapplication.entity.Word;
+import com.example.myapplication.entity.WordPartOfSpeech;
 import com.example.myapplication.entity.dto.WordCreationDTO;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.LanguageService;
+import com.example.myapplication.service.PartOfSpeechService;
 import com.example.myapplication.service.ProfileService;
 import com.example.myapplication.service.TranslationService;
 import com.example.myapplication.service.TranslationWordRelationService;
+import com.example.myapplication.service.WordPartOfSpeechService;
 import com.example.myapplication.service.WordService;
 
 import org.modelmapper.ModelMapper;
@@ -26,7 +30,8 @@ public class Seed extends Application {
     private TranslationService translationService;
     private WordService wordService;
     private TranslationWordRelationService translationWordRelationService;
-
+    private PartOfSpeechService partOfSpeechService;
+    private WordPartOfSpeechService wordPartOfSpeechService;
 
     public Seed(){
         this.profileService = FactoryUtil.createProfileService(this);
@@ -34,6 +39,8 @@ public class Seed extends Application {
         this.translationService = FactoryUtil.createTranslationService(this);
         this.wordService = FactoryUtil.createWordService(this);
         this.translationWordRelationService=FactoryUtil.createTranslationWordRelationService(this);
+        this.partOfSpeechService=FactoryUtil.createPartOfSpeechService(this);
+        this.wordPartOfSpeechService=FactoryUtil.createWordPartOfSpeechService(this);
     }
 
 
@@ -71,7 +78,21 @@ public class Seed extends Application {
         word2.setLanguageID(1L);
         word2.setProfileID(1L);
 
+        PartOfSpeech noun_PartOfSpeech = new PartOfSpeech();
+        noun_PartOfSpeech.setLanguageID(2L);
+        noun_PartOfSpeech.setName("Noun");
 
+        PartOfSpeech verb_PartOfSpeech = new PartOfSpeech();
+        verb_PartOfSpeech.setLanguageID(2L);
+        verb_PartOfSpeech.setName("Verb");
+
+        WordPartOfSpeech wordPartOfSpeech = new WordPartOfSpeech();
+        wordPartOfSpeech.setWordID(1L);
+        wordPartOfSpeech.setPartOfSpeechID(1L);
+
+        WordPartOfSpeech wordPartOfSpeech1 = new WordPartOfSpeech();
+        wordPartOfSpeech1.setWordID(1L);
+        wordPartOfSpeech1.setPartOfSpeechID(2L);
 
 
 
@@ -79,6 +100,7 @@ public class Seed extends Application {
 
             @Override
             protected Void doInBackground(Void... voids) {
+                /**/
                 profileService.insert(profile);
                 languageService.insert(bulgarianLanguage);
                 languageService.insert(englishLanguage);
@@ -92,7 +114,16 @@ public class Seed extends Application {
                 Word word = wordService.findByID(foreignWordID);
                 translationWordRelationService.createWordRelation(word,wordCreationDTO);
                 translationWordRelationService.createWordRelation(word,wordCreationDTO2);
+
+
+                partOfSpeechService.insert(noun_PartOfSpeech);
+                partOfSpeechService.insert(verb_PartOfSpeech);
+
+                Long insert = wordPartOfSpeechService.insert(wordPartOfSpeech);
+                Long insert1 = wordPartOfSpeechService.insert(wordPartOfSpeech1);
+                String debug=null;
                 return null;
+
             }
 
             @Override

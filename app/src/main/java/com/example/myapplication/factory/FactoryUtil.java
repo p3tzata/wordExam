@@ -4,10 +4,12 @@ import android.app.Application;
 
 import com.example.myapplication.entity.TranslationWordRelation;
 import com.example.myapplication.service.LanguageService;
+import com.example.myapplication.service.PartOfSpeechService;
 import com.example.myapplication.service.ProfileService;
 import com.example.myapplication.service.TranslationService;
 
 import com.example.myapplication.service.TranslationWordRelationService;
+import com.example.myapplication.service.WordPartOfSpeechService;
 import com.example.myapplication.service.WordService;
 
 import org.modelmapper.ModelMapper;
@@ -33,6 +35,16 @@ public class FactoryUtil {
     static public TranslationWordRelationService createTranslationWordRelationService(Application application) {
         return new TranslationWordRelationService(application);
     }
+
+
+    static public PartOfSpeechService createPartOfSpeechService(Application application) {
+        return new PartOfSpeechService(application);
+    }
+
+    static public WordPartOfSpeechService createWordPartOfSpeechService(Application application) {
+        return new WordPartOfSpeechService(application);
+    }
+
 
 
     static public ModelMapper createModelMapper()

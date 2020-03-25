@@ -11,6 +11,8 @@ import com.example.myapplication.repository.TranslationWordRelationRepository;
 
 import org.modelmapper.ModelMapper;
 
+import java.util.List;
+
 
 public class TranslationWordRelationService extends CrudService<TranslationWordRelationRepository, TranslationWordRelation> {
 
@@ -64,12 +66,29 @@ public class TranslationWordRelationService extends CrudService<TranslationWordR
 
     }
 
-    private void deleteNativeTranslation(Word foreignWord,Word word) {
 
 
+    public void deleteNativeTranslation(Word foreignWord,Word nativeWord) {
 
+        TranslationWordRelation byForeignWordIDAndNativeWordID = this.findByForeignWordIDAndNativeWordID(foreignWord.getWordID(), nativeWord.getWordID());
+        super.getRepository().delete(byForeignWordIDAndNativeWordID);
+        List<TranslationWordRelation> byNativeWordID = this.findByNativeWordID(nativeWord.getWordID());
+        if (byNativeWordID.size()==0) {
+            wordService.delete(nativeWord);
+        }
 
     }
+
+
+    public TranslationWordRelation findByForeignWordIDAndNativeWordID(Long foreignWordID, Long nativeWordID){
+        return super.getRepository().findByForeignWordIDAndNativeWordID(foreignWordID,nativeWordID);
+    }
+
+    public List<TranslationWordRelation> findByNativeWordID(Long nativeWordID){
+        return super.getRepository().findByNativeWordID(nativeWordID);
+    }
+
+
 
 
 }

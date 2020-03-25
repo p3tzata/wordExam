@@ -6,6 +6,8 @@ import com.example.myapplication.dao.TranslationWordRelationDao;
 import com.example.myapplication.entity.TranslationWordRelation;
 import com.example.myapplication.entity.dto.ForeignWithNativeWords;
 
+import java.util.List;
+
 
 public class TranslationWordRelationRepository extends CrudRepository<TranslationWordRelationDao, TranslationWordRelation> {
 
@@ -19,6 +21,14 @@ public class TranslationWordRelationRepository extends CrudRepository<Translatio
         return super.getDao().translateFromForeign(foreignWordID);
     }
 
+
+    public TranslationWordRelation findByForeignWordIDAndNativeWordID(Long foreignWordID, Long nativeWordID){
+        return super.getDao().findByForeignWordIDAndNativeWordID(foreignWordID,nativeWordID);
+    }
+
+    public List<TranslationWordRelation> findByNativeWordID(Long nativeWordID){
+        return super.getDao().findByNativeWordID(nativeWordID);
+    }
 
 
 }

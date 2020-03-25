@@ -13,22 +13,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.ListAllDictionary;
 import com.example.myapplication.activity.ListAllWordActivity;
-import com.example.myapplication.activity.MainActivity;
-import com.example.myapplication.adapter.WordListAdapter;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
-import com.example.myapplication.utitliy.MenuUtility;
-import com.example.myapplication.utitliy.Session;
-import com.example.myapplication.utitliy.SessionNameAttribute;
 
 public class UpdateWordMenuActivity extends AppCompatActivity {
 
     ListView mainListMenu;
     TextView menuListItem;
-    String[] mainListMenuOptions = new String[]{"Change Word String", "Translation"};
-    Class<?>[] mainListMenuOptionsNavigate = new Class[]{UpdateWordActivity.class, UpdateWordTranslation.class};
+    String[] mainListMenuOptions = new String[]{"Basics", "Translation"};
+    Class<?>[] mainListMenuOptionsNavigate = new Class[]{UpdateWordBasicActivity.class, UpdateWordTranslationActivity.class};
     Word word;
     private TranslationAndLanguages translationAndLanguages;
     private Long fromLanguageID;

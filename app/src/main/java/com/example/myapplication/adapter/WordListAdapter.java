@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.activity.wordActivity.ShowForeignWordActivity;
 import com.example.myapplication.activity.wordActivity.ShowNativeWordActivity;
-import com.example.myapplication.activity.wordActivity.UpdateWordActivity;
 import com.example.myapplication.activity.wordActivity.UpdateWordMenuActivity;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
