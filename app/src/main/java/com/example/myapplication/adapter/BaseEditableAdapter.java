@@ -1,6 +1,5 @@
 package com.example.myapplication.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,9 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.wordActivity.BaseEditableAppCompatActivity;
-import com.example.myapplication.activity.wordActivity.UpdateWordHelpSentenceActivity;
-import com.example.myapplication.entity.HelpSentence;
+import com.example.myapplication.activity.BaseEditableAppCompatActivity;
 import com.example.myapplication.entity.TextLabelable;
 
 import java.util.List;

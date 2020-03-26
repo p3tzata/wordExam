@@ -1,4 +1,4 @@
-package com.example.myapplication.activity.wordActivity;
+package com.example.myapplication.activity;
 
 public interface EditableAppCompatActivity<T>  {
 

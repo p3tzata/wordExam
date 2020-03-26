@@ -1,21 +1,7 @@
 package com.example.myapplication.adapter;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.PopupMenu;
-import android.widget.TextView;
-
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.myapplication.R;
-import com.example.myapplication.activity.wordActivity.BaseEditableAppCompatActivity;
-import com.example.myapplication.activity.wordActivity.UpdateWordHelpSentenceActivity;
+import com.example.myapplication.activity.BaseEditableAppCompatActivity;
 import com.example.myapplication.entity.HelpSentence;
-
-import java.util.List;
 
 //public class HelpSentenceEditableAdapterTEST extends RecyclerView.Adapter<HelpSentenceEditableAdapterTEST.ItemViewHolder>  {
 public class HelpSentenceEditableAdapter extends BaseEditableAdapter<BaseEditableAppCompatActivity,HelpSentence,BaseEditableAdapter.ItemViewHolder>  {

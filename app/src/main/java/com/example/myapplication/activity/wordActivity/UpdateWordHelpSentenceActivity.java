@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 
+import com.example.myapplication.activity.BaseEditableAppCompatActivity;
 import com.example.myapplication.adapter.HelpSentenceEditableAdapter;
 import com.example.myapplication.entity.HelpSentence;
 import com.example.myapplication.entity.Word;
