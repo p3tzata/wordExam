@@ -13,7 +13,7 @@ import androidx.room.PrimaryKey;
                 @ForeignKey(entity = Word.class, parentColumns = "wordID", childColumns = "wordID")
         }
 )
-public class HelpSentence {
+public class HelpSentence implements TextLabelable {
 
     @PrimaryKey
     private Long helpSentenceID;
@@ -49,5 +49,10 @@ public class HelpSentence {
 
     public void setSentenceString(@NonNull String sentenceString) {
         this.sentenceString = sentenceString;
+    }
+
+    @Override
+    public String getLabelText() {
+        return getSentenceString();
     }
 }

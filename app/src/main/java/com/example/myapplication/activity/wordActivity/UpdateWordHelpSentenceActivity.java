@@ -11,28 +11,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+
 import com.example.myapplication.adapter.HelpSentenceEditableAdapter;
-import com.example.myapplication.adapter.WordTranslateListAdapter;
 import com.example.myapplication.entity.HelpSentence;
 import com.example.myapplication.entity.Word;
-import com.example.myapplication.entity.dto.ForeignWithNativeWords;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
-import com.example.myapplication.entity.dto.WordCreationDTO;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.HelpSentenceService;
-import com.example.myapplication.service.TranslationWordRelationService;
-import com.example.myapplication.utitliy.Session;
-import com.example.myapplication.utitliy.SessionNameAttribute;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class UpdateWordHelpSentenceActivity extends AppCompatActivity {
+//public class UpdateWordHelpSentenceActivity extends AppCompatActivity {
+public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivity<HelpSentence> {
     private HelpSentenceService helpSentenceService;
     private TranslationAndLanguages translationAndLanguages;
     private Long fromLanguageID;
@@ -57,7 +52,7 @@ public class UpdateWordHelpSentenceActivity extends AppCompatActivity {
         fab_newItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callLoginDialog(false,null);
+                callPopUpDialog(false,null);
             }
         });
 
@@ -73,11 +68,8 @@ public class UpdateWordHelpSentenceActivity extends AppCompatActivity {
                 //.setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-/*
-                        if (context instanceof UpdateWordHelpSentenceActivity) {
-                            UpdateWordHelpSentenceActivity context = (UpdateWordHelpSentenceActivity) HelpSentenceEditableAdapter.this.context;
-                            context.deleteItem(selectedItem);
-                        }*/
+
+
                         deleteItem(helpSentence);
 
 
@@ -96,7 +88,7 @@ public class UpdateWordHelpSentenceActivity extends AppCompatActivity {
 
     }
 
-    public void callLoginDialog(boolean isEditMode,HelpSentence helpSentence)
+    public void  callPopUpDialog(boolean isEditMode,HelpSentence helpSentence)
     {
         this.myDialog = new Dialog(this);
         myDialog.setContentView(R.layout.dialog_new_item);
@@ -235,4 +227,9 @@ public class UpdateWordHelpSentenceActivity extends AppCompatActivity {
         GetTasks gt = new GetTasks();
         gt.execute();
     }
+
+
+
+
+
 }
