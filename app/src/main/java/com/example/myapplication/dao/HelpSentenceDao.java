@@ -8,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.myapplication.entity.HelpSentence;
+import com.example.myapplication.entity.Language;
 import com.example.myapplication.entity.Profile;
 
 import java.util.List;
@@ -22,12 +23,16 @@ public abstract class HelpSentenceDao implements CrudDao<HelpSentence> {
     public abstract Integer update(HelpSentence entity);
 
     @Delete
-    public abstract void delete(HelpSentence entity);
+    public abstract Integer delete(HelpSentence entity);
 
     @Query("SELECT * FROM helpSentence p where p.helpSentenceID=:ID")
     abstract public HelpSentence findByID(Long ID);
 
     @Query("SELECT * FROM helpSentence p where p.wordID=:ID")
     abstract public List<HelpSentence> findAllByWordID(Long ID);
+
+
+    @Query("SELECT * FROM helpSentence l order by l.sentenceString")
+    abstract public List<HelpSentence> findAllOrderAlphabetic();
 
 }

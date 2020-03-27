@@ -26,7 +26,7 @@ public abstract class WordPartOfSpeechDao implements CrudDao<WordPartOfSpeech> {
     abstract public  Integer update(WordPartOfSpeech entity);
 
     @Delete
-    abstract public  void delete(WordPartOfSpeech entity);
+    abstract public  Integer delete(WordPartOfSpeech entity);
 
 
     @Query("SELECT * FROM wordpartofspeech t where t.wordPartOfSpeechID=:ID")

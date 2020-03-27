@@ -13,7 +13,7 @@ import com.example.myapplication.entity.Word;
 import java.util.List;
 
 @Dao
-public abstract class WordDao implements NameableCrudDao<Word> {
+public abstract class WordDao implements CrudDao<Word> {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract Long insert(Word entity);
@@ -22,7 +22,7 @@ public abstract class WordDao implements NameableCrudDao<Word> {
     public abstract Integer update(Word entity);
 
     @Delete
-    public abstract void delete(Word entity);
+    public abstract Integer delete(Word entity);
 
     @Query("SELECT * FROM word p where p.wordID=:ID")
     abstract public Word findByID(Long ID);

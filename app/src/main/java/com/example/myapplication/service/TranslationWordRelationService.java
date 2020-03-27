@@ -14,7 +14,7 @@ import org.modelmapper.ModelMapper;
 import java.util.List;
 
 
-public class TranslationWordRelationService extends CrudService<TranslationWordRelationRepository, TranslationWordRelation> {
+public class TranslationWordRelationService extends BaseCrudService<TranslationWordRelationRepository, TranslationWordRelation> {
 
     private WordService wordService;
 

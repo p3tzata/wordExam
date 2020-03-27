@@ -1,4 +1,4 @@
-package com.example.myapplication.adapter;
+package com.example.myapplication.adapter.spinnerAdapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,8 +11,14 @@ import com.example.myapplication.entity.PartOfSpeech;
 
 import java.util.List;
 
-public class partOfSpeechSpinAdapter extends ArrayAdapter<PartOfSpeech> {
+public class PartOfSpeechSpinAdapter extends BaseSpinAdapter<PartOfSpeech> {
 
+    public PartOfSpeechSpinAdapter(Context context, int textViewResourceId, List<PartOfSpeech> values) {
+        super(context, textViewResourceId, values);
+    }
+
+
+    /*
     // Your sent context
     private Context context;
     // Your custom values for the spinner
@@ -50,7 +56,7 @@ public class partOfSpeechSpinAdapter extends ArrayAdapter<PartOfSpeech> {
         label.setTextColor(Color.BLACK);
         // Then you can get the current item using the values array (Users array) and the current position
         // You can NOW reference each method you has created in your bean object (User class)
-        label.setText(values.get(position).getName());
+        label.setText(values.get(position).getLabelText());
 
         // And finally return your dynamic (or custom) view for each spinner item
         return label;
@@ -63,9 +69,9 @@ public class partOfSpeechSpinAdapter extends ArrayAdapter<PartOfSpeech> {
                                 ViewGroup parent) {
         TextView label = (TextView) super.getDropDownView(position, convertView, parent);
         label.setTextColor(Color.BLACK);
-        label.setText(values.get(position).getName());
+        label.setText(values.get(position).getLabelText());
 
         return label;
     }
-
+    */
 }

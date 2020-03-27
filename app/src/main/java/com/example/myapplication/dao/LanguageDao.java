@@ -21,9 +21,9 @@ public abstract class LanguageDao implements NameableCrudDao<Language> {
     abstract public  Integer update(Language entity);
 
     @Delete
-    abstract public  void delete(Language entity);
+    abstract public  Integer delete(Language entity);
 
-    @Override
+
     @Query("SELECT * FROM language l order by l.languageName")
     abstract public List<Language> findAllOrderAlphabetic();
 

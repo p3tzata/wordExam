@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey;
         @Index(unique = true, value = {"languageID","wordFormName"})},
         foreignKeys = {@ForeignKey(entity = Language.class, parentColumns = "languageID", childColumns = "languageID")
                 })
-public class WordForm {
+public class WordForm implements TextLabelable{
 
     @PrimaryKey
     private Long wordFormID;
@@ -49,5 +49,10 @@ public class WordForm {
 
     public void setWordFormName(@NonNull String wordFormName) {
         this.wordFormName = wordFormName;
+    }
+
+    @Override
+    public String getLabelText() {
+        return getWordFormName();
     }
 }

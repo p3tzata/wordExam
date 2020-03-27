@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,15 +13,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 
 import com.example.myapplication.adapter.UpdWordBasicPartOfSpeechListAdapter;
-import com.example.myapplication.adapter.WordFormSpinAdapter;
-import com.example.myapplication.adapter.WordTranslateListAdapter;
-import com.example.myapplication.adapter.partOfSpeechSpinAdapter;
+import com.example.myapplication.adapter.spinnerAdapter.WordFormSpinAdapter;
+import com.example.myapplication.adapter.spinnerAdapter.PartOfSpeechSpinAdapter;
 import com.example.myapplication.entity.PartOfSpeech;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.WordForm;
@@ -64,6 +61,7 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
         this.partOfSpeechService=FactoryUtil.createPartOfSpeechService(getApplication());
         this.wordPartOfSpeechService=FactoryUtil.createWordPartOfSpeechService(getApplication());
         setContentView(R.layout.activity_update_word);
+        getSupportActionBar().setTitle("Basic");
         Intent intent = getIntent();
         this.translationAndLanguages = (TranslationAndLanguages) intent.getSerializableExtra("translationAndLanguages");
         this.fromLanguageID = (Long) intent.getSerializableExtra("translationFromLanguageID");
@@ -213,7 +211,7 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
                 partOfSpeeches.add(0,partOfSpeech);
 
 
-                partOfSpeechSpinAdapter adapter = new partOfSpeechSpinAdapter(UpdateWordBasicActivity.this,
+                PartOfSpeechSpinAdapter adapter = new PartOfSpeechSpinAdapter(UpdateWordBasicActivity.this,
                         //android.R.layout.simple_spinner_item,
                         R.layout.spinner_item,
                         partOfSpeeches);

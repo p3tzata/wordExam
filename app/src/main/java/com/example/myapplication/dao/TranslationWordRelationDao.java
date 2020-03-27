@@ -25,7 +25,7 @@ public abstract class TranslationWordRelationDao implements CrudDao<TranslationW
     abstract public  Integer update(TranslationWordRelation entity);
 
     @Delete
-    abstract public  void delete(TranslationWordRelation entity);
+    abstract public  Integer delete(TranslationWordRelation entity);
 
     @Query("SELECT * FROM translationwordrelation l where l.translationWordRelationID=:ID")
     abstract public TranslationWordRelation findByID(Long ID);

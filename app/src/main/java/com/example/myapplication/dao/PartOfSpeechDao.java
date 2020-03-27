@@ -24,7 +24,7 @@ public abstract class PartOfSpeechDao implements CrudDao<PartOfSpeech> {
     public abstract Integer update(PartOfSpeech entity);
 
     @Delete
-    public abstract void delete(PartOfSpeech entity);
+    public abstract Integer delete(PartOfSpeech entity);
 
     @Query("SELECT * FROM partOfSpeech p where p.languageID=:languageID order by p.name")
     abstract public List<PartOfSpeech> findAllOrderAlphabetic(Long languageID);

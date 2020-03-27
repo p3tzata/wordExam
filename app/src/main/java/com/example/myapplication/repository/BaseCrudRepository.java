@@ -6,11 +6,11 @@ import com.example.myapplication.dao.CrudDao;
 import com.example.myapplication.database.DatabaseClient;
 import com.example.myapplication.database.WordRoomDatabase;
 
-public abstract class CrudRepository<Dao extends CrudDao,T> {
+public abstract class BaseCrudRepository<Dao extends CrudDao,T> {
 
     WordRoomDatabase appDatabase;
     private Dao daoObject;
-    CrudRepository(Application application) {
+    BaseCrudRepository(Application application) {
         appDatabase = DatabaseClient.getInstance(application).getAppDatabase();
     }
 
@@ -39,8 +39,8 @@ public abstract class CrudRepository<Dao extends CrudDao,T> {
        return daoObject.insert(entity);
     }
 
-    public void delete(T entity) {
-        daoObject.delete(entity);
+    public Integer delete(T entity) {
+        return daoObject.delete(entity);
     }
 
 

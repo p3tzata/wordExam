@@ -15,7 +15,7 @@ import com.example.myapplication.entity.dto.TranslationAndLanguages;
 import java.util.List;
 
 @Dao
-public abstract class TranslationDao implements NameableCrudDao<Translation> {
+public abstract class TranslationDao implements CrudDao<Translation> {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract  public  Long insert(Translation entity);
@@ -24,7 +24,7 @@ public abstract class TranslationDao implements NameableCrudDao<Translation> {
     abstract public  Integer update(Translation entity);
 
     @Delete
-    abstract public  void delete(Translation entity);
+    abstract public  Integer delete(Translation entity);
 
     @Query("SELECT * FROM translation t order by t.translationName")
     abstract public List<Translation> findAllOrderAlphabetic();

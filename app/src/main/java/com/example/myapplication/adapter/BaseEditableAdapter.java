@@ -62,7 +62,7 @@ public abstract class BaseEditableAdapter<C extends BaseEditableAppCompatActivit
 
 
 
-    class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView wordItemView;
 
         private ItemViewHolder(View itemView) {
@@ -74,46 +74,37 @@ public abstract class BaseEditableAdapter<C extends BaseEditableAppCompatActivit
         @Override
         public void onClick(View v) {
 
-            PopupMenu popupMenu = new PopupMenu(context, v);
-            popupMenu.inflate(R.menu.popup_crud_menu_update_delete);
-            //adding click listener
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    I selectedItem = mItems.get(getAdapterPosition());
-                    switch (item.getItemId()) {
-                        case R.id.menu_delete:
+            I selectedItem = mItems.get(getAdapterPosition());
+            callShowPopUpMenu(v,selectedItem);
 
-                            callOnDeleteMenuSelected(selectedItem);
-                            /*
-                            if (context instanceof UpdateWordHelpSentenceActivity) {
-                                UpdateWordHelpSentenceActivity context = (UpdateWordHelpSentenceActivity) BaseEditableAdapter.this.context;
-                                context.callDeleteConfirmDialog(selectedItem);
-                            }
-
-                             */
-
-
-
-                            break;
-                        case R.id.menu_update:
-                            callOnUpdateMenuSelected(selectedItem);
-                            /*
-                            if (context instanceof UpdateWordHelpSentenceActivity) {
-                                UpdateWordHelpSentenceActivity context = (UpdateWordHelpSentenceActivity) BaseEditableAdapter.this.context;
-                                context.callPopUpDialog(true,selectedItem);
-                            }
-
-                             */
-
-                    }
-                    return false;
-                }
-            });
-
-            popupMenu.show();
 
         }
+    }
+
+
+    public void callShowPopUpMenu(View v,I selectedItem) {
+        PopupMenu popupMenu = new PopupMenu(context, v);
+        popupMenu.inflate(R.menu.popup_crud_menu_update_delete);
+        //adding click listener
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                //I selectedItem = mItems.get(getAdapterPosition());
+                switch (item.getItemId()) {
+                    case R.id.menu_delete:
+
+                        callOnDeleteMenuSelected(selectedItem);
+
+                        break;
+                    case R.id.menu_update:
+                        callOnUpdateMenuSelected(selectedItem);
+                }
+                return false;
+            }
+        });
+
+        popupMenu.show();
+
     }
 
 

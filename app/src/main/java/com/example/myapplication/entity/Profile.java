@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "profile")
-public class Profile {
+public class Profile implements TextLabelable {
 
     @PrimaryKey
     private Long profileID;
@@ -15,6 +15,8 @@ public class Profile {
 
     public Profile() {
     }
+
+
 
     public Long getProfileID() {
         return profileID;
@@ -38,5 +40,10 @@ public class Profile {
 
     public void setProfileDesc(String profileDesc) {
         this.profileDesc = profileDesc;
+    }
+
+    @Override
+    public String getLabelText() {
+        return getProfileName();
     }
 }

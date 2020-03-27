@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity(tableName = "language")
-public class Language implements Serializable {
+public class Language implements Serializable,TextLabelable {
 
     @PrimaryKey
     private Long languageID;
@@ -40,5 +40,10 @@ public class Language implements Serializable {
 
     public void setDefinitionUrl(String definitionUrl) {
         this.definitionUrl = definitionUrl;
+    }
+
+    @Override
+    public String getLabelText() {
+        return getLanguageName();
     }
 }

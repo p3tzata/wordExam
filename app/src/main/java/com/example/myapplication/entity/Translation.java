@@ -20,7 +20,7 @@ import java.io.Serializable;
             @ForeignKey(entity = Profile.class, parentColumns = "profileID", childColumns = "profileID"),
         }
 )
-public class Translation implements Serializable {
+public class Translation implements Serializable,TextLabelable {
 
     @PrimaryKey
     private Long translationID;
@@ -93,5 +93,10 @@ public class Translation implements Serializable {
 
     public void setForeignLanguageID(@NonNull Long foreignLanguageID) {
         this.foreignLanguageID = foreignLanguageID;
+    }
+
+    @Override
+    public String getLabelText() {
+        return getTranslationName();
     }
 }

@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,12 +41,13 @@ public class UpdateWordTranslationActivity extends AppCompatActivity {
         UpdateWordTranslationActivity updateWordTranslationActivity = this;
 
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_update_word_translation);
         this.translationWordRelationService= FactoryUtil.createTranslationWordRelationService(this.getApplication());
         this.translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
         this.fromLanguageID = (Long) getIntent().getSerializableExtra("translationFromLanguageID");
         this.word = (Word) getIntent().getSerializableExtra("word");
-
+        getSupportActionBar().setTitle("Translation");
         getWords(word);
 
         FloatingActionButton fab_newWord = findViewById(R.id.fab_newItem);
@@ -57,6 +59,16 @@ public class UpdateWordTranslationActivity extends AppCompatActivity {
         });
 
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return true;
+    }
+
 
     private void callLoginDialog()
     {

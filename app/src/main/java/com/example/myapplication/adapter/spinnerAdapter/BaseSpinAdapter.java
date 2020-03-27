@@ -1,4 +1,4 @@
-package com.example.myapplication.adapter;
+package com.example.myapplication.adapter.spinnerAdapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,19 +8,18 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.myapplication.entity.PartOfSpeech;
-import com.example.myapplication.entity.WordForm;
+import com.example.myapplication.entity.TextLabelable;
 
 import java.util.List;
 
-public class WordFormSpinAdapter extends ArrayAdapter<WordForm> {
+public abstract class BaseSpinAdapter<T extends TextLabelable> extends ArrayAdapter<T> {
 
-    // Your sent context
     private Context context;
-    // Your custom values for the spinner
-    private List<WordForm> values;
 
-    public WordFormSpinAdapter(Context context, int textViewResourceId,
-                               List<WordForm> values) {
+    private List<T> values;
+
+    public BaseSpinAdapter(Context context, int textViewResourceId,
+                                   List<T> values) {
         super(context, textViewResourceId, values);
         this.context = context;
         this.values = values;
@@ -32,7 +31,7 @@ public class WordFormSpinAdapter extends ArrayAdapter<WordForm> {
     }
 
     @Override
-    public WordForm getItem(int position) {
+    public T getItem(int position) {
         return values.get(position);
     }
 
@@ -51,7 +50,7 @@ public class WordFormSpinAdapter extends ArrayAdapter<WordForm> {
         label.setTextColor(Color.BLACK);
         // Then you can get the current item using the values array (Users array) and the current position
         // You can NOW reference each method you has created in your bean object (User class)
-        label.setText(values.get(position).getWordFormName());
+        label.setText(values.get(position).getLabelText());
 
         // And finally return your dynamic (or custom) view for each spinner item
         return label;
@@ -64,9 +63,11 @@ public class WordFormSpinAdapter extends ArrayAdapter<WordForm> {
                                 ViewGroup parent) {
         TextView label = (TextView) super.getDropDownView(position, convertView, parent);
         label.setTextColor(Color.BLACK);
-        label.setText(values.get(position).getWordFormName());
+        label.setText(values.get(position).getLabelText());
 
         return label;
     }
+
+
 
 }

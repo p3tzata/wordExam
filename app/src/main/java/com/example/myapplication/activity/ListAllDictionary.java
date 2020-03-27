@@ -28,6 +28,8 @@ import java.util.List;
 
 public class ListAllDictionary extends AppCompatActivity {
 
+
+
     TranslationService translationService;
     List<TranslationAndLanguages> allTranslationByProfile;
     private Menu mOptionsMenu;

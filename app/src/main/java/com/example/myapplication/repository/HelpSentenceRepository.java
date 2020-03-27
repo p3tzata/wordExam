@@ -3,13 +3,11 @@ package com.example.myapplication.repository;
 import android.app.Application;
 
 import com.example.myapplication.dao.HelpSentenceDao;
-import com.example.myapplication.dao.ProfileDao;
 import com.example.myapplication.entity.HelpSentence;
-import com.example.myapplication.entity.Profile;
 
 import java.util.List;
 
-public class HelpSentenceRepository extends CrudRepository<HelpSentenceDao, HelpSentence> {
+public class HelpSentenceRepository extends BaseCrudRepository<HelpSentenceDao, HelpSentence> {
 
     public HelpSentenceRepository(Application application) {
         super(application);

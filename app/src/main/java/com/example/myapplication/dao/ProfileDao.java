@@ -22,7 +22,7 @@ public abstract class ProfileDao implements NameableCrudDao<Profile> {
     public abstract Integer update(Profile entity);
 
     @Delete
-    public abstract void delete(Profile entity);
+    public abstract Integer delete(Profile entity);
 
     @Query("SELECT * FROM profile p order by p.profileName")
     abstract public List<Profile> findAllOrderAlphabetic();

@@ -22,7 +22,7 @@ public abstract class WordFormDao implements CrudDao<WordForm> {
     public abstract Integer update(WordForm entity);
 
     @Delete
-    public abstract void delete(WordForm entity);
+    public abstract Integer delete(WordForm entity);
 
     @Query("SELECT * FROM WordForm p where p.wordFormID=:ID")
     abstract public WordForm findByID(Long ID);

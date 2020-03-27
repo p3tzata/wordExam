@@ -13,7 +13,7 @@ import androidx.room.PrimaryKey;
                 @ForeignKey(entity = Language.class, parentColumns = "languageID", childColumns = "languageID"),
         }
 )
-public class PartOfSpeech {
+public class PartOfSpeech implements TextLabelable {
 
     @PrimaryKey
     private Long partOfSpeechID;
@@ -71,5 +71,10 @@ public class PartOfSpeech {
 
     public void setExample(String example) {
         this.example = example;
+    }
+
+    @Override
+    public String getLabelText() {
+        return getName();
     }
 }

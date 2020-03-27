@@ -9,7 +9,7 @@ import com.example.myapplication.entity.dto.ForeignWithNativeWords;
 import java.util.List;
 
 
-public class TranslationWordRelationRepository extends CrudRepository<TranslationWordRelationDao, TranslationWordRelation> {
+public class TranslationWordRelationRepository extends BaseCrudRepository<TranslationWordRelationDao, TranslationWordRelation> {
 
     public TranslationWordRelationRepository(Application application) {
         super(application);

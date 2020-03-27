@@ -1,6 +1,7 @@
 package com.example.myapplication.utitliy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.configureActivity.ConfigureMenuActivity;
 
 public class MenuUtility {
 
@@ -62,8 +64,10 @@ public class MenuUtility {
             case R.id.item1:
                 Toast.makeText(activity.getApplicationContext(),"Item 1 Selected",Toast.LENGTH_LONG).show();
                 return true;
-            case R.id.item2:
-                Toast.makeText(activity.getApplicationContext(),"Item 2 Selected",Toast.LENGTH_LONG).show();
+            case R.id.item_Configure:
+                Intent activity2Intent = new Intent(activity, ConfigureMenuActivity.class);
+                activity.startActivity(activity2Intent);
+
                 return true;
             case R.id.item_editMode:
 

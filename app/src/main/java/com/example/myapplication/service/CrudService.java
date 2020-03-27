@@ -1,39 +1,16 @@
 package com.example.myapplication.service;
 
-import android.app.Application;
+public interface CrudService<T>  {
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
+    //public R getRepository();
 
-import com.example.myapplication.repository.CrudRepository;
+    public Long insert(T entity);
 
-public abstract class CrudService<R extends CrudRepository,T> extends AndroidViewModel {
+    public Integer update(T entity);
 
-    private R repository;
+    public Integer delete(T entity);
 
-    public CrudService(@NonNull Application application, R repository) {
-        super(application);
-        this.repository=repository;
-    }
-
-    public R getRepository() {
-        return repository;
-    }
-
-    public Long insert(T entity) {
-        return repository.inset(entity);
-    }
-
-    public Integer update(T entity) {return repository.update(entity);}
-
-    public void delete(T entity) {repository.delete(entity);}
-
-    public T findByID(Long ID) {
-        return (T) repository.findByID(ID);
-    }
-
-
-
+    public T findByID(Long ID);
 
 
 }

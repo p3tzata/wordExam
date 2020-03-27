@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.wordOldService = new ViewModelProvider(this).get(WordOldService.class);
         setContentView(R.layout.activity_main);
-
+        getSupportActionBar().setTitle("Main");
         mainListMenu=(ListView)findViewById(R.id.mainListMenu);
         menuListItem=(TextView)findViewById(R.id.menuListItem);
 
@@ -70,20 +70,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /* */
-
-
-/*
-        final Button bnt_Dictionaries = findViewById(R.id.btn_listAllDictinary);
-        bnt_Dictionaries.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-
-                Intent activity2Intent = new Intent(getApplicationContext(), ListAllDictionary.class);
-                startActivity(activity2Intent);
-            }
-        });
-
-*/
 
         Seed seed = new Seed();
         //seed.seedDB();

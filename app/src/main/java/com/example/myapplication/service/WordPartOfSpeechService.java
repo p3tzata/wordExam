@@ -1,25 +1,16 @@
 package com.example.myapplication.service;
 
 import android.app.Application;
-import android.provider.Telephony;
 
 import com.example.myapplication.entity.PartOfSpeech;
-import com.example.myapplication.entity.TranslationWordRelation;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.WordPartOfSpeech;
-import com.example.myapplication.entity.dto.ForeignWithNativeWords;
 import com.example.myapplication.entity.dto.ForeignWordWithDefPartOfSpeech;
-import com.example.myapplication.entity.dto.WordCreationDTO;
 import com.example.myapplication.factory.FactoryUtil;
-import com.example.myapplication.repository.TranslationWordRelationRepository;
 import com.example.myapplication.repository.WordPartOfSpeechRepository;
 
-import org.modelmapper.ModelMapper;
 
-import java.util.List;
-
-
-public class WordPartOfSpeechService extends CrudService<WordPartOfSpeechRepository, WordPartOfSpeech> {
+public class WordPartOfSpeechService extends BaseCrudService<WordPartOfSpeechRepository, WordPartOfSpeech> {
 
     private WordService wordService;
 

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 
 import com.example.myapplication.activity.BaseEditableAppCompatActivity;
+import com.example.myapplication.activity.configureActivity.ConfigLanguageActivity;
 import com.example.myapplication.adapter.HelpSentenceEditableAdapter;
+import com.example.myapplication.adapter.configure.LanguageEditableAdapter;
 import com.example.myapplication.entity.HelpSentence;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
@@ -27,9 +30,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-//public class UpdateWordHelpSentenceActivity extends AppCompatActivity {
-public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivity<HelpSentence> {
-    private HelpSentenceService helpSentenceService;
+
+public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivity<HelpSentence,HelpSentenceService,
+        UpdateWordHelpSentenceActivity,HelpSentenceEditableAdapter> {
+
+
     private TranslationAndLanguages translationAndLanguages;
     private Long fromLanguageID;
     private Word word;
@@ -41,13 +46,18 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
         UpdateWordHelpSentenceActivity updateWordTranslationActivity = this;
 
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_update_word_translation);
-        this.helpSentenceService= FactoryUtil.createHelpSentenceService(this.getApplication());
+        HelpSentenceEditableAdapter adapter = new HelpSentenceEditableAdapter(UpdateWordHelpSentenceActivity.this);
+        super.setAdapter(adapter);
+        super.setContext(UpdateWordHelpSentenceActivity.this);
+        super.setItemService(FactoryUtil.createHelpSentenceService(getApplication()));
+
         this.translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
         this.fromLanguageID = (Long) getIntent().getSerializableExtra("translationFromLanguageID");
         this.word = (Word) getIntent().getSerializableExtra("word");
 
-        getItems(word);
+        getItems();
         getSupportActionBar().setTitle(word.getWordString()+" Sentences");
         FloatingActionButton fab_newItem = findViewById(R.id.fab_newItem);
         fab_newItem.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +67,16 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return true;
     }
 
     public void callDeleteConfirmDialog(HelpSentence helpSentence) {
@@ -89,8 +109,7 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
 
     }
 
-    public void  callPopUpDialog(boolean isEditMode,HelpSentence helpSentence)
-    {
+    public void  callPopUpDialog(boolean isEditMode,HelpSentence helpSentence){
         this.myDialog = new Dialog(this);
         myDialog.setContentView(R.layout.dialog_new_item);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
@@ -132,105 +151,10 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
     }
 
 
-    private void createItem(HelpSentence item) {
-        class GetTasks extends AsyncTask<Void, Void, Void> {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-               helpSentenceService.insert(item);
-               return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void voiD) {
-                super.onPostExecute(voiD);
-                getItems(word);
-
-            }
-        }
-
-        GetTasks gt = new GetTasks();
-        gt.execute();
+    @Override
+    public List<HelpSentence> getListOfItems() {
+        //List<HelpSentence> helpSentenceServiceAllByWordID = getItemService().findAllByWordID(word.getWordID());
+        List<HelpSentence> helpSentenceServiceAllByWordID = getItemService().findAllOrderAlphabetic(word.getWordID());
+        return helpSentenceServiceAllByWordID;
     }
-
-
-    private void updateItem(HelpSentence item) {
-        class GetTasks extends AsyncTask<Void, Void, Void> {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                helpSentenceService.update(item);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void voiD) {
-                super.onPostExecute(voiD);
-                getItems(word);
-
-            }
-        }
-
-        GetTasks gt = new GetTasks();
-        gt.execute();
-    }
-
-
-
-
-    private void getItems(Word word) {
-        class GetTasks extends AsyncTask<Void, Void, List<HelpSentence>> {
-
-            @Override
-            protected List<HelpSentence> doInBackground(Void... voids) {
-
-                List<HelpSentence> helpSentenceServiceAllByWordID = helpSentenceService.findAllByWordID(word.getWordID());
-                return helpSentenceServiceAllByWordID;
-
-
-            }
-
-            @Override
-            protected void onPostExecute(List<HelpSentence> items) {
-                super.onPostExecute(items);
-
-                HelpSentenceEditableAdapter adapter = new HelpSentenceEditableAdapter(UpdateWordHelpSentenceActivity.this);
-
-                adapter.setItems(items);
-                RecyclerView recyclerView = findViewById(R.id.recyclerview);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                recyclerView.setAdapter(adapter);
-            }
-        }
-
-        GetTasks gt = new GetTasks();
-        gt.execute();
-    }
-
-
-
-    public void deleteItem(HelpSentence item) {
-        class GetTasks extends AsyncTask<Void, Void, Void> {
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                helpSentenceService.delete(item);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void voiD) {
-                Toast.makeText(UpdateWordHelpSentenceActivity.this.getApplicationContext(),"Successfully delete",Toast.LENGTH_SHORT).show();
-                getItems(UpdateWordHelpSentenceActivity.this.word);
-            }
-        }
-
-        GetTasks gt = new GetTasks();
-        gt.execute();
-    }
-
-
-
-
-
 }
