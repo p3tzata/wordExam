@@ -11,6 +11,7 @@ import androidx.room.Update;
 import com.example.myapplication.entity.Language;
 import com.example.myapplication.entity.TranslationWordRelation;
 import com.example.myapplication.entity.dto.ForeignWithNativeWords;
+import com.example.myapplication.entity.dto.NativeWithForeignWords;
 
 
 import java.util.List;
@@ -33,6 +34,10 @@ public abstract class TranslationWordRelationDao implements CrudDao<TranslationW
     @Transaction
     @Query("SELECT * FROM word l where l.wordID=:foreignWordID")
     abstract public ForeignWithNativeWords translateFromForeign(Long foreignWordID);
+
+    @Transaction
+    @Query("SELECT * FROM word l where l.wordID=:nativeWordID")
+    abstract public NativeWithForeignWords translateFromNative(Long nativeWordID);
 
 
     @Query("SELECT * FROM translationwordrelation l where l.foreignWordID=:foreignWordID" +

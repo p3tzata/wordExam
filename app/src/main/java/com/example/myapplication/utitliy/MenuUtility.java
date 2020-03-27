@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.ChangeSelectedProfile;
 import com.example.myapplication.activity.configureActivity.ConfigureMenuActivity;
 
 public class MenuUtility {
@@ -61,12 +62,18 @@ public class MenuUtility {
         int id = menuItem.getItemId();
 
         switch (id){
-            case R.id.item1:
-                Toast.makeText(activity.getApplicationContext(),"Item 1 Selected",Toast.LENGTH_LONG).show();
+            case R.id.item_changeProfile:
+                Intent ProfileSelectIntent = new Intent(activity, ChangeSelectedProfile.class);
+                activity.startActivity(ProfileSelectIntent);
                 return true;
             case R.id.item_Configure:
-                Intent activity2Intent = new Intent(activity, ConfigureMenuActivity.class);
-                activity.startActivity(activity2Intent);
+
+                if (MenuUtility.isEditMode(activity)) {
+                    Intent activity2Intent = new Intent(activity, ConfigureMenuActivity.class);
+                    activity.startActivity(activity2Intent);
+                } else {
+                    Toast.makeText(activity, "Please select EDIT mode", Toast.LENGTH_LONG).show();
+                }
 
                 return true;
             case R.id.item_editMode:

@@ -9,7 +9,8 @@ import androidx.room.PrimaryKey;
 
 @Entity(indices = {@Index("languageID"),
         @Index(unique = true, value = {"languageID","wordFormName"})},
-        foreignKeys = {@ForeignKey(entity = Language.class, parentColumns = "languageID", childColumns = "languageID")
+        foreignKeys = {
+           @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = Language.class, parentColumns = "languageID", childColumns = "languageID")
                 })
 public class WordForm implements TextLabelable{
 

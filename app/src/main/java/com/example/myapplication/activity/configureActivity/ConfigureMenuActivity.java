@@ -10,19 +10,27 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.MainActivity;
+import com.example.myapplication.utitliy.Session;
+import com.example.myapplication.utitliy.SessionNameAttribute;
 
 public class ConfigureMenuActivity extends AppCompatActivity {
 
     ListView mainListMenu;
     TextView menuListItem;
-    String[] mainListMenuOptions = new String[]{"Profile",
+    String[] mainListMenuOptions = new String[]{
+            "Profile",
             "Language",
             "Translation"};
-    Class<?>[] mainListMenuOptionsNavigate = new Class[]{ConfigProfileActivity.class,
+    Class<?>[] mainListMenuOptionsNavigate = new Class[]{
+            ConfigProfileActivity.class,
             ConfigLanguageActivity.class,
+            ConfigTranslationActivity.class};
+
+    Class<?>[] mainListMenuNeedProfile = new Class[]{
             ConfigTranslationActivity.class};
 
     @Override
@@ -39,6 +47,20 @@ public class ConfigureMenuActivity extends AppCompatActivity {
         mainListMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                //Session.setLongAttribute(getApplicationContext(), SessionNameAttribute.ProfileID, -1L);
+                long profileID = Session.getLongAttribute(getApplicationContext(), SessionNameAttribute.ProfileID, -1L);
+
+                for(int i=0;i<mainListMenuNeedProfile.length;i++) {
+                    if (mainListMenuNeedProfile[i].equals(mainListMenuOptionsNavigate[position])
+                    && profileID<=0L) {
+                        Toast.makeText(getApplicationContext(), "Please select Profile", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+
+
+
+
 
                 Intent activity2Intent = new Intent(getApplicationContext(), mainListMenuOptionsNavigate[position]);
                 startActivity(activity2Intent);

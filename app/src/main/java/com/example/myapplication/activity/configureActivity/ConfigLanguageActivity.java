@@ -13,6 +13,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.activity.BaseEditableAppCompatActivity;
 import com.example.myapplication.adapter.configure.LanguageEditableAdapter;
 import com.example.myapplication.entity.Language;
+import com.example.myapplication.entity.Profile;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.LanguageService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,14 +40,14 @@ public class ConfigLanguageActivity extends BaseEditableAppCompatActivity<Langua
         fab_newItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callPopUpDialog(false,null);
+                handlerCreateUpdateClick(false,null);
             }
         });
 
     }
 
     @Override
-    public void callDeleteConfirmDialog(Language selectedItem) {
+    public void handlerDeleteClick(Language selectedItem) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(selectedItem.getLabelText());
@@ -72,7 +73,7 @@ public class ConfigLanguageActivity extends BaseEditableAppCompatActivity<Langua
     }
 
     @Override
-    public void callPopUpDialog(boolean isEditMode, Language selectedItem) {
+    public void handlerCreateUpdateClick(boolean isEditMode, Language selectedItem) {
         this.myDialog = new Dialog(this);
         myDialog.setContentView(R.layout.dialog_language_edit);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
@@ -116,4 +117,10 @@ public class ConfigLanguageActivity extends BaseEditableAppCompatActivity<Langua
         //myDialog.setCancelable(false);
         myDialog.show();
     }
+
+    @Override
+    public void recyclerViewOnClickHandler(View v, Language selectedItem) {
+            callShowCrudMenu(v,selectedItem);
+    }
+
 }

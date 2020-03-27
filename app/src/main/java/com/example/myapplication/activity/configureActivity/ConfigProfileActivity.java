@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.BaseEditableAppCompatActivity;
+import com.example.myapplication.activity.MainActivity;
 import com.example.myapplication.activity.wordActivity.UpdateWordHelpSentenceActivity;
 import com.example.myapplication.adapter.HelpSentenceEditableAdapter;
 import com.example.myapplication.adapter.configure.LanguageEditableAdapter;
@@ -41,6 +42,7 @@ public class ConfigProfileActivity extends
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config_profile);
         super.setItemService(FactoryUtil.createProfileService(getApplication()));
@@ -54,7 +56,7 @@ public class ConfigProfileActivity extends
         fab_newItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callPopUpDialog(false,null);
+                handlerCreateUpdateClick(false,null);
             }
         });
 
@@ -71,7 +73,7 @@ public class ConfigProfileActivity extends
         return true;
     }
 
-    public void callDeleteConfirmDialog(Profile selectedItem) {
+    public void handlerDeleteClick(Profile selectedItem) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(selectedItem.getLabelText());
@@ -103,7 +105,7 @@ public class ConfigProfileActivity extends
 
 
     @Override
-    public void callPopUpDialog(boolean isEditMode, Profile selectedItem) {
+    public void handlerCreateUpdateClick(boolean isEditMode, Profile selectedItem) {
         this.myDialog = new Dialog(this);
         myDialog.setContentView(R.layout.dialog_new_item);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
@@ -144,4 +146,8 @@ public class ConfigProfileActivity extends
     }
 
 
+    @Override
+    public void recyclerViewOnClickHandler(View v, Profile selectedItem) {
+        callShowCrudMenu(v,selectedItem);
+    }
 }

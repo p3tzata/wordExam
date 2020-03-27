@@ -1,34 +1,31 @@
 package com.example.myapplication.adapter;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupMenu;
 import android.widget.TextView;
-
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.BaseEditableAppCompatActivity;
+import com.example.myapplication.activity.BaseListableAppCompatActivity;
 import com.example.myapplication.entity.TextLabelable;
 
 import java.util.List;
 
-public abstract class BaseEditableAdapter<C extends BaseEditableAppCompatActivity,I extends TextLabelable,V extends BaseEditableAdapter.ItemViewHolder>  extends RecyclerView.Adapter<BaseEditableAdapter<C,I, V>.ItemViewHolder> {
+public abstract class BaseRecycleAdapter<C extends BaseListableAppCompatActivity,I extends TextLabelable,V extends BaseRecycleAdapter.ItemViewHolder>  extends RecyclerView.Adapter<BaseRecycleAdapter<C,I, V>.ItemViewHolder> {
+
+   // abstract public void callOnClick(View v,I selectedItem);
 
     private final LayoutInflater mInflater;
     protected C context;
     private List<I> mItems;
 
-    public BaseEditableAdapter(C context) {
+    public BaseRecycleAdapter(C context) {
         mInflater = LayoutInflater.from(context);
         this.context=context;
     }
 
-    protected abstract void callOnDeleteMenuSelected(I selectedItem);
-    protected abstract void callOnUpdateMenuSelected(I selectedItem);
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,7 +35,7 @@ public abstract class BaseEditableAdapter<C extends BaseEditableAppCompatActivit
     }
 
     @Override
-    public void onBindViewHolder(BaseEditableAdapter.ItemViewHolder holder, int position) {
+    public void onBindViewHolder(BaseRecycleAdapter.ItemViewHolder holder, int position) {
         if (mItems != null) {
             I current = mItems.get(position);
             holder.wordItemView.setText(current.getLabelText());
@@ -75,37 +72,16 @@ public abstract class BaseEditableAdapter<C extends BaseEditableAppCompatActivit
         public void onClick(View v) {
 
             I selectedItem = mItems.get(getAdapterPosition());
-            callShowPopUpMenu(v,selectedItem);
+            //callOnClick(v,selectedItem);
+            context.recyclerViewOnClickHandler(v,selectedItem);
 
 
         }
     }
 
 
-    public void callShowPopUpMenu(View v,I selectedItem) {
-        PopupMenu popupMenu = new PopupMenu(context, v);
-        popupMenu.inflate(R.menu.popup_crud_menu_update_delete);
-        //adding click listener
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                //I selectedItem = mItems.get(getAdapterPosition());
-                switch (item.getItemId()) {
-                    case R.id.menu_delete:
 
-                        callOnDeleteMenuSelected(selectedItem);
 
-                        break;
-                    case R.id.menu_update:
-                        callOnUpdateMenuSelected(selectedItem);
-                }
-                return false;
-            }
-        });
-
-        popupMenu.show();
-
-    }
 
 
 

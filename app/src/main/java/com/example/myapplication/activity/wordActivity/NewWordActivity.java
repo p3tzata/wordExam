@@ -13,11 +13,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.MainActivity;
 import com.example.myapplication.entity.Word;
-import com.example.myapplication.entity.WordOld;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
-import com.example.myapplication.service.WordOldService;
 import com.example.myapplication.service.WordService;
 
 public class NewWordActivity extends AppCompatActivity {

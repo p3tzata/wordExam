@@ -8,7 +8,7 @@ import com.example.myapplication.repository.WordRepository;
 import java.util.List;
 
 
-public class WordService extends BaseCrudService<WordRepository, Word> {
+public class WordService extends BaseCrudService<WordRepository, Word> implements NameableCrudService<Word> {
 
     public WordService(Application application) {
         super(application,new WordRepository(application));
@@ -27,5 +27,8 @@ public class WordService extends BaseCrudService<WordRepository, Word> {
     }
 
 
-
+    @Override
+    public List<Word> findAllOrderAlphabetic(Object... objects) {
+        return null;
+    }
 }

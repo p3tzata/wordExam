@@ -12,22 +12,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.seed.Seed;
-import com.example.myapplication.service.WordOldService;
 import com.example.myapplication.utitliy.MenuUtility;
 import com.example.myapplication.utitliy.Session;
 import com.example.myapplication.utitliy.SessionNameAttribute;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    private WordOldService wordOldService;
+
     private Menu mOptionsMenu;
 
     ListView mainListMenu;
@@ -37,8 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
+
         super.onCreate(savedInstanceState);
-        this.wordOldService = new ViewModelProvider(this).get(WordOldService.class);
+
         setContentView(R.layout.activity_main);
         getSupportActionBar().setTitle("Main");
         mainListMenu=(ListView)findViewById(R.id.mainListMenu);
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        Seed seed = new Seed();
+        Seed seed = new Seed(this.getApplication());
         //seed.seedDB();
 
 
@@ -96,31 +97,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
        return MenuUtility.onOptionsItemSelected(this,item);
     }
-
-    private void deleteAllWords() {
-        class deleteAll extends AsyncTask<Void, Void, Integer> {
-
-            @Override
-            protected Integer doInBackground(Void... voids) {
-                 return wordOldService.deleteAll();
-
-            }
-
-            @Override
-            protected void onPostExecute(Integer result) {
-                super.onPostExecute(result);
-                if (result>0) {
-                    Toast.makeText(getApplicationContext(), result + " Words deleted.", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Words can not be deleted...", Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-
-        deleteAll gt = new deleteAll();
-        gt.execute();
-    }
-
 
 
 

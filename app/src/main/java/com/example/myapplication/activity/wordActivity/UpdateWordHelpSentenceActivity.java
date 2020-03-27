@@ -63,7 +63,7 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
         fab_newItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callPopUpDialog(false,null);
+                handlerCreateUpdateClick(false,null);
             }
         });
 
@@ -79,7 +79,7 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
         return true;
     }
 
-    public void callDeleteConfirmDialog(HelpSentence helpSentence) {
+    public void handlerDeleteClick(HelpSentence helpSentence) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(helpSentence.getSentenceString());
@@ -109,7 +109,7 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
 
     }
 
-    public void  callPopUpDialog(boolean isEditMode,HelpSentence helpSentence){
+    public void  handlerCreateUpdateClick(boolean isEditMode,HelpSentence helpSentence){
         this.myDialog = new Dialog(this);
         myDialog.setContentView(R.layout.dialog_new_item);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
@@ -156,5 +156,10 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
         //List<HelpSentence> helpSentenceServiceAllByWordID = getItemService().findAllByWordID(word.getWordID());
         List<HelpSentence> helpSentenceServiceAllByWordID = getItemService().findAllOrderAlphabetic(word.getWordID());
         return helpSentenceServiceAllByWordID;
+    }
+
+    @Override
+    public void recyclerViewOnClickHandler(View v, HelpSentence selectedItem) {
+        callShowCrudMenu(v,selectedItem);
     }
 }

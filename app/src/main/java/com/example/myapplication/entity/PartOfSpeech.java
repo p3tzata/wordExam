@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey;
                 @Index(value = "languageID"),
                 @Index(unique = true,value = {"name","languageID"}) },
         foreignKeys = {
-                @ForeignKey(entity = Language.class, parentColumns = "languageID", childColumns = "languageID"),
+                @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = Language.class, parentColumns = "languageID", childColumns = "languageID"),
         }
 )
 public class PartOfSpeech implements TextLabelable {

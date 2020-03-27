@@ -1,28 +1,28 @@
 package com.example.myapplication.activity;
 
-import android.os.AsyncTask;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myapplication.R;
-import com.example.myapplication.adapter.BaseEditableAdapter;
-import com.example.myapplication.service.BaseNameCrudService;
+import com.example.myapplication.adapter.BaseRecycleAdapter;
+import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.NameableCrudService;
-
-import java.util.List;
+import com.example.myapplication.utitliy.DbExecutor;
+import com.example.myapplication.utitliy.DbExecutorImp;
 
 public abstract class BaseEditableAppCompatActivity<T,
         S extends NameableCrudService<T>,
         C extends BaseEditableAppCompatActivity,
-        A extends BaseEditableAdapter>
-        extends AppCompatActivity implements EditableAppCompatActivity<T> {
-
+        A extends BaseRecycleAdapter>
+ //       extends AppCompatActivity implements EditableAppCompatActivity<T> {
+        extends BaseListableAppCompatActivity<T,S,C,A> implements EditableAppCompatActivity<T> {
+/*
     private S itemService;
     private C context;
     private A adapter;
+
 
     public void setItemService(S itemService) {
         this.itemService = itemService;
@@ -56,98 +56,131 @@ public abstract class BaseEditableAppCompatActivity<T,
     }
 
     protected void getItems() {
-        class GetTasks extends AsyncTask<Void, Void, List<T>> {
 
+        DbExecutorImp<List<T>> dbExecutor = FactoryUtil.<List<T>>createDbExecutor();
+        dbExecutor.execute_(new DbExecutor<List<T>>() {
             @Override
-            protected List<T> doInBackground(Void... voids) {
-              return getListOfItems();
+            public List<T> doInBackground() {
+                return getListOfItems();
             }
 
             @Override
-            protected void onPostExecute(List<T> items) {
-                super.onPostExecute(items);
-
-
-
-                adapter.setItems(items);
+            public void onPostExecute(List<T> item) {
+                adapter.setItems(item);
                 RecyclerView recyclerView = findViewById(R.id.recyclerview);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 recyclerView.setAdapter(adapter);
             }
-        }
+        });
 
-        GetTasks gt = new GetTasks();
-        gt.execute();
+    }
+*/
+
+
+    public void callShowCrudMenu(View v, T selectedItem) {
+        PopupMenu popupMenu = new PopupMenu(getContext(), v);
+        popupMenu.inflate(R.menu.popup_crud_menu_update_delete);
+        //adding click listener
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                //I selectedItem = mItems.get(getAdapterPosition());
+                switch (item.getItemId()) {
+                    case R.id.menu_delete:
+
+                        getContext().handlerDeleteClick(selectedItem);
+
+                        break;
+                    case R.id.menu_update:
+                        getContext().handlerCreateUpdateClick(true,selectedItem);
+
+                }
+                return false;
+            }
+        });
+
+        popupMenu.show();
+
     }
 
-    public void updateItem(T item) {
-        class GetTasks extends AsyncTask<Void, Void, Integer> {
 
+
+
+
+
+    public void updateItem(T item) {
+
+        DbExecutorImp<Integer> dbExecutor = FactoryUtil.<Integer>createDbExecutor();
+        dbExecutor.execute_(new DbExecutor<Integer>() {
             @Override
-            protected Integer doInBackground(Void... voids) {
-                Integer updateCount = itemService.update(item);
+            public Integer doInBackground() {
+                Integer updateCount = getItemService().update(item);
                 return updateCount;
             }
 
             @Override
-            protected void onPostExecute(Integer updatedCount) {
-                super.onPostExecute(updatedCount);
-                if (updatedCount==1) {
-                    Toast.makeText(context, "Successfully Updated", Toast.LENGTH_SHORT).show();
+            public void onPostExecute(Integer item) {
+                if (item==1) {
+                    Toast.makeText(getContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
                 }
                 getItems();
-
             }
-        }
+        });
 
-        GetTasks gt = new GetTasks();
-        gt.execute();
+
     }
 
     protected void deleteItem(T item) {
-        class GetTasks extends AsyncTask<Void, Void, Integer> {
 
+        DbExecutorImp<Integer> dbExecutor = FactoryUtil.<Integer>createDbExecutor();
+        dbExecutor.execute_(new DbExecutor<Integer>() {
             @Override
-            protected Integer doInBackground(Void... voids) {
-                Integer deleteCount = itemService.delete(item);
+            public Integer doInBackground() {
+                Integer deleteCount=0;
+                String errorMsg=null;
+                try {
+                    deleteCount = getItemService().delete(item);
+                } catch (Exception e){
+                  errorMsg=e.getMessage();
+                }
+
+
                 return deleteCount;
             }
 
             @Override
-            protected void onPostExecute(Integer deleteCount) {
-                if (deleteCount>0) {
-                    Toast.makeText(context, "Successfully delete", Toast.LENGTH_SHORT).show();
-                }
+            public void onPostExecute(Integer item) {
+                if (item>0) {
+                    Toast.makeText(getContext(), "Successfully delete", Toast.LENGTH_SHORT).show();
+                } else {
+
+                        Toast.makeText(getContext(), "Something went wrong: ", Toast.LENGTH_SHORT).show();
+                 }
                 getItems();
             }
-        }
+        });
 
-        GetTasks gt = new GetTasks();
-        gt.execute();
     }
 
     public void createItem(T item) {
-        class GetTasks extends AsyncTask<Void, Void, Long> {
 
+        DbExecutorImp<Long> dbExecutor = FactoryUtil.<Long>createDbExecutor();
+        dbExecutor.execute_(new DbExecutor<Long>() {
             @Override
-            protected Long doInBackground(Void... voids) {
-                Long insertedID = itemService.insert(item);
+            public Long doInBackground() {
+                Long insertedID = getItemService().insert(item);
                 return insertedID;
             }
 
             @Override
-            protected void onPostExecute(Long insertedID) {
-                super.onPostExecute(insertedID);
-                if (insertedID>0L) {
-                    Toast.makeText(context, "Successfully Inserted", Toast.LENGTH_SHORT).show();
+            public void onPostExecute(Long item) {
+                if (item>0L) {
+                    Toast.makeText(getContext(), "Successfully Inserted", Toast.LENGTH_SHORT).show();
                 }
                 getItems();
-
             }
-        }
+        });
 
-        GetTasks gt = new GetTasks();
-        gt.execute();
-    }
+       }
 
 }

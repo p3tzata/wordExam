@@ -8,8 +8,9 @@ import androidx.room.PrimaryKey;
 
 @Entity(indices = {@Index(value = "foreignWordID"), @Index(value = "nativeWordID"),
                    @Index(unique = true, value = {"foreignWordID","nativeWordID"}) },
-        foreignKeys = {@ForeignKey(entity = Word.class, parentColumns = "wordID", childColumns = "foreignWordID"),
-                @ForeignKey(entity = Word.class, parentColumns = "wordID", childColumns = "nativeWordID") })
+        foreignKeys = {
+                @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = Word.class, parentColumns = "wordID", childColumns = "foreignWordID"),
+                @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = Word.class, parentColumns = "wordID", childColumns = "nativeWordID") })
 public class TranslationWordRelation {
 
     @PrimaryKey

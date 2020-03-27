@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey;
         indices = {
                 @Index(value = "wordID")},
         foreignKeys = {
-                @ForeignKey(entity = Word.class, parentColumns = "wordID", childColumns = "wordID")
+                @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = Word.class, parentColumns = "wordID", childColumns = "wordID")
         }
 )
 public class HelpSentence implements TextLabelable {

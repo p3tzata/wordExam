@@ -69,7 +69,7 @@ public class ConfigTranslationActivity extends
         fab_newItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callPopUpDialog(false,null);
+                handlerCreateUpdateClick(false,null);
             }
         });
     }
@@ -136,7 +136,7 @@ public class ConfigTranslationActivity extends
     }
 
     @Override
-    public void callDeleteConfirmDialog(Translation selectedItem) {
+    public void handlerDeleteClick(Translation selectedItem) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(selectedItem.getLabelText());
@@ -168,7 +168,7 @@ public class ConfigTranslationActivity extends
 
 
     @Override
-    public void callPopUpDialog(boolean isEditMode, Translation selectedItem) {
+    public void handlerCreateUpdateClick(boolean isEditMode, Translation selectedItem) {
         this.myDialog = new Dialog(this);
         myDialog.setContentView(R.layout.dialog_translation_edit);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
@@ -253,6 +253,7 @@ public class ConfigTranslationActivity extends
                     myDialog.dismiss();
                 } else {
                     Translation newItem = new Translation();
+
                     newItem.setTranslationName(et_newItem.getText().toString());
                     newItem.setNativeLanguageID(nativeLanguage.getLanguageID());
                     newItem.setForeignLanguageID(foreignLanguage.getLanguageID());
@@ -274,5 +275,8 @@ public class ConfigTranslationActivity extends
     }
 
 
-
+    @Override
+    public void recyclerViewOnClickHandler(View v, Translation selectedItem) {
+        callShowCrudMenu(v,selectedItem);
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.myapplication.repository;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.example.myapplication.dao.CrudDao;
 import com.example.myapplication.database.DatabaseClient;
@@ -10,7 +11,7 @@ public abstract class BaseCrudRepository<Dao extends CrudDao,T> {
 
     WordRoomDatabase appDatabase;
     private Dao daoObject;
-    BaseCrudRepository(Application application) {
+    BaseCrudRepository(Context application) {
         appDatabase = DatabaseClient.getInstance(application).getAppDatabase();
     }
 

@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.adapter.WordTranslateListAdapter;
+import com.example.myapplication.adapter.NativeWordTranslateListAdapter;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.ForeignWithNativeWords;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
@@ -146,7 +146,7 @@ public class UpdateWordTranslationActivity extends AppCompatActivity {
                 super.onPostExecute(tasks);
 
 
-                WordTranslateListAdapter adapter = new WordTranslateListAdapter(UpdateWordTranslationActivity.this);
+                NativeWordTranslateListAdapter adapter = new NativeWordTranslateListAdapter(UpdateWordTranslationActivity.this);
 
                 adapter.setItems(tasks.getNativeWords(), null,null);
                 RecyclerView recyclerView = findViewById(R.id.recyclerview);

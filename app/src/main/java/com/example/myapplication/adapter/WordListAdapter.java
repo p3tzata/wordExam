@@ -94,8 +94,10 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
                 if (WordListAdapter.this.translationAndLanguages.getForeignLanguage().getLanguageID().equals(
                         WordListAdapter.this.fromLanguageID)) {
                     activity2Intent = new Intent(context, ShowForeignWordActivity.class);
+                    activity2Intent.putExtra("targetLanguageID", translationAndLanguages.getNativeLanguage().getLanguageID());
                 } else {
                     activity2Intent = new Intent(context, ShowNativeWordActivity.class);
+                    activity2Intent.putExtra("targetLanguageID", translationAndLanguages.getForeignLanguage().getLanguageID());
                 }
 
             }

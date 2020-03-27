@@ -19,9 +19,9 @@ public class DatabaseClient {
 
         //creating the app database with Room database builder
         //MyToDos is the name of the database
-        appDatabase = Room.databaseBuilder(mCtx, WordRoomDatabase.class, "MyToDos")
+        appDatabase = Room.databaseBuilder(mCtx, WordRoomDatabase.class, "MyWordExam")
                 //.addMigrations(MIGRATION_1_2)
-                .fallbackToDestructiveMigration()
+                //.fallbackToDestructiveMigration()
                 .build();
     }
 

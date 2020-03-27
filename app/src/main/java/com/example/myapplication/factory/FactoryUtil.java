@@ -2,6 +2,8 @@ package com.example.myapplication.factory;
 
 import android.app.Application;
 
+
+import com.example.myapplication.entity.Profile;
 import com.example.myapplication.entity.TranslationWordRelation;
 import com.example.myapplication.service.HelpSentenceService;
 import com.example.myapplication.service.LanguageService;
@@ -13,8 +15,11 @@ import com.example.myapplication.service.TranslationWordRelationService;
 import com.example.myapplication.service.WordFormService;
 import com.example.myapplication.service.WordPartOfSpeechService;
 import com.example.myapplication.service.WordService;
+import com.example.myapplication.utitliy.DbExecutorImp;
 
 import org.modelmapper.ModelMapper;
+
+import java.util.List;
 
 public class FactoryUtil {
 
@@ -66,6 +71,9 @@ public class FactoryUtil {
     }
 
 
+    static public <T> DbExecutorImp<T> createDbExecutor(){
+            return new DbExecutorImp<T>();
+    }
 
 
 }

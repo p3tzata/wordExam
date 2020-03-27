@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.configureActivity.ConfigTranslationActivity"></activity>
+        <activity android:name=".activity.wordActivity.WordAssignToExam"></activity>
+        <activity android:name=".activity.ChangeSelectedProfile" />
+        <activity android:name=".activity.configureActivity.ConfigTranslationActivity" />
         <activity android:name=".activity.configureActivity.ConfigProfileActivity" />
         <activity android:name=".activity.configureActivity.ConfigLanguageActivity" />
         <activity android:name=".activity.configureActivity.ConfigureMenuActivity" />
@@ -29,7 +31,7 @@
             android:name=".activity.wordActivity.UpdateWordHelpSentenceActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.ListAllWordActivity"
+            android:name=".activity.wordActivity.ListAllWordActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.wordActivity.NewWordActivity" />
         <activity android:name=".activity.MainActivity">

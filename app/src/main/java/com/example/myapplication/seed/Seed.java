@@ -1,9 +1,12 @@
 package com.example.myapplication.seed;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 
 
+import com.example.myapplication.database.DatabaseClient;
+import com.example.myapplication.database.WordRoomDatabase;
 import com.example.myapplication.entity.Language;
 import com.example.myapplication.entity.PartOfSpeech;
 import com.example.myapplication.entity.Profile;
@@ -26,7 +29,7 @@ import com.example.myapplication.service.WordService;
 import org.modelmapper.ModelMapper;
 
 public class Seed extends Application {
-
+    private Context context;
     private ProfileService profileService;
     private LanguageService languageService;
     private TranslationService translationService;
@@ -35,8 +38,11 @@ public class Seed extends Application {
     private PartOfSpeechService partOfSpeechService;
     private WordPartOfSpeechService wordPartOfSpeechService;
     private WordFormService wordFormService;
-    public Seed(){
-        this.profileService = FactoryUtil.createProfileService(this);
+    public Seed(Application context){
+
+//        WordRoomDatabase appDatabase = DatabaseClient.getInstance(context).getAppDatabase();
+
+        this.profileService = FactoryUtil.createProfileService(context);
         this.languageService = FactoryUtil.createLanguageService(this);
         this.translationService = FactoryUtil.createTranslationService(this);
         this.wordService = FactoryUtil.createWordService(this);

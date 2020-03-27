@@ -1,6 +1,7 @@
 package com.example.myapplication.repository;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.example.myapplication.dao.NameableCrudDao;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public abstract class BaseNameCrudRepository<Dao extends NameableCrudDao,T> extends BaseCrudRepository<Dao,T>
         implements NameableCrudRepository<T> {
 
-    BaseNameCrudRepository(Application application) {
+    BaseNameCrudRepository(Context application) {
         super(application);
     }
 

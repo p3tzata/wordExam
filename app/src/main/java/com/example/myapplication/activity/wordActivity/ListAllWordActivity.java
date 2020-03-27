@@ -1,4 +1,4 @@
-package com.example.myapplication.activity;
+package com.example.myapplication.activity.wordActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuItemCompat;
@@ -17,7 +17,7 @@ import android.widget.SearchView;
 
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.wordActivity.NewWordActivity;
+import com.example.myapplication.activity.ListAllDictionary;
 import com.example.myapplication.adapter.WordListAdapter;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;

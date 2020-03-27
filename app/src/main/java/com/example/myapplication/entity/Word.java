@@ -10,9 +10,10 @@ import java.io.Serializable;
 
 @Entity(indices = {@Index("languageID"),@Index("profileID"),@Index("wordFormID"),
         @Index(unique = true, value = {"wordString","languageID","profileID"})},
-        foreignKeys = {@ForeignKey(entity = Language.class, parentColumns = "languageID", childColumns = "languageID"),
-                @ForeignKey(entity = Profile.class, parentColumns = "profileID", childColumns = "profileID")})
-public class Word implements Serializable {
+        foreignKeys = {
+                @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = Language.class, parentColumns = "languageID", childColumns = "languageID"),
+                @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = Profile.class, parentColumns = "profileID", childColumns = "profileID")})
+public class Word implements Serializable, TextLabelable {
 
     @PrimaryKey
     private Long wordID;
@@ -73,5 +74,10 @@ public class Word implements Serializable {
 
     public void setLanguageID(@NonNull Long languageID) {
         this.languageID = languageID;
+    }
+
+    @Override
+    public String getLabelText() {
+        return getWordString();
     }
 }

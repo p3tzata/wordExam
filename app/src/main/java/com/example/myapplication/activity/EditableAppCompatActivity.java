@@ -1,9 +1,13 @@
 package com.example.myapplication.activity;
 
-public interface EditableAppCompatActivity<T>  {
+import android.view.View;
 
-    public void callDeleteConfirmDialog(T selectedItem);
+public interface EditableAppCompatActivity<T> extends ListableAppCompatActivity<T>  {
 
-    public void callPopUpDialog(boolean isEditableMode,T selectedItem);
+     void handlerDeleteClick(T selectedItem);
+
+     void handlerCreateUpdateClick(boolean isEditableMode,T selectedItem);
+
+     void callShowCrudMenu(View v, T selectedItem);
 
 }

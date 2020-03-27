@@ -15,9 +15,9 @@ import java.io.Serializable;
                    @Index(unique = true,value = {"profileID","nativeLanguageID","foreignLanguageID"}) },
 
         foreignKeys = {
-            @ForeignKey(entity = Language.class, parentColumns = "languageID", childColumns = "nativeLanguageID"),
-            @ForeignKey(entity = Language.class, parentColumns = "languageID", childColumns = "foreignLanguageID"),
-            @ForeignKey(entity = Profile.class, parentColumns = "profileID", childColumns = "profileID"),
+            @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = Language.class, parentColumns = "languageID", childColumns = "nativeLanguageID"),
+            @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = Language.class, parentColumns = "languageID", childColumns = "foreignLanguageID"),
+            @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = Profile.class, parentColumns = "profileID", childColumns = "profileID"),
         }
 )
 public class Translation implements Serializable,TextLabelable {
@@ -40,6 +40,8 @@ public class Translation implements Serializable,TextLabelable {
     private Long foreignLanguageID;
 
     public Translation() {
+
+
     }
 
     public Long getTranslationID() {

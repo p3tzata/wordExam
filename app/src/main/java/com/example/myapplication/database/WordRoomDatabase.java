@@ -11,7 +11,6 @@ import com.example.myapplication.dao.TranslationDao;
 import com.example.myapplication.dao.TranslationWordRelationDao;
 import com.example.myapplication.dao.WordDao;
 import com.example.myapplication.dao.WordFormDao;
-import com.example.myapplication.dao.WordOldDao;
 import com.example.myapplication.dao.WordPartOfSpeechDao;
 import com.example.myapplication.entity.HelpSentence;
 import com.example.myapplication.entity.Language;
@@ -21,15 +20,12 @@ import com.example.myapplication.entity.Translation;
 import com.example.myapplication.entity.TranslationWordRelation;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.WordForm;
-import com.example.myapplication.entity.WordOld;
 import com.example.myapplication.entity.WordPartOfSpeech;
 
-@Database(entities = {WordOld.class, WordForm.class,HelpSentence.class,WordPartOfSpeech.class,PartOfSpeech.class, Profile.class, Language.class, Translation.class, Word.class, TranslationWordRelation.class},
-        version = 21, exportSchema = false)
+@Database(entities = {WordForm.class,HelpSentence.class,WordPartOfSpeech.class,PartOfSpeech.class, Profile.class, Language.class, Translation.class, Word.class, TranslationWordRelation.class},
+        version = 1, exportSchema = false)
 public abstract class WordRoomDatabase extends RoomDatabase {
 
-
-    public abstract WordOldDao wordOldDao();
 
     public abstract HelpSentenceDao helpSentenceDao();
 

@@ -9,8 +9,9 @@ import androidx.room.PrimaryKey;
 
 @Entity(indices = {@Index(value = "wordID"), @Index(value = "partOfSpeechID"),
         @Index(unique = true, value = {"wordID","partOfSpeechID"}) },
-        foreignKeys = {@ForeignKey(entity = Word.class, parentColumns = "wordID", childColumns = "wordID"),
-                @ForeignKey(entity = PartOfSpeech.class, parentColumns = "partOfSpeechID", childColumns = "partOfSpeechID") })
+        foreignKeys = {
+                @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = Word.class, parentColumns = "wordID", childColumns = "wordID"),
+                @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = PartOfSpeech.class, parentColumns = "partOfSpeechID", childColumns = "partOfSpeechID") })
 public class WordPartOfSpeech {
 
     @PrimaryKey

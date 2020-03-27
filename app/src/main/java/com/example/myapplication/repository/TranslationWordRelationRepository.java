@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.myapplication.dao.TranslationWordRelationDao;
 import com.example.myapplication.entity.TranslationWordRelation;
 import com.example.myapplication.entity.dto.ForeignWithNativeWords;
+import com.example.myapplication.entity.dto.NativeWithForeignWords;
 
 import java.util.List;
 
@@ -19,6 +20,10 @@ public class TranslationWordRelationRepository extends BaseCrudRepository<Transl
 
     public ForeignWithNativeWords translateFromForeign(Long foreignWordID){
         return super.getDao().translateFromForeign(foreignWordID);
+    }
+
+    public NativeWithForeignWords translateFromNative(Long nativeWordID){
+        return super.getDao().translateFromNative(nativeWordID);
     }
 
 

@@ -12,15 +12,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.ListAllWordActivity;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
 import com.example.myapplication.service.WordService;
-import com.example.myapplication.utitliy.MenuUtility;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class UpdateWordMenuActivity extends AppCompatActivity {
     private WordService wordService;

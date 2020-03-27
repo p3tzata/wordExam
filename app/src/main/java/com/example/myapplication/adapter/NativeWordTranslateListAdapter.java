@@ -20,7 +20,7 @@ import com.example.myapplication.service.TranslationWordRelationService;
 
 import java.util.List;
 
-public class WordTranslateListAdapter extends RecyclerView.Adapter<WordTranslateListAdapter.ItemViewHolder>  {
+public class NativeWordTranslateListAdapter extends RecyclerView.Adapter<NativeWordTranslateListAdapter.ItemViewHolder>  {
 
 
 
@@ -34,7 +34,7 @@ public class WordTranslateListAdapter extends RecyclerView.Adapter<WordTranslate
 
     private TranslationWordRelationService translationWordRelationService;
 
-    public WordTranslateListAdapter(Context context) {
+    public NativeWordTranslateListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         this.context=context;
 
@@ -117,7 +117,7 @@ public class WordTranslateListAdapter extends RecyclerView.Adapter<WordTranslate
                                             //finish();
 
                                             if (context instanceof UpdateWordTranslationActivity) {
-                                                UpdateWordTranslationActivity context = (UpdateWordTranslationActivity) WordTranslateListAdapter.this.context;
+                                                UpdateWordTranslationActivity context = (UpdateWordTranslationActivity) NativeWordTranslateListAdapter.this.context;
                                                 context.deleteRelation(nativeWord);
                                             }
 
