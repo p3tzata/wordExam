@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.myapplication.entity.Word;
+import com.example.myapplication.dao.base.CrudDao;
 import com.example.myapplication.entity.WordForm;
 
 import java.util.List;

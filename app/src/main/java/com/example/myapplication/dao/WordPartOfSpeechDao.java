@@ -8,13 +8,9 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
-import com.example.myapplication.entity.Translation;
+import com.example.myapplication.dao.base.CrudDao;
 import com.example.myapplication.entity.WordPartOfSpeech;
-import com.example.myapplication.entity.dto.ForeignWithNativeWords;
 import com.example.myapplication.entity.dto.ForeignWordWithDefPartOfSpeech;
-import com.example.myapplication.entity.dto.TranslationAndLanguages;
-
-import java.util.List;
 
 @Dao
 public abstract class WordPartOfSpeechDao implements CrudDao<WordPartOfSpeech> {

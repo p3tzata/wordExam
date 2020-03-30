@@ -14,7 +14,7 @@ public class ShowForeignWordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_foreign_word);
+        setContentView(R.layout.activity_base_listable);
 
         Intent i = getIntent();
         this.translationAndLanguages = (TranslationAndLanguages) i.getSerializableExtra("translationAndLanguages");

@@ -1,6 +1,6 @@
 package com.example.myapplication.adapter.configure;
 
-import com.example.myapplication.activity.BaseEditableAppCompatActivity;
+import com.example.myapplication.activity.base.BaseEditableAppCompatActivity;
 import com.example.myapplication.adapter.BaseRecycleAdapter;
 import com.example.myapplication.entity.Profile;
 

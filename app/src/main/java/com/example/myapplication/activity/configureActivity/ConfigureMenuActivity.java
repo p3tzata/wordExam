@@ -20,7 +20,7 @@ import com.example.myapplication.utitliy.SessionNameAttribute;
 public class ConfigureMenuActivity extends AppCompatActivity {
 
     ListView mainListMenu;
-    TextView menuListItem;
+
     String[] mainListMenuOptions = new String[]{
             "Profile",
             "Language",
@@ -40,7 +40,7 @@ public class ConfigureMenuActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Configure Menu");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mainListMenu = (ListView) findViewById(R.id.configureListMenu);
-        menuListItem = (TextView) findViewById(R.id.menuListItem);
+
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, mainListMenuOptions);
         mainListMenu.setAdapter(adapter);

@@ -4,11 +4,15 @@ import android.app.Application;
 
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.repository.WordRepository;
+import com.example.myapplication.service.base.BaseCrudService;
+import com.example.myapplication.service.base.BaseNameCrudService;
+import com.example.myapplication.service.base.CrudService;
+import com.example.myapplication.service.base.NameableCrudService;
 
 import java.util.List;
 
 
-public class WordService extends BaseCrudService<WordRepository, Word> implements NameableCrudService<Word> {
+public class WordService extends BaseCrudService<WordRepository, Word> implements CrudService<Word> {
 
     public WordService(Application application) {
         super(application,new WordRepository(application));
@@ -27,8 +31,4 @@ public class WordService extends BaseCrudService<WordRepository, Word> implement
     }
 
 
-    @Override
-    public List<Word> findAllOrderAlphabetic(Object... objects) {
-        return null;
-    }
 }

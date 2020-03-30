@@ -4,12 +4,15 @@ import android.app.Application;
 
 import com.example.myapplication.entity.HelpSentence;
 import com.example.myapplication.repository.HelpSentenceRepository;
+import com.example.myapplication.service.base.BaseCrudService;
+import com.example.myapplication.service.base.BaseNameCrudService;
+import com.example.myapplication.service.base.NameableCrudService;
 
 import java.util.List;
 
 
-public class HelpSentenceService extends BaseCrudService<HelpSentenceRepository, HelpSentence>
-implements NameableCrudService<HelpSentence>{
+public class HelpSentenceService extends BaseNameCrudService<HelpSentenceRepository, HelpSentence>
+implements NameableCrudService<HelpSentence> {
 
     public HelpSentenceService(Application application) {
         super(application,new HelpSentenceRepository(application));
@@ -19,15 +22,5 @@ implements NameableCrudService<HelpSentence>{
         return super.getRepository().findAllByWordID(ID);
     }
 
-    @Override
-    public List<HelpSentence> findAllOrderAlphabetic(Object... objects) {
 
-        if (objects.length==1) {
-            if (objects[0] instanceof Long) {
-                Long wordID =  (Long) objects[0];
-               return super.getRepository().findAllByWordID(wordID);
-            }
-       }
-        return null;
-    }
 }

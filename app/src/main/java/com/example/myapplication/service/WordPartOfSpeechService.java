@@ -8,6 +8,7 @@ import com.example.myapplication.entity.WordPartOfSpeech;
 import com.example.myapplication.entity.dto.ForeignWordWithDefPartOfSpeech;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.repository.WordPartOfSpeechRepository;
+import com.example.myapplication.service.base.BaseCrudService;
 
 
 public class WordPartOfSpeechService extends BaseCrudService<WordPartOfSpeechRepository, WordPartOfSpeech> {

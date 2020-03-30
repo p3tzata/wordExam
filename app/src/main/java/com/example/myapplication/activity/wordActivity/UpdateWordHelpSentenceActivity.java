@@ -3,25 +3,21 @@ package com.example.myapplication.activity.wordActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 
-import com.example.myapplication.activity.BaseEditableAppCompatActivity;
-import com.example.myapplication.activity.configureActivity.ConfigLanguageActivity;
+import com.example.myapplication.activity.base.BaseEditableAppCompatActivity;
+import com.example.myapplication.activity.base.GetItemsExecutorBlock;
+import com.example.myapplication.activity.base.GetItemsExecutorImp;
 import com.example.myapplication.adapter.HelpSentenceEditableAdapter;
-import com.example.myapplication.adapter.configure.LanguageEditableAdapter;
 import com.example.myapplication.entity.HelpSentence;
+import com.example.myapplication.entity.Translation;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
 import com.example.myapplication.factory.FactoryUtil;
@@ -40,14 +36,12 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
     private Word word;
     private Dialog myDialog;
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        UpdateWordHelpSentenceActivity updateWordTranslationActivity = this;
+    public void onCreateCustom() {
 
-        super.onCreate(savedInstanceState);
+        UpdateWordHelpSentenceActivity updateWordTranslationActivity = this;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setContentView(R.layout.activity_update_word_translation);
+        setContentView(R.layout.activity_base_crudable);
         HelpSentenceEditableAdapter adapter = new HelpSentenceEditableAdapter(UpdateWordHelpSentenceActivity.this);
         super.setAdapter(adapter);
         super.setContext(UpdateWordHelpSentenceActivity.this);
@@ -56,7 +50,43 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
         this.translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
         this.fromLanguageID = (Long) getIntent().getSerializableExtra("translationFromLanguageID");
         this.word = (Word) getIntent().getSerializableExtra("word");
+        setGetItemsExecutor(new GetItemsExecutorImp<HelpSentence>(new GetItemsExecutorBlock<HelpSentence>() {
+            @Override
+            public List<HelpSentence> execute() {
+                List<HelpSentence> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(0L, "");
+                return allOrderAlphabetic;
+            }
+        }));
+        getItems();
 
+
+    }
+
+
+    /*
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+
+        super.onCreate(savedInstanceState);
+        UpdateWordHelpSentenceActivity updateWordTranslationActivity = this;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_base_crudable);
+        HelpSentenceEditableAdapter adapter = new HelpSentenceEditableAdapter(UpdateWordHelpSentenceActivity.this);
+        super.setAdapter(adapter);
+        super.setContext(UpdateWordHelpSentenceActivity.this);
+        super.setItemService(FactoryUtil.createHelpSentenceService(getApplication()));
+
+        this.translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
+        this.fromLanguageID = (Long) getIntent().getSerializableExtra("translationFromLanguageID");
+        this.word = (Word) getIntent().getSerializableExtra("word");
+        setGetItemsExecutor(new GetItemsExecutorImp<HelpSentence>(new GetItemsExecutorBlock<HelpSentence>() {
+            @Override
+            public List<HelpSentence> execute() {
+                List<HelpSentence> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(0L, "");
+                return allOrderAlphabetic;
+            }
+        }));
         getItems();
         getSupportActionBar().setTitle(word.getWordString()+" Sentences");
         FloatingActionButton fab_newItem = findViewById(R.id.fab_newItem);
@@ -68,6 +98,11 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
         });
 
     }
+    */
+
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -78,6 +113,8 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
         }
         return true;
     }
+
+
 
     public void handlerDeleteClick(HelpSentence helpSentence) {
 
@@ -111,7 +148,7 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
 
     public void  handlerCreateUpdateClick(boolean isEditMode,HelpSentence helpSentence){
         this.myDialog = new Dialog(this);
-        myDialog.setContentView(R.layout.dialog_new_item);
+        myDialog.setContentView(R.layout.dialog_base_crud_item);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
@@ -151,15 +188,23 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
     }
 
 
-    @Override
-    public List<HelpSentence> getListOfItems() {
-        //List<HelpSentence> helpSentenceServiceAllByWordID = getItemService().findAllByWordID(word.getWordID());
-        List<HelpSentence> helpSentenceServiceAllByWordID = getItemService().findAllOrderAlphabetic(word.getWordID());
-        return helpSentenceServiceAllByWordID;
-    }
+
 
     @Override
     public void recyclerViewOnClickHandler(View v, HelpSentence selectedItem) {
         callShowCrudMenu(v,selectedItem);
     }
+
+    @Override
+    public void onSearchBarGetItemsExecutorHandler(String contains) {
+        setGetItemsExecutor(new GetItemsExecutorImp<HelpSentence>(new GetItemsExecutorBlock<HelpSentence>() {
+            @Override
+            public List<HelpSentence> execute() {
+                List<HelpSentence> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(0L, contains);
+                return allOrderAlphabetic;
+            }
+        }));
+    }
+
+
 }

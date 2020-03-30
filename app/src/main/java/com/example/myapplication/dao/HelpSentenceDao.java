@@ -7,14 +7,15 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.myapplication.dao.base.CrudDao;
+import com.example.myapplication.dao.base.NameableCrudDao;
 import com.example.myapplication.entity.HelpSentence;
 import com.example.myapplication.entity.Language;
-import com.example.myapplication.entity.Profile;
 
 import java.util.List;
 
 @Dao
-public abstract class HelpSentenceDao implements CrudDao<HelpSentence> {
+public abstract class HelpSentenceDao implements NameableCrudDao<HelpSentence> {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract Long insert(HelpSentence entity);
@@ -34,5 +35,10 @@ public abstract class HelpSentenceDao implements CrudDao<HelpSentence> {
 
     @Query("SELECT * FROM helpSentence l order by l.sentenceString")
     abstract public List<HelpSentence> findAllOrderAlphabetic();
+
+    @Override
+    @Query("SELECT * FROM helpSentence l where l.wordID=:parentID and l.sentenceString like '%'||:contains||'%' order by l.sentenceString")
+    abstract public List<HelpSentence> findAllOrderAlphabetic(Long parentID, String contains);
+
 
 }

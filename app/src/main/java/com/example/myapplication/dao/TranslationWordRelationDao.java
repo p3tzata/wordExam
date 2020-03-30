@@ -8,7 +8,7 @@ import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
-import com.example.myapplication.entity.Language;
+import com.example.myapplication.dao.base.CrudDao;
 import com.example.myapplication.entity.TranslationWordRelation;
 import com.example.myapplication.entity.dto.ForeignWithNativeWords;
 import com.example.myapplication.entity.dto.NativeWithForeignWords;

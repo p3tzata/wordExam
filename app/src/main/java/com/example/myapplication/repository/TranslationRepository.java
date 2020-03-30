@@ -8,7 +8,7 @@ import com.example.myapplication.entity.dto.TranslationAndLanguages;
 
 import java.util.List;
 
-public class TranslationRepository extends BaseCrudRepository<TranslationDao, Translation> {
+public class TranslationRepository extends BaseNameCrudRepository<TranslationDao, Translation> {
 
     public TranslationRepository(Application application) {
         super(application);

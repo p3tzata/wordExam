@@ -1,57 +1,79 @@
 package com.example.myapplication.activity.configureActivity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.SearchView;
+
+import androidx.core.view.MenuItemCompat;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.BaseEditableAppCompatActivity;
-import com.example.myapplication.activity.MainActivity;
-import com.example.myapplication.activity.wordActivity.UpdateWordHelpSentenceActivity;
-import com.example.myapplication.adapter.HelpSentenceEditableAdapter;
-import com.example.myapplication.adapter.configure.LanguageEditableAdapter;
+import com.example.myapplication.activity.base.BaseEditableAppCompatActivity;
+import com.example.myapplication.activity.base.GetItemsExecutor;
+import com.example.myapplication.activity.base.GetItemsExecutorBlock;
+import com.example.myapplication.activity.base.GetItemsExecutorImp;
 import com.example.myapplication.adapter.configure.ProfileEditableAdapter;
-import com.example.myapplication.entity.HelpSentence;
-import com.example.myapplication.entity.Language;
 import com.example.myapplication.entity.Profile;
-import com.example.myapplication.entity.Word;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.ProfileService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+import java.util.PrimitiveIterator;
 
 public class ConfigProfileActivity extends
         BaseEditableAppCompatActivity<Profile,ProfileService, ConfigProfileActivity,ProfileEditableAdapter> {
 
-    //private Profile selectedItem;
-    //private ProfileService itemService;
-    private Dialog myDialog;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_config_profile);
+    public void onCreateCustom() {
+        setContentView(R.layout.activity_base_crudable);
         super.setItemService(FactoryUtil.createProfileService(getApplication()));
         ProfileEditableAdapter adapter = new ProfileEditableAdapter(ConfigProfileActivity.this);
         super.setAdapter(adapter);
         super.setContext(ConfigProfileActivity.this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Configure Profiles");
+        setGetItemsExecutor(new GetItemsExecutorImp<Profile>(new GetItemsExecutorBlock<Profile>() {
+            @Override
+            public List<Profile> execute() {
+                List<Profile> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(0L,"");
+                return allOrderAlphabetic;
+            }
+        }));
         getItems();
+
+    }
+
+
+/*
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_base_crudable);
+        super.setItemService(FactoryUtil.createProfileService(getApplication()));
+        ProfileEditableAdapter adapter = new ProfileEditableAdapter(ConfigProfileActivity.this);
+        super.setAdapter(adapter);
+        super.setContext(ConfigProfileActivity.this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Configure Profiles");
+        setGetItemsExecutor(new GetItemsExecutorImp<Profile>(new GetItemsExecutorBlock<Profile>() {
+            @Override
+            public List<Profile> execute() {
+                List<Profile> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(0L,"");
+                return allOrderAlphabetic;
+            }
+        }));
+        getItems();
+
         FloatingActionButton fab_newItem = findViewById(R.id.fab_newItem);
         fab_newItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +85,8 @@ public class ConfigProfileActivity extends
 
     }
 
+ */
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -72,6 +96,21 @@ public class ConfigProfileActivity extends
         }
         return true;
     }
+
+
+    @Override
+    public void onSearchBarGetItemsExecutorHandler(String contains) {
+
+        setGetItemsExecutor(new GetItemsExecutorImp<Profile>(new GetItemsExecutorBlock<Profile>() {
+            @Override
+            public List<Profile> execute() {
+                List<Profile> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(0L, contains);
+                return allOrderAlphabetic;
+            }
+        }));
+    }
+
+
 
     public void handlerDeleteClick(Profile selectedItem) {
 
@@ -107,7 +146,7 @@ public class ConfigProfileActivity extends
     @Override
     public void handlerCreateUpdateClick(boolean isEditMode, Profile selectedItem) {
         this.myDialog = new Dialog(this);
-        myDialog.setContentView(R.layout.dialog_new_item);
+        myDialog.setContentView(R.layout.dialog_base_crud_item);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
@@ -150,4 +189,6 @@ public class ConfigProfileActivity extends
     public void recyclerViewOnClickHandler(View v, Profile selectedItem) {
         callShowCrudMenu(v,selectedItem);
     }
+
+
 }

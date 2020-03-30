@@ -1,9 +1,5 @@
 package com.example.myapplication.activity.configureActivity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -12,22 +8,18 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.BaseEditableAppCompatActivity;
-import com.example.myapplication.activity.wordActivity.UpdateWordBasicActivity;
-import com.example.myapplication.adapter.configure.ProfileEditableAdapter;
+import com.example.myapplication.activity.base.BaseEditableAppCompatActivity;
+import com.example.myapplication.activity.base.GetItemsExecutorBlock;
+import com.example.myapplication.activity.base.GetItemsExecutorImp;
 import com.example.myapplication.adapter.configure.TranslationEditableAdapter;
 import com.example.myapplication.adapter.spinnerAdapter.LanguageSpinAdapter;
-import com.example.myapplication.adapter.spinnerAdapter.WordFormSpinAdapter;
 import com.example.myapplication.entity.Language;
-import com.example.myapplication.entity.Profile;
 import com.example.myapplication.entity.Translation;
-import com.example.myapplication.entity.WordForm;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.LanguageService;
 import com.example.myapplication.service.TranslationService;
@@ -50,9 +42,8 @@ public class ConfigTranslationActivity extends
     private LanguageSpinAdapter foreignSpinnerAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_config_item);
+    public void onCreateCustom() {
+        setContentView(R.layout.activity_base_crudable);
         profileID= Session.getLongAttribute(getApplicationContext(), SessionNameAttribute.ProfileID,-1L);
         profileName=Session.getStringAttribute(getApplicationContext(),SessionNameAttribute.ProfileName,"");
         this.languageService=FactoryUtil.createLanguageService(getApplication());
@@ -62,7 +53,39 @@ public class ConfigTranslationActivity extends
         super.setContext(ConfigTranslationActivity.this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(profileName +" | "+ "Translation");
+        setGetItemsExecutor(new GetItemsExecutorImp<Translation>(new GetItemsExecutorBlock<Translation>() {
+            @Override
+            public List<Translation> execute() {
+                List<Translation> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(profileID, "");
+                return allOrderAlphabetic;
+            }
+        }));
+        getItems();
+        getAllLanguages();
 
+    }
+
+    /*
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_base_crudable);
+        profileID= Session.getLongAttribute(getApplicationContext(), SessionNameAttribute.ProfileID,-1L);
+        profileName=Session.getStringAttribute(getApplicationContext(),SessionNameAttribute.ProfileName,"");
+        this.languageService=FactoryUtil.createLanguageService(getApplication());
+        super.setItemService(FactoryUtil.createTranslationService(getApplication()));
+        TranslationEditableAdapter adapter = new TranslationEditableAdapter(ConfigTranslationActivity.this);
+        super.setAdapter(adapter);
+        super.setContext(ConfigTranslationActivity.this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(profileName +" | "+ "Translation");
+        setGetItemsExecutor(new GetItemsExecutorImp<Translation>(new GetItemsExecutorBlock<Translation>() {
+            @Override
+            public List<Translation> execute() {
+                List<Translation> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(profileID, "");
+                return allOrderAlphabetic;
+            }
+        }));
         getItems();
         getAllLanguages();
         FloatingActionButton fab_newItem = findViewById(R.id.fab_newItem);
@@ -72,7 +95,19 @@ public class ConfigTranslationActivity extends
                 handlerCreateUpdateClick(false,null);
             }
         });
+    }*/
+
+    @Override
+    public void onSearchBarGetItemsExecutorHandler(String contains) {
+        setGetItemsExecutor(new GetItemsExecutorImp<Translation>(new GetItemsExecutorBlock<Translation>() {
+            @Override
+            public List<Translation> execute() {
+                List<Translation> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(profileID, contains);
+                return allOrderAlphabetic;
+            }
+        }));
     }
+
 
     private void getAllLanguages() {
         class GetTasks extends AsyncTask<Void, Void, List<Language>> {
@@ -80,7 +115,7 @@ public class ConfigTranslationActivity extends
             @Override
             protected List<Language> doInBackground(Void... voids) {
 
-                return languageService.findAllOrderAlphabetic();
+                return languageService.findAllOrderAlphabetic(0L,"");
             }
 
             @Override
@@ -134,6 +169,8 @@ public class ConfigTranslationActivity extends
         }
         return true;
     }
+
+
 
     @Override
     public void handlerDeleteClick(Translation selectedItem) {
@@ -269,10 +306,7 @@ public class ConfigTranslationActivity extends
         myDialog.show();
     }
 
-    @Override
-    public List<Translation> getListOfItems() {
-        return getItemService().findAllOrderAlphabetic(profileID);
-    }
+
 
 
     @Override

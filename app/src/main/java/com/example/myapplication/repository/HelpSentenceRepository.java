@@ -7,7 +7,7 @@ import com.example.myapplication.entity.HelpSentence;
 
 import java.util.List;
 
-public class HelpSentenceRepository extends BaseCrudRepository<HelpSentenceDao, HelpSentence> {
+public class HelpSentenceRepository extends BaseNameCrudRepository<HelpSentenceDao, HelpSentence> {
 
     public HelpSentenceRepository(Application application) {
         super(application);

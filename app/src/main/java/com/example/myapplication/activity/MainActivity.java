@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private Menu mOptionsMenu;
 
     ListView mainListMenu;
-    TextView menuListItem;
+
     String[] mainListMenuOptions = new String[]{"Dictionaries","Item1"};
     Class<?>[] mainListMenuOptionsNavigate = new Class[]{ListAllDictionary.class,ListAllDictionary.class};
 
@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().setTitle("Main");
         mainListMenu=(ListView)findViewById(R.id.mainListMenu);
-        menuListItem=(TextView)findViewById(R.id.menuListItem);
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, mainListMenuOptions);

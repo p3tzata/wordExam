@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.BaseListableAppCompatActivity;
+import com.example.myapplication.activity.base.BaseListableAppCompatActivity;
 import com.example.myapplication.entity.TextLabelable;
 
 import java.util.List;

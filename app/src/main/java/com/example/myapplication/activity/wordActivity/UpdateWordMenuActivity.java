@@ -21,7 +21,7 @@ import com.example.myapplication.service.WordService;
 public class UpdateWordMenuActivity extends AppCompatActivity {
     private WordService wordService;
     ListView mainListMenu;
-    TextView menuListItem;
+
     String[] mainListMenuOptions = new String[]{"Basic",
             "Translation",
             "Help sentence"};
@@ -46,7 +46,7 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
 
 
         mainListMenu = (ListView) findViewById(R.id.updateWordListMenu);
-        menuListItem = (TextView) findViewById(R.id.menuListItem);
+
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, mainListMenuOptions);

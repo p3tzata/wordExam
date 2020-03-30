@@ -1,7 +1,6 @@
-package com.example.myapplication.service;
+package com.example.myapplication.service.base;
 
 import android.app.Application;
-import android.content.Context;
 
 import androidx.annotation.NonNull;
 
@@ -17,8 +16,8 @@ implements NameableCrudService<T> {
 
     }
 
-    public List<T> findAllOrderAlphabetic(Object... objects) {
-        return (List<T>) super.getRepository().findAllOrderAlphabetic(objects);
+    public List<T> findAllOrderAlphabetic(Long parentID,String contains) {
+        return (List<T>) super.getRepository().findAllOrderAlphabetic(parentID,contains);
     }
 
 

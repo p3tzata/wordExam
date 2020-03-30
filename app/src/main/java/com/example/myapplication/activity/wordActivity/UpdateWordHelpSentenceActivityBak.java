@@ -83,7 +83,7 @@ public class UpdateWordHelpSentenceActivityBak {
     public void  callPopUpDialog(boolean isEditMode,HelpSentence helpSentence)
     {
         this.myDialog = new Dialog(this);
-        myDialog.setContentView(R.layout.dialog_new_item);
+        myDialog.setContentView(R.layout.dialog_base_crud_item);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;

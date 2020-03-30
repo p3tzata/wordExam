@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.example.myapplication.entity.WordForm;
 import com.example.myapplication.repository.WordFormRepository;
+import com.example.myapplication.service.base.BaseCrudService;
 
 import java.util.List;
 

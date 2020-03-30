@@ -1,10 +1,12 @@
 package com.example.myapplication.service;
 
 import android.app.Application;
-import android.content.Context;
+
+import androidx.room.Query;
 
 import com.example.myapplication.entity.Profile;
 import com.example.myapplication.repository.ProfileRepository;
+import com.example.myapplication.service.base.BaseNameCrudService;
 
 import java.util.List;
 
@@ -15,8 +17,10 @@ public class ProfileService extends BaseNameCrudService<ProfileRepository, Profi
         super(application,new ProfileRepository(application));
     }
 
-    public List<Profile> findAllOrderAlphabetic(){
-        return super.getRepository().findAllOrderAlphabetic();
+
+    @Override
+    public List<Profile> findAllOrderAlphabetic(Long parentID,String contains){
+        return super.getRepository().findAllOrderAlphabetic(parentID,contains);
     }
 
 }

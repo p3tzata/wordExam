@@ -6,11 +6,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.BaseListableAppCompatActivity;
-import com.example.myapplication.activity.configureActivity.ConfigProfileActivity;
+import com.example.myapplication.activity.base.BaseListableAppCompatActivity;
+import com.example.myapplication.activity.base.GetItemsExecutorBlock;
+import com.example.myapplication.activity.base.GetItemsExecutorImp;
 import com.example.myapplication.adapter.NativeWordListableAdapter;
-import com.example.myapplication.adapter.configure.ProfileEditableAdapter;
-import com.example.myapplication.entity.TranslationWordRelation;
+import com.example.myapplication.entity.Translation;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.NativeWithForeignWords;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
@@ -31,7 +31,7 @@ public class ShowNativeWordActivity extends BaseListableAppCompatActivity<Word, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_native_word);
+        setContentView(R.layout.activity_base_listable);
         Intent i = getIntent();
         super.setItemService(FactoryUtil.createWordService(getApplication()));
         NativeWordListableAdapter adapter = new NativeWordListableAdapter(ShowNativeWordActivity.this);
@@ -43,22 +43,32 @@ public class ShowNativeWordActivity extends BaseListableAppCompatActivity<Word, 
         translationFromLanguageID = (Long) i.getSerializableExtra("translationFromLanguageID");
         this.word= (Word) i.getSerializableExtra("word");
         getSupportActionBar().setTitle(word.getWordString());
+        setGetItemsExecutor(new GetItemsExecutorImp<Word>(new GetItemsExecutorBlock<Word>() {
+            @Override
+            public List<Word> execute() {
+                NativeWithForeignWords nativeWithForeignWords = translationWordRelationService.translateFromNative(word.getWordID());
+                return nativeWithForeignWords.getForeignWords();
+            }
+        }));
         getItems();
 
 
     }
 
     @Override
-    public List<Word> getListOfItems() {
-        NativeWithForeignWords nativeWithForeignWords = translationWordRelationService.translateFromNative(word.getWordID());
-        return nativeWithForeignWords.getForeignWords();
-    }
-
-
-
-
-    @Override
     public void recyclerViewOnClickHandler(View v, Word selectedItem) {
         Toast.makeText(getApplicationContext(), selectedItem.getLabelText(), Toast.LENGTH_LONG).show();
     }
+
+    @Override
+    public void onSearchBarGetItemsExecutorHandler(String contains) {
+        setGetItemsExecutor(new GetItemsExecutorImp<Word>(new GetItemsExecutorBlock<Word>() {
+            @Override
+            public List<Word> execute() {
+                NativeWithForeignWords nativeWithForeignWords = translationWordRelationService.translateFromNative(word.getWordID());
+                return nativeWithForeignWords.getForeignWords();
+            }
+        }));
+    }
+
 }

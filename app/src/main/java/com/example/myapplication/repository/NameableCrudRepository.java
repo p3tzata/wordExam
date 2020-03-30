@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface NameableCrudRepository<T>  {
 
-    public List<T> findAllOrderAlphabetic(Object... objs);
+    List<T> findAllOrderAlphabetic(Long parentID,String contains);
 }

@@ -9,6 +9,7 @@ import com.example.myapplication.entity.dto.NativeWithForeignWords;
 import com.example.myapplication.entity.dto.WordCreationDTO;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.repository.TranslationWordRelationRepository;
+import com.example.myapplication.service.base.BaseCrudService;
 
 import org.modelmapper.ModelMapper;
 

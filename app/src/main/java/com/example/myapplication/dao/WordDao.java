@@ -7,7 +7,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.myapplication.entity.Profile;
+import com.example.myapplication.dao.base.CrudDao;
+import com.example.myapplication.dao.base.NameableCrudDao;
 import com.example.myapplication.entity.Word;
 
 import java.util.List;
@@ -27,8 +28,6 @@ public abstract class WordDao implements CrudDao<Word> {
     @Query("SELECT * FROM word p where p.wordID=:ID")
     abstract public Word findByID(Long ID);
 
-    @Query("SELECT * FROM word p order by p.wordString")
-    abstract public List<Word> findAllOrderAlphabetic();
 
     @Query("SELECT * FROM word p where p.wordString=:wordString and p.profileID=:profileID and p.languageID=:languageID")
     abstract public Word findByWordStringAndProfileIDAndLanguageID(String wordString,Long profileID,Long languageID);

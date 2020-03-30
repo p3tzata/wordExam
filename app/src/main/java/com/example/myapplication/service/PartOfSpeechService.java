@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.example.myapplication.entity.PartOfSpeech;
 import com.example.myapplication.repository.PartOfSpeechRepository;
+import com.example.myapplication.service.base.BaseCrudService;
 
 import java.util.List;
 

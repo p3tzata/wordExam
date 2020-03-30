@@ -1,9 +1,8 @@
 package com.example.myapplication.repository;
 
-import android.app.Application;
 import android.content.Context;
 
-import com.example.myapplication.dao.CrudDao;
+import com.example.myapplication.dao.base.CrudDao;
 import com.example.myapplication.database.DatabaseClient;
 import com.example.myapplication.database.WordRoomDatabase;
 

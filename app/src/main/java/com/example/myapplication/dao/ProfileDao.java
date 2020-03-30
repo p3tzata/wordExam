@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.myapplication.entity.Language;
+import com.example.myapplication.dao.base.NameableCrudDao;
 import com.example.myapplication.entity.Profile;
 
 import java.util.List;
@@ -24,8 +24,9 @@ public abstract class ProfileDao implements NameableCrudDao<Profile> {
     @Delete
     public abstract Integer delete(Profile entity);
 
-    @Query("SELECT * FROM profile p order by p.profileName")
-    abstract public List<Profile> findAllOrderAlphabetic();
+    @Override
+    @Query("SELECT * FROM profile p where :parentID=:parentID and p.profileName like '%'||:contains||'%' order by p.profileName")
+    abstract public List<Profile> findAllOrderAlphabetic(Long parentID,String contains);
 
     @Query("SELECT * FROM profile p where p.profileID=:ID")
     abstract public Profile findByID(Long ID);

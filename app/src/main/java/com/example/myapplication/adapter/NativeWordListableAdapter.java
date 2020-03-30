@@ -1,6 +1,6 @@
 package com.example.myapplication.adapter;
 
-import com.example.myapplication.activity.BaseListableAppCompatActivity;
+import com.example.myapplication.activity.base.BaseListableAppCompatActivity;
 import com.example.myapplication.entity.Word;
 
 

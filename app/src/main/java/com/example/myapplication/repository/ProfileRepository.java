@@ -14,8 +14,9 @@ public class ProfileRepository extends BaseNameCrudRepository<ProfileDao,Profile
         super(application);
         super.setDao(super.getAppDatabase().profileDao());
     }
-    public List<Profile> findAllOrderAlphabetic(){
-        return super.getDao().findAllOrderAlphabetic();
-    }
 
+    @Override
+    public List<Profile> findAllOrderAlphabetic(Long parentID, String contains) {
+        return super.getDao().findAllOrderAlphabetic(parentID, contains);
+    }
 }

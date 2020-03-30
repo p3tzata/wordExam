@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.myapplication.dao.base.NameableCrudDao;
 import com.example.myapplication.entity.Language;
 
 import java.util.List;
@@ -24,8 +25,9 @@ public abstract class LanguageDao implements NameableCrudDao<Language> {
     abstract public  Integer delete(Language entity);
 
 
-    @Query("SELECT * FROM language l order by l.languageName")
-    abstract public List<Language> findAllOrderAlphabetic();
+    @Override
+    @Query("SELECT * FROM language l where :parentID=:parentID and l.languageName like '%'||:contains||'%' order by l.languageName")
+    abstract public List<Language> findAllOrderAlphabetic(Long parentID,String contains);
 
 
     @Query("SELECT * FROM language l where l.languageID=:ID")

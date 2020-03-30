@@ -1,101 +1,64 @@
-package com.example.myapplication.activity;
+package com.example.myapplication.activity.base;
 
+import android.app.Dialog;
+import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.BaseRecycleAdapter;
 import com.example.myapplication.factory.FactoryUtil;
-import com.example.myapplication.service.NameableCrudService;
+import com.example.myapplication.service.base.CrudService;
+import com.example.myapplication.service.base.NameableCrudService;
 import com.example.myapplication.utitliy.DbExecutor;
 import com.example.myapplication.utitliy.DbExecutorImp;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class BaseEditableAppCompatActivity<T,
-        S extends NameableCrudService<T>,
+        S extends CrudService<T>,
         C extends BaseEditableAppCompatActivity,
         A extends BaseRecycleAdapter>
- //       extends AppCompatActivity implements EditableAppCompatActivity<T> {
         extends BaseListableAppCompatActivity<T,S,C,A> implements EditableAppCompatActivity<T> {
-/*
-    private S itemService;
-    private C context;
-    private A adapter;
+
+    private Map<Integer,onMenuItemClickHandlerExecutor> mappingMenuItemHandler;
 
 
-    public void setItemService(S itemService) {
-        this.itemService = itemService;
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mappingMenuItemHandler=new HashMap<>();
+        onCreateCustom();
+        callShowNewItemButton(findViewById(R.id.fab_newItem));
     }
 
-    public void setContext(C context) {
-        this.context = context;
+    public void callShowNewItemButton(FloatingActionButton fab_newItem) {
+        fab_newItem.setOnClickListener(new View.OnClickListener()   {
+        @Override
+        public void onClick (View view){
+        handlerCreateUpdateClick(false, null);
+        }
+    });
     }
 
-    public void setAdapter(A adapter) {
-        this.adapter = adapter;
-    }
-
-
-    public C getContext() {
-        return context;
-    }
-
-    public S getItemService() {
-        return itemService;
-    }
-
-
-    public A getAdapter() {
-        return adapter;
-    }
-
-    public List<T> getListOfItems(){
-        List<T> foundItems = itemService.findAllOrderAlphabetic();
-        return foundItems;
-    }
-
-    protected void getItems() {
-
-        DbExecutorImp<List<T>> dbExecutor = FactoryUtil.<List<T>>createDbExecutor();
-        dbExecutor.execute_(new DbExecutor<List<T>>() {
-            @Override
-            public List<T> doInBackground() {
-                return getListOfItems();
-            }
-
-            @Override
-            public void onPostExecute(List<T> item) {
-                adapter.setItems(item);
-                RecyclerView recyclerView = findViewById(R.id.recyclerview);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                recyclerView.setAdapter(adapter);
-            }
-        });
-
-    }
-*/
-
-
-    public void callShowCrudMenu(View v, T selectedItem) {
+    public void callShowCrudMenu(int popupMenuID,View v, T selectedItem) {
         PopupMenu popupMenu = new PopupMenu(getContext(), v);
-        popupMenu.inflate(R.menu.popup_crud_menu_update_delete);
+        //popupMenu.inflate(R.menu.popup_crud_menu_update_delete);
+        popupMenu.inflate(popupMenuID);
         //adding click listener
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                onMenuItemClickHandlerMappingConfig(mappingMenuItemHandler,item,selectedItem);
                 //I selectedItem = mItems.get(getAdapterPosition());
-                switch (item.getItemId()) {
-                    case R.id.menu_delete:
+                return onMenuItemClickHandler(item);
 
-                        getContext().handlerDeleteClick(selectedItem);
-
-                        break;
-                    case R.id.menu_update:
-                        getContext().handlerCreateUpdateClick(true,selectedItem);
-
-                }
-                return false;
             }
         });
 
@@ -103,8 +66,37 @@ public abstract class BaseEditableAppCompatActivity<T,
 
     }
 
+    public void callShowCrudMenu(View v, T selectedItem) {
+        callShowCrudMenu(R.menu.popup_crud_menu_update_delete,v,selectedItem);
+    }
 
 
+
+    void onMenuItemClickHandlerMappingConfig(Map<Integer,onMenuItemClickHandlerExecutor> mapping,MenuItem item,T selectedItem){
+
+        mapping.put( R.id.menu_update,new onMenuItemClickHandlerExecutor() {
+            @Override
+            public void execute() {
+                getContext().handlerCreateUpdateClick(true,selectedItem);
+            }
+        });
+
+        mapping.put(R.id.menu_delete, new onMenuItemClickHandlerExecutor() {
+            @Override
+            public void execute() {
+                        getContext().handlerDeleteClick(selectedItem);
+                };
+        });
+
+
+    }
+
+
+    boolean onMenuItemClickHandler(MenuItem item){
+
+        mappingMenuItemHandler.get(item.getItemId()).execute();
+        return false;
+    }
 
 
 
@@ -130,7 +122,7 @@ public abstract class BaseEditableAppCompatActivity<T,
 
     }
 
-    protected void deleteItem(T item) {
+    public void deleteItem(T item) {
 
         DbExecutorImp<Integer> dbExecutor = FactoryUtil.<Integer>createDbExecutor();
         dbExecutor.execute_(new DbExecutor<Integer>() {

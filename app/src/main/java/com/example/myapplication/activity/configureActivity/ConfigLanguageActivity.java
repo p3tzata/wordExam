@@ -5,12 +5,15 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.BaseEditableAppCompatActivity;
+import com.example.myapplication.activity.base.BaseEditableAppCompatActivity;
+import com.example.myapplication.activity.base.GetItemsExecutorBlock;
+import com.example.myapplication.activity.base.GetItemsExecutorImp;
 import com.example.myapplication.adapter.configure.LanguageEditableAdapter;
 import com.example.myapplication.entity.Language;
 import com.example.myapplication.entity.Profile;
@@ -18,23 +21,47 @@ import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.LanguageService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
 
 public class ConfigLanguageActivity extends BaseEditableAppCompatActivity<Language,LanguageService, ConfigLanguageActivity,LanguageEditableAdapter> {
 
-
-    private Dialog myDialog;
-
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_config_language);
+    public void onCreateCustom() {
+        setContentView(R.layout.activity_base_crudable);
         super.setItemService(FactoryUtil.createLanguageService(getApplication()));
         LanguageEditableAdapter adapter = new LanguageEditableAdapter(ConfigLanguageActivity.this);
         super.setAdapter(adapter);
         super.setContext(ConfigLanguageActivity.this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Configure Languages");
+        setGetItemsExecutor(new GetItemsExecutorImp<Language>(new GetItemsExecutorBlock<Language>() {
+            @Override
+            public List<Language> execute() {
+                List<Language> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(0L, "");
+                return allOrderAlphabetic;
+            }
+        }));
+        getItems();
+    }
+  /*
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_base_crudable);
+        super.setItemService(FactoryUtil.createLanguageService(getApplication()));
+        LanguageEditableAdapter adapter = new LanguageEditableAdapter(ConfigLanguageActivity.this);
+        super.setAdapter(adapter);
+        super.setContext(ConfigLanguageActivity.this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Configure Languages");
+        setGetItemsExecutor(new GetItemsExecutorImp<Language>(new GetItemsExecutorBlock<Language>() {
+            @Override
+            public List<Language> execute() {
+                List<Language> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(0L, "");
+                return allOrderAlphabetic;
+            }
+        }));
         getItems();
         FloatingActionButton fab_newItem = findViewById(R.id.fab_newItem);
         fab_newItem.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +72,19 @@ public class ConfigLanguageActivity extends BaseEditableAppCompatActivity<Langua
         });
 
     }
+*/
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return true;
+    }
+
+
 
     @Override
     public void handlerDeleteClick(Language selectedItem) {
@@ -118,9 +158,23 @@ public class ConfigLanguageActivity extends BaseEditableAppCompatActivity<Langua
         myDialog.show();
     }
 
+
+
     @Override
     public void recyclerViewOnClickHandler(View v, Language selectedItem) {
             callShowCrudMenu(v,selectedItem);
     }
+
+    @Override
+    public void onSearchBarGetItemsExecutorHandler(String contains) {
+        setGetItemsExecutor(new GetItemsExecutorImp<Language>(new GetItemsExecutorBlock<Language>() {
+            @Override
+            public List<Language> execute() {
+                List<Language> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(0L, contains);
+                return allOrderAlphabetic;
+            }
+        }));
+    }
+
 
 }
