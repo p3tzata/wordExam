@@ -21,7 +21,7 @@ public class DatabaseClient {
         //MyToDos is the name of the database
         appDatabase = Room.databaseBuilder(mCtx, WordRoomDatabase.class, "MyWordExam")
                 //.addMigrations(MIGRATION_1_2)
-                //.fallbackToDestructiveMigration()
+                .fallbackToDestructiveMigration()
                 .build();
     }
 

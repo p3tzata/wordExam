@@ -70,7 +70,7 @@ public class ChangeSelectedProfile extends AppCompatActivity {
         profileDbExecutor.execute_(new DbExecutor<List<Profile>>() {
             @Override
             public List<Profile> doInBackground() {
-                return profileService.findAllOrderAlphabetic(null,"");
+                return profileService.findAllOrderAlphabetic(0L,"");
             }
 
             @Override

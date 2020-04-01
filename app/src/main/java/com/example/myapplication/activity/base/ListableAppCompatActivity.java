@@ -4,6 +4,7 @@ import android.view.View;
 
 public interface ListableAppCompatActivity<T>  {
 
+    void onCreateCustom();
 
     void recyclerViewOnClickHandler(View v, T selectedItem);
 

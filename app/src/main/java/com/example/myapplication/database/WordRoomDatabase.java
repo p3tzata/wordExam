@@ -23,7 +23,7 @@ import com.example.myapplication.entity.WordForm;
 import com.example.myapplication.entity.WordPartOfSpeech;
 
 @Database(entities = {WordForm.class,HelpSentence.class,WordPartOfSpeech.class,PartOfSpeech.class, Profile.class, Language.class, Translation.class, Word.class, TranslationWordRelation.class},
-        version = 1, exportSchema = false)
+        version = 2, exportSchema = false)
 public abstract class WordRoomDatabase extends RoomDatabase {
 
 

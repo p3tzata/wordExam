@@ -1,6 +1,8 @@
 package com.example.myapplication.activity.base;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +13,8 @@ import androidx.annotation.Nullable;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.BaseRecycleAdapter;
+import com.example.myapplication.entity.TextLabelable;
+import com.example.myapplication.entity.Translation;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.base.CrudService;
 import com.example.myapplication.service.base.NameableCrudService;
@@ -21,20 +25,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class BaseEditableAppCompatActivity<T,
+public abstract class BaseEditableAppCompatActivity<T extends TextLabelable,
         S extends CrudService<T>,
         C extends BaseEditableAppCompatActivity,
         A extends BaseRecycleAdapter>
         extends BaseListableAppCompatActivity<T,S,C,A> implements EditableAppCompatActivity<T> {
 
-    private Map<Integer,onMenuItemClickHandlerExecutor> mappingMenuItemHandler;
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mappingMenuItemHandler=new HashMap<>();
-        onCreateCustom();
         callShowNewItemButton(findViewById(R.id.fab_newItem));
     }
 
@@ -72,7 +71,7 @@ public abstract class BaseEditableAppCompatActivity<T,
 
 
 
-    void onMenuItemClickHandlerMappingConfig(Map<Integer,onMenuItemClickHandlerExecutor> mapping,MenuItem item,T selectedItem){
+    public void onMenuItemClickHandlerMappingConfig(Map<Integer,onMenuItemClickHandlerExecutor> mapping,MenuItem item,T selectedItem){
 
         mapping.put( R.id.menu_update,new onMenuItemClickHandlerExecutor() {
             @Override
@@ -92,12 +91,43 @@ public abstract class BaseEditableAppCompatActivity<T,
     }
 
 
-    boolean onMenuItemClickHandler(MenuItem item){
+    public boolean onMenuItemClickHandler(MenuItem item){
 
         mappingMenuItemHandler.get(item.getItemId()).execute();
         return false;
     }
 
+
+
+    public void handlerDeleteClick(T selectedItem) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(selectedItem.getLabelText());
+
+
+        builder
+                //.setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+
+                        deleteItem(selectedItem);
+
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+
+        AlertDialog alert = builder.create();
+        alert.setTitle("Are you sure for deleting");
+        alert.show();
+
+    }
 
 
     public void updateItem(T item) {

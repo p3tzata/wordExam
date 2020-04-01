@@ -7,7 +7,7 @@ import com.example.myapplication.entity.WordForm;
 
 import java.util.List;
 
-public class WordFormRepository extends BaseCrudRepository<WordFormDao, WordForm> {
+public class WordFormRepository extends BaseNameCrudRepository<WordFormDao, WordForm> {
 
     public WordFormRepository(Application application) {
         super(application);

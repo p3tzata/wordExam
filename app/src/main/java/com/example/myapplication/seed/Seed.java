@@ -65,12 +65,29 @@ public class Seed extends Application {
         Language englishLanguage = new Language();
         englishLanguage.setLanguageName("English");
 
+        Language franceLanguage = new Language();
+        franceLanguage.setLanguageName("French");
+
         Translation translation = new Translation();
         translation.setProfileID(1L);
         translation.setTranslationName("Bg_En");
         translation.setTranslationDesc("Bulgarian_English");
         translation.setNativeLanguageID(1L);
         translation.setForeignLanguageID(2L);
+
+        Translation translation1 = new Translation();
+        translation1.setProfileID(1L);
+        translation1.setTranslationName("Bg_Fr");
+        translation1.setTranslationDesc("Bulgarian_French");
+        translation1.setNativeLanguageID(1L);
+        translation1.setForeignLanguageID(3L);
+
+        Word foreignWordFrench = new Word();
+        foreignWordFrench.setWordString("Papa france");
+        foreignWordFrench.setLanguageID(3L);
+        foreignWordFrench.setProfileID(1L);
+
+
 
         Word foreignWord = new Word();
         foreignWord.setWordString("father");
@@ -126,6 +143,7 @@ public class Seed extends Application {
                 profileService.insert(profile);
                 languageService.insert(bulgarianLanguage);
                 languageService.insert(englishLanguage);
+                languageService.insert(franceLanguage);
                 translationService.insert(translation);
                 Long foreignWordID = wordService.insert(foreignWord);
                 wordService.insert(word1);

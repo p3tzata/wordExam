@@ -24,11 +24,14 @@ public class TranslationWordRelationService extends BaseCrudService<TranslationW
         super(application,new TranslationWordRelationRepository(application));
         this.wordService=FactoryUtil.createWordService(application);
     }
-
+/*
     public NativeWithForeignWords translateFromNative(Long nativeWordID){
         return super.getRepository().translateFromNative(nativeWordID);
     }
-
+*/
+    public List<Word> translateFromNative(Long nativeWordID, Long toLanguageID){
+        return super.getRepository().translateFromNative(nativeWordID,toLanguageID);
+    }
 
 
     public ForeignWithNativeWords translateFromForeign(Long foreignWordID){

@@ -1,9 +1,10 @@
 package com.example.myapplication.entity;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "profile")
+@Entity(tableName = "profile",indices = {@Index(unique = true, value = {"profileName"})})
 public class Profile implements TextLabelable {
 
     @PrimaryKey

@@ -3,31 +3,21 @@ package com.example.myapplication.activity.configureActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SearchView;
-
-import androidx.core.view.MenuItemCompat;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.base.BaseEditableAppCompatActivity;
-import com.example.myapplication.activity.base.GetItemsExecutor;
 import com.example.myapplication.activity.base.GetItemsExecutorBlock;
-import com.example.myapplication.activity.base.GetItemsExecutorImp;
 import com.example.myapplication.adapter.configure.ProfileEditableAdapter;
 import com.example.myapplication.entity.Profile;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.ProfileService;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
-import java.util.PrimitiveIterator;
 
 public class ConfigProfileActivity extends
         BaseEditableAppCompatActivity<Profile,ProfileService, ConfigProfileActivity,ProfileEditableAdapter> {
@@ -41,13 +31,13 @@ public class ConfigProfileActivity extends
         super.setContext(ConfigProfileActivity.this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Configure Profiles");
-        setGetItemsExecutor(new GetItemsExecutorImp<Profile>(new GetItemsExecutorBlock<Profile>() {
+        setGetItemsExecutor(new GetItemsExecutorBlock<Profile>() {
             @Override
             public List<Profile> execute() {
                 List<Profile> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(0L,"");
                 return allOrderAlphabetic;
             }
-        }));
+        });
         getItems();
 
     }
@@ -101,13 +91,13 @@ public class ConfigProfileActivity extends
     @Override
     public void onSearchBarGetItemsExecutorHandler(String contains) {
 
-        setGetItemsExecutor(new GetItemsExecutorImp<Profile>(new GetItemsExecutorBlock<Profile>() {
+        setGetItemsExecutor(new GetItemsExecutorBlock<Profile>() {
             @Override
             public List<Profile> execute() {
                 List<Profile> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(0L, contains);
                 return allOrderAlphabetic;
             }
-        }));
+        });
     }
 
 

@@ -7,8 +7,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public interface EditableAppCompatActivity<T> extends ListableAppCompatActivity<T>  {
 
 
-     void onCreateCustom();
-
      void handlerDeleteClick(T selectedItem);
 
      void handlerCreateUpdateClick(boolean isEditableMode,T selectedItem);

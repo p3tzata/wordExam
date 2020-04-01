@@ -3,7 +3,6 @@ package com.example.myapplication.activity.wordActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,15 +13,12 @@ import com.example.myapplication.R;
 
 import com.example.myapplication.activity.base.BaseEditableAppCompatActivity;
 import com.example.myapplication.activity.base.GetItemsExecutorBlock;
-import com.example.myapplication.activity.base.GetItemsExecutorImp;
 import com.example.myapplication.adapter.HelpSentenceEditableAdapter;
 import com.example.myapplication.entity.HelpSentence;
-import com.example.myapplication.entity.Translation;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.HelpSentenceService;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -50,13 +46,14 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
         this.translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
         this.fromLanguageID = (Long) getIntent().getSerializableExtra("translationFromLanguageID");
         this.word = (Word) getIntent().getSerializableExtra("word");
-        setGetItemsExecutor(new GetItemsExecutorImp<HelpSentence>(new GetItemsExecutorBlock<HelpSentence>() {
+        getSupportActionBar().setTitle(word.getWordString() + " | " + "Sentences");
+        setGetItemsExecutor(new GetItemsExecutorBlock<HelpSentence>() {
             @Override
             public List<HelpSentence> execute() {
-                List<HelpSentence> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(0L, "");
+                List<HelpSentence> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(word.getWordID(), "");
                 return allOrderAlphabetic;
             }
-        }));
+        });
         getItems();
 
 
@@ -197,13 +194,13 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
 
     @Override
     public void onSearchBarGetItemsExecutorHandler(String contains) {
-        setGetItemsExecutor(new GetItemsExecutorImp<HelpSentence>(new GetItemsExecutorBlock<HelpSentence>() {
+        setGetItemsExecutor(new GetItemsExecutorBlock<HelpSentence>() {
             @Override
             public List<HelpSentence> execute() {
-                List<HelpSentence> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(0L, contains);
+                List<HelpSentence> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(word.getWordID(), contains);
                 return allOrderAlphabetic;
             }
-        }));
+        });
     }
 
 

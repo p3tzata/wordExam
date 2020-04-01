@@ -1,18 +1,14 @@
 package com.example.myapplication.activity.wordActivity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.base.BaseListableAppCompatActivity;
 import com.example.myapplication.activity.base.GetItemsExecutorBlock;
-import com.example.myapplication.activity.base.GetItemsExecutorImp;
 import com.example.myapplication.adapter.NativeWordListableAdapter;
-import com.example.myapplication.entity.Translation;
 import com.example.myapplication.entity.Word;
-import com.example.myapplication.entity.dto.NativeWithForeignWords;
 import com.example.myapplication.entity.dto.TranslationAndLanguages;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.TranslationWordRelationService;
@@ -29,8 +25,8 @@ public class ShowNativeWordActivity extends BaseListableAppCompatActivity<Word, 
     private TranslationWordRelationService translationWordRelationService;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreateCustom() {
+
         setContentView(R.layout.activity_base_listable);
         Intent i = getIntent();
         super.setItemService(FactoryUtil.createWordService(getApplication()));
@@ -43,17 +39,21 @@ public class ShowNativeWordActivity extends BaseListableAppCompatActivity<Word, 
         translationFromLanguageID = (Long) i.getSerializableExtra("translationFromLanguageID");
         this.word= (Word) i.getSerializableExtra("word");
         getSupportActionBar().setTitle(word.getWordString());
-        setGetItemsExecutor(new GetItemsExecutorImp<Word>(new GetItemsExecutorBlock<Word>() {
+        setGetItemsExecutor(new GetItemsExecutorBlock<Word>() {
             @Override
             public List<Word> execute() {
-                NativeWithForeignWords nativeWithForeignWords = translationWordRelationService.translateFromNative(word.getWordID());
-                return nativeWithForeignWords.getForeignWords();
+                //NativeWithForeignWords nativeWithForeignWords = translationWordRelationService.translateFromNative1(word.getWordID());
+                return translationWordRelationService.translateFromNative(word.getWordID(),translationAndLanguages.getForeignLanguage().getLanguageID());
+//                return nativeWithForeignWords.getForeignWords();
             }
-        }));
+        });
         getItems();
 
-
     }
+
+
+
+
 
     @Override
     public void recyclerViewOnClickHandler(View v, Word selectedItem) {
@@ -62,13 +62,13 @@ public class ShowNativeWordActivity extends BaseListableAppCompatActivity<Word, 
 
     @Override
     public void onSearchBarGetItemsExecutorHandler(String contains) {
-        setGetItemsExecutor(new GetItemsExecutorImp<Word>(new GetItemsExecutorBlock<Word>() {
+        setGetItemsExecutor(new GetItemsExecutorBlock<Word>() {
             @Override
             public List<Word> execute() {
-                NativeWithForeignWords nativeWithForeignWords = translationWordRelationService.translateFromNative(word.getWordID());
-                return nativeWithForeignWords.getForeignWords();
+                return translationWordRelationService.translateFromNative(word.getWordID(),translationAndLanguages.getForeignLanguage().getLanguageID());
+
             }
-        }));
+        });
     }
 
 }

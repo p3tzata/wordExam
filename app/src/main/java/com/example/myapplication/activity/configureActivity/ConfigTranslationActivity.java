@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.Spinner;
 import com.example.myapplication.R;
 import com.example.myapplication.activity.base.BaseEditableAppCompatActivity;
 import com.example.myapplication.activity.base.GetItemsExecutorBlock;
-import com.example.myapplication.activity.base.GetItemsExecutorImp;
 import com.example.myapplication.adapter.configure.TranslationEditableAdapter;
 import com.example.myapplication.adapter.spinnerAdapter.LanguageSpinAdapter;
 import com.example.myapplication.entity.Language;
@@ -25,7 +23,6 @@ import com.example.myapplication.service.LanguageService;
 import com.example.myapplication.service.TranslationService;
 import com.example.myapplication.utitliy.Session;
 import com.example.myapplication.utitliy.SessionNameAttribute;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,59 +50,29 @@ public class ConfigTranslationActivity extends
         super.setContext(ConfigTranslationActivity.this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(profileName +" | "+ "Translation");
-        setGetItemsExecutor(new GetItemsExecutorImp<Translation>(new GetItemsExecutorBlock<Translation>() {
+        setGetItemsExecutor(new GetItemsExecutorBlock<Translation>() {
             @Override
             public List<Translation> execute() {
                 List<Translation> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(profileID, "");
                 return allOrderAlphabetic;
             }
-        }));
+        });
         getItems();
         getAllLanguages();
 
     }
 
-    /*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base_crudable);
-        profileID= Session.getLongAttribute(getApplicationContext(), SessionNameAttribute.ProfileID,-1L);
-        profileName=Session.getStringAttribute(getApplicationContext(),SessionNameAttribute.ProfileName,"");
-        this.languageService=FactoryUtil.createLanguageService(getApplication());
-        super.setItemService(FactoryUtil.createTranslationService(getApplication()));
-        TranslationEditableAdapter adapter = new TranslationEditableAdapter(ConfigTranslationActivity.this);
-        super.setAdapter(adapter);
-        super.setContext(ConfigTranslationActivity.this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(profileName +" | "+ "Translation");
-        setGetItemsExecutor(new GetItemsExecutorImp<Translation>(new GetItemsExecutorBlock<Translation>() {
-            @Override
-            public List<Translation> execute() {
-                List<Translation> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(profileID, "");
-                return allOrderAlphabetic;
-            }
-        }));
-        getItems();
-        getAllLanguages();
-        FloatingActionButton fab_newItem = findViewById(R.id.fab_newItem);
-        fab_newItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handlerCreateUpdateClick(false,null);
-            }
-        });
-    }*/
+
 
     @Override
     public void onSearchBarGetItemsExecutorHandler(String contains) {
-        setGetItemsExecutor(new GetItemsExecutorImp<Translation>(new GetItemsExecutorBlock<Translation>() {
+        setGetItemsExecutor(new GetItemsExecutorBlock<Translation>() {
             @Override
             public List<Translation> execute() {
                 List<Translation> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(profileID, contains);
                 return allOrderAlphabetic;
             }
-        }));
+        });
     }
 
 

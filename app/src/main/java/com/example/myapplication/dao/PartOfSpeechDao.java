@@ -8,12 +8,14 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.myapplication.dao.base.CrudDao;
+import com.example.myapplication.dao.base.NameableCrudDao;
 import com.example.myapplication.entity.PartOfSpeech;
+import com.example.myapplication.entity.WordForm;
 
 import java.util.List;
 
 @Dao
-public abstract class PartOfSpeechDao implements CrudDao<PartOfSpeech> {
+public abstract class PartOfSpeechDao implements NameableCrudDao<PartOfSpeech> {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract Long insert(PartOfSpeech entity);
@@ -33,6 +35,8 @@ public abstract class PartOfSpeechDao implements CrudDao<PartOfSpeech> {
     @Query("SELECT * FROM partOfSpeech p where p.languageID=:languageID order by p.name asc")
     abstract public List<PartOfSpeech> findAllByLanguageID(Long languageID);
 
-
+    @Override
+    @Query("SELECT * FROM partOfSpeech l where l.languageID=:parentID and l.name like '%'||:contains||'%' order by l.name")
+    abstract public List<PartOfSpeech> findAllOrderAlphabetic(Long parentID, String contains);
 
 }

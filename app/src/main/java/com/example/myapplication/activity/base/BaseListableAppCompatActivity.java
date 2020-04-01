@@ -1,11 +1,13 @@
 package com.example.myapplication.activity.base;
 
 import android.app.Dialog;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,7 +21,9 @@ import com.example.myapplication.service.base.NameableCrudService;
 import com.example.myapplication.utitliy.DbExecutor;
 import com.example.myapplication.utitliy.DbExecutorImp;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class BaseListableAppCompatActivity<T,
         S,
@@ -32,7 +36,27 @@ public abstract class BaseListableAppCompatActivity<T,
     private A adapter;
     public Dialog myDialog;
     public SearchView searchView;
-    private GetItemsExecutor<T> getItemsExecutor;
+    private GetItemsExecutorBlock<T> getItemsExecutor;
+
+    protected Map<Integer,onMenuItemClickHandlerExecutor> mappingMenuItemHandler;
+
+    public GetItemsExecutorBlock<T> getGetItemsExecutor() {
+        return getItemsExecutor;
+    }
+
+    public void setGetItemsExecutor(GetItemsExecutorBlock<T> getItemsExecutor) {
+        this.getItemsExecutor = getItemsExecutor;
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mappingMenuItemHandler=new HashMap<>();
+        onCreateCustom();
+    }
+
+
+
 
 
     @Override
@@ -67,14 +91,6 @@ public abstract class BaseListableAppCompatActivity<T,
 
 
 
-    public GetItemsExecutor<T> getGetItemsExecutor() {
-        return getItemsExecutor;
-    }
-
-    public void setGetItemsExecutor(GetItemsExecutor<T> getItemsExecutor) {
-        this.getItemsExecutor = getItemsExecutor;
-    }
-
     public void setItemService(S itemService) {
         this.itemService = itemService;
     }
@@ -106,7 +122,7 @@ public abstract class BaseListableAppCompatActivity<T,
             @Override
             public List<T> doInBackground() {
 
-                return getItemsExecutor.trigger();
+                return getItemsExecutor.execute();
             }
 
             @Override
@@ -123,9 +139,11 @@ public abstract class BaseListableAppCompatActivity<T,
     }
 
 
+    public Map<Integer, onMenuItemClickHandlerExecutor> getMappingMenuItemHandler() {
+        return mappingMenuItemHandler;
+    }
 
-
-
-
-
+    public void setMappingMenuItemHandler(Map<Integer, onMenuItemClickHandlerExecutor> mappingMenuItemHandler) {
+        this.mappingMenuItemHandler = mappingMenuItemHandler;
+    }
 }

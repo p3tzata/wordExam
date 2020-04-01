@@ -1,16 +1,19 @@
 package com.example.myapplication.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "language")
+@Entity(tableName = "language",indices = {@Index(unique = true, value = {"languageName"})})
 public class Language implements Serializable,TextLabelable {
 
     @PrimaryKey
     private Long languageID;
 
+    @NonNull
     private String languageName;
 
     private String definitionUrl;

@@ -8,7 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.example.myapplication.repository.BaseCrudRepository;
 
-public abstract class BaseCrudService<R extends BaseCrudRepository,T> extends AndroidViewModel {
+public abstract class BaseCrudService<R extends BaseCrudRepository,T> extends AndroidViewModel implements CrudService<T>{
 
     private R repository;
 

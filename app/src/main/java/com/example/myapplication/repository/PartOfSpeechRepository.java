@@ -7,7 +7,7 @@ import com.example.myapplication.entity.PartOfSpeech;
 
 import java.util.List;
 
-public class PartOfSpeechRepository extends BaseCrudRepository<PartOfSpeechDao, PartOfSpeech> {
+public class PartOfSpeechRepository extends BaseNameCrudRepository<PartOfSpeechDao, PartOfSpeech> {
 
     public PartOfSpeechRepository(Application application) {
         super(application);

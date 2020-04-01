@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 
 import com.example.myapplication.adapter.UpdWordBasicPartOfSpeechListAdapter;
+import com.example.myapplication.adapter.WordListAdapter;
 import com.example.myapplication.adapter.spinnerAdapter.WordFormSpinAdapter;
 import com.example.myapplication.adapter.spinnerAdapter.PartOfSpeechSpinAdapter;
 import com.example.myapplication.entity.PartOfSpeech;
@@ -172,7 +173,6 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
             protected Void doInBackground(Void... voids) {
 
 
-
                 wordService.update(word);
                 return null;
             }
@@ -182,7 +182,11 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
                 super.onPostExecute(aVoid);
                 Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_LONG).show();
                 //finish();
-                //startActivity(new Intent(UpdateWordBasicActivity.this, ListAllWordActivity.class));
+                Intent activity2Intent = new Intent(UpdateWordBasicActivity.this, UpdateWordMenuActivity.class);
+                activity2Intent.putExtra("translationAndLanguages", UpdateWordBasicActivity.this.translationAndLanguages);
+                activity2Intent.putExtra("translationFromLanguageID", UpdateWordBasicActivity.this.fromLanguageID);
+                activity2Intent.putExtra("word", word);
+                startActivity(activity2Intent);
             }
         }
 

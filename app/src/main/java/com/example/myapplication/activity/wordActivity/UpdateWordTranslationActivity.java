@@ -47,7 +47,7 @@ public class UpdateWordTranslationActivity extends AppCompatActivity {
         this.translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
         this.fromLanguageID = (Long) getIntent().getSerializableExtra("translationFromLanguageID");
         this.word = (Word) getIntent().getSerializableExtra("word");
-        getSupportActionBar().setTitle("Translation");
+        getSupportActionBar().setTitle(word.getWordString() + " | " + "Translations");
         getWords(word);
 
         FloatingActionButton fab_newWord = findViewById(R.id.fab_newItem);
