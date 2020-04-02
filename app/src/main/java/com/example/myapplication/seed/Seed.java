@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 
 import com.example.myapplication.database.DatabaseClient;
 import com.example.myapplication.database.WordRoomDatabase;
+import com.example.myapplication.entity.HelpSentence;
 import com.example.myapplication.entity.Language;
 import com.example.myapplication.entity.PartOfSpeech;
 import com.example.myapplication.entity.Profile;
@@ -55,6 +56,9 @@ public class Seed extends Application {
 
     public void seedDB(){
 
+
+
+
         Profile profile = new Profile();
         profile.setProfileName("Default");
         profile.setProfileDesc("Default Profile");
@@ -64,6 +68,7 @@ public class Seed extends Application {
 
         Language englishLanguage = new Language();
         englishLanguage.setLanguageName("English");
+        englishLanguage.setDefinitionUrl("https://dictionary.cambridge.org/dictionary/english/%s");
 
         Language franceLanguage = new Language();
         franceLanguage.setLanguageName("French");
@@ -132,19 +137,28 @@ public class Seed extends Application {
         wordForm2.setLanguageID(2L);
         wordForm2.setWordFormName("Plural");
 
-
-
+        HelpSentence helpSentence = new HelpSentence();
+        helpSentence.setWordID(1L);
+        helpSentence.setSentenceString("I am good father.");
+        helpSentence.setSentenceString("I am father of my son.");
 
         class SaveTask extends AsyncTask<Void, Void, Void> {
 
             @Override
             protected Void doInBackground(Void... voids) {
                 /**/
+                Profile profileServiceByID = profileService.findByID(1L);
+                if (profileServiceByID!=null) {
+                    return null;
+                }
+
+
                 profileService.insert(profile);
                 languageService.insert(bulgarianLanguage);
                 languageService.insert(englishLanguage);
                 languageService.insert(franceLanguage);
                 translationService.insert(translation);
+                translationService.insert(translation1);
                 Long foreignWordID = wordService.insert(foreignWord);
                 wordService.insert(word1);
                 wordService.insert(word2);

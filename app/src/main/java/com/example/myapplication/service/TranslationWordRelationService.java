@@ -33,6 +33,10 @@ public class TranslationWordRelationService extends BaseCrudService<TranslationW
         return super.getRepository().translateFromNative(nativeWordID,toLanguageID);
     }
 
+    public List<Word> translateFromForeign(Long foreignWordID,Long toLanguageID){
+        return super.getRepository().translateFromForeign(foreignWordID, toLanguageID);
+    }
+
 
     public ForeignWithNativeWords translateFromForeign(Long foreignWordID){
         return super.getRepository().translateFromForeign(foreignWordID);

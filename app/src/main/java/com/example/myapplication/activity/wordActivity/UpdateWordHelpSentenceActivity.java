@@ -60,45 +60,6 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
     }
 
 
-    /*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-
-        super.onCreate(savedInstanceState);
-        UpdateWordHelpSentenceActivity updateWordTranslationActivity = this;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setContentView(R.layout.activity_base_crudable);
-        HelpSentenceEditableAdapter adapter = new HelpSentenceEditableAdapter(UpdateWordHelpSentenceActivity.this);
-        super.setAdapter(adapter);
-        super.setContext(UpdateWordHelpSentenceActivity.this);
-        super.setItemService(FactoryUtil.createHelpSentenceService(getApplication()));
-
-        this.translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
-        this.fromLanguageID = (Long) getIntent().getSerializableExtra("translationFromLanguageID");
-        this.word = (Word) getIntent().getSerializableExtra("word");
-        setGetItemsExecutor(new GetItemsExecutorImp<HelpSentence>(new GetItemsExecutorBlock<HelpSentence>() {
-            @Override
-            public List<HelpSentence> execute() {
-                List<HelpSentence> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(0L, "");
-                return allOrderAlphabetic;
-            }
-        }));
-        getItems();
-        getSupportActionBar().setTitle(word.getWordString()+" Sentences");
-        FloatingActionButton fab_newItem = findViewById(R.id.fab_newItem);
-        fab_newItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handlerCreateUpdateClick(false,null);
-            }
-        });
-
-    }
-    */
-
-
-
 
 
     @Override

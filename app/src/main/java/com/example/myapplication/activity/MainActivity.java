@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Seed seed = new Seed(this.getApplication());
-        //seed.seedDB();
+        seed.seedDB();
 
 
     }

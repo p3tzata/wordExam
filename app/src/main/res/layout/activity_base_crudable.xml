@@ -9,14 +9,15 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
-        android:layout_width="376dp"
-        android:layout_height="558dp"
+        android:layout_width="377dp"
+        android:layout_height="403dp"
         android:layout_marginStart="19dp"
-        android:layout_marginTop="61dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="112dp"
+        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/recyclerview_item" />
@@ -27,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="336dp"
         android:layout_marginTop="37dp"
-        android:layout_marginEnd="19dp"
+        android:layout_marginEnd="60dp"
         android:layout_marginBottom="32dp"
         android:clickable="true"
         app:backgroundTint="@color/colorPrimary"

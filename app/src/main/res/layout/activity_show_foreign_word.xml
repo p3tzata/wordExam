@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scroll"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        android:fillViewport="true"
+        android:scrollbars="vertical"
+>
+
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            >
+
+
+            <Button
+                android:id="@+id/btn_openLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="295dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="22dp"
+                android:paddingStart="10sp"
+                android:paddingLeft="10sp"
+                android:paddingTop="10sp"
+                android:text="Open link" />
+
+            <ListView
+                android:id="@+id/show_foreign_helpSentence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_openLink"></ListView>
+
+            <ListView
+                android:id="@+id/show_foreign_partOfSpeech"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/show_foreign_helpSentence"></ListView>
+
+
+            <ListView
+                android:id="@+id/show_foreign_translation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/show_foreign_partOfSpeech"></ListView>
+
+            <ListView
+                android:id="@+id/show_foreign_wordForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/show_foreign_translation"></ListView>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+

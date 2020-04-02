@@ -35,6 +35,11 @@ public class TranslationWordRelationRepository extends BaseCrudRepository<Transl
         return super.getDao().translateFromNative(nativeWordID,toLanguageID);
     }
 
+    public List<Word> translateFromForeign(Long foreignWordID,Long toLanguageID){
+        return super.getDao().translateFromForeign(foreignWordID, toLanguageID);
+    }
+
+
 
     public TranslationWordRelation findByForeignWordIDAndNativeWordID(Long foreignWordID, Long nativeWordID){
         return super.getDao().findByForeignWordIDAndNativeWordID(foreignWordID,nativeWordID);

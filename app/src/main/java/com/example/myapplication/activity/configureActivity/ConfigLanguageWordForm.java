@@ -2,6 +2,7 @@ package com.example.myapplication.activity.configureActivity;
 
 import android.app.Dialog;
 import android.util.DisplayMetrics;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,7 +43,15 @@ public class ConfigLanguageWordForm extends BaseEditableAppCompatActivity<WordFo
         getItems();
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return true;
+    }
 
     @Override
     public void handlerCreateUpdateClick(boolean isEditMode, WordForm selectedItem) {

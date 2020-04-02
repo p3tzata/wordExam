@@ -36,7 +36,7 @@ public class ShowNativeWordActivity extends BaseListableAppCompatActivity<Word, 
 
         translationWordRelationService=FactoryUtil.createTranslationWordRelationService(getApplication());
         this.translationAndLanguages = (TranslationAndLanguages) i.getSerializableExtra("translationAndLanguages");
-        translationFromLanguageID = (Long) i.getSerializableExtra("translationFromLanguageID");
+        this.translationFromLanguageID = (Long) i.getSerializableExtra("translationFromLanguageID");
         this.word= (Word) i.getSerializableExtra("word");
         getSupportActionBar().setTitle(word.getWordString());
         setGetItemsExecutor(new GetItemsExecutorBlock<Word>() {

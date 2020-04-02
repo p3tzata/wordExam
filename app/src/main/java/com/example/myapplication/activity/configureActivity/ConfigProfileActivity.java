@@ -43,39 +43,7 @@ public class ConfigProfileActivity extends
     }
 
 
-/*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base_crudable);
-        super.setItemService(FactoryUtil.createProfileService(getApplication()));
-        ProfileEditableAdapter adapter = new ProfileEditableAdapter(ConfigProfileActivity.this);
-        super.setAdapter(adapter);
-        super.setContext(ConfigProfileActivity.this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Configure Profiles");
-        setGetItemsExecutor(new GetItemsExecutorImp<Profile>(new GetItemsExecutorBlock<Profile>() {
-            @Override
-            public List<Profile> execute() {
-                List<Profile> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(0L,"");
-                return allOrderAlphabetic;
-            }
-        }));
-        getItems();
-
-        FloatingActionButton fab_newItem = findViewById(R.id.fab_newItem);
-        fab_newItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                handlerCreateUpdateClick(false,null);
-            }
-        });
-
-
-    }
-
- */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

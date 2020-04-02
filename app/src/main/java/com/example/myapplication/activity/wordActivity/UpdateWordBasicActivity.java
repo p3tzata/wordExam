@@ -312,9 +312,6 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
         gt.execute();
     }
 
-
-
-
     private void getDefinedPartOfSpeech(Word word) {
         class GetTasks extends AsyncTask<Void, Void, ForeignWordWithDefPartOfSpeech> {
 
