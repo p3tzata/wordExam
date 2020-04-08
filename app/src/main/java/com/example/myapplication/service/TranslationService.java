@@ -27,6 +27,26 @@ public class TranslationService extends BaseNameCrudService<TranslationRepositor
         return super.getRepository().findAllTransAndLangByProfile(profileID);
     }
 
+    public Translation findByNativeLanguageIDAndForeignLanguageID(Long profileID,Long nativeLanguageID, Long foreignLanguageID){
+        return getRepository().findByNativeLanguageIDAndForeignLanguageID(profileID, nativeLanguageID, foreignLanguageID);
+    }
+
+    public Boolean isToForeignTranslation(Long ProfileID,Long sourceLanguageID,Long destinationLanguageID){
+        Translation check=null;
+        check = findByNativeLanguageIDAndForeignLanguageID(ProfileID, sourceLanguageID, destinationLanguageID);
+        if (check!=null) {
+            return true;
+        }
+        check = findByNativeLanguageIDAndForeignLanguageID(ProfileID, destinationLanguageID, sourceLanguageID);
+        if (check!=null) {
+            return false;
+        }
+
+        throw new IllegalArgumentException("Can not find translation");
+
+
+
+    }
 
 
 

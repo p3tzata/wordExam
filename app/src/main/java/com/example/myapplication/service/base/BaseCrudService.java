@@ -2,6 +2,7 @@ package com.example.myapplication.service.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -32,8 +33,6 @@ public abstract class BaseCrudService<R extends BaseCrudRepository,T> extends An
     public T findByID(Long ID) {
         return (T) repository.findByID(ID);
     }
-
-
 
 
 

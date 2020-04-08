@@ -11,10 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.configureActivity.ConfigLanguageWordForm"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".activity.configureActivity.ConfigLanguagePartOfSpeech"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".activity.exam.CFExamWordProceedQuestionActivity"></activity>
+        <activity android:name=".activity.exam.CFExamWordQuestionnaireNeedProceedActivity" />
+        <activity
+            android:name=".activity.configureActivity.ConfigLanguageWordForm"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.configureActivity.ConfigLanguagePartOfSpeech"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.wordActivity.WordAssignToExam" />
         <activity
             android:name=".activity.ChangeSelectedProfile"
@@ -52,6 +56,22 @@
             android:name=".activity.wordActivity.ListAllWordActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.wordActivity.NewWordActivity" />
+        <activity
+            android:name=".activity.exam.RandomExamListAllDictionaryActivity"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".activity.exam.RandomExamWordProceedQuestionActivity"
+            android:windowSoftInputMode="adjustPan" />
+
+
+        <activity
+            android:name=".activity.exam.RandomExamQuestionnaireNeedProceedActivity"
+            android:windowSoftInputMode="adjustPan" />
+
+
+
+
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

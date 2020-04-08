@@ -10,7 +10,7 @@ public abstract class BaseCrudRepository<Dao extends CrudDao,T> {
 
     WordRoomDatabase appDatabase;
     private Dao daoObject;
-    BaseCrudRepository(Context application) {
+    protected BaseCrudRepository(Context application) {
         appDatabase = DatabaseClient.getInstance(application).getAppDatabase();
     }
 

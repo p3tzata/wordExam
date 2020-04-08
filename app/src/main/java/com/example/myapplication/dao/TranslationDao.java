@@ -51,6 +51,11 @@ public abstract class TranslationDao implements NameableCrudDao<Translation> {
     @Query("SELECT * FROM translation l where l.profileID=:parentID and l.translationName like '%'||:contains||'%' order by l.translationName")
     abstract public List<Translation> findAllOrderAlphabetic(Long parentID, String contains);
 
+    @Query("Select * from translation t where t.profileID=:profileID " +
+            "and t.nativeLanguageID=:nativeLanguageID " +
+            "and t.foreignLanguageID=:foreignLanguageID")
+    abstract public Translation findByNativeLanguageIDAndForeignLanguageID(Long profileID,Long nativeLanguageID, Long foreignLanguageID);
+
 
 
 

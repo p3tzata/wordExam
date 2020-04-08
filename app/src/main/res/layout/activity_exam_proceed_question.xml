@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.exam.CFExamWordProceedQuestionActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="10sp">
+
+        <TextView
+            android:id="@+id/tx_examTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20sp"
+            android:paddingTop="20sp"
+            android:text="Translate:"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/tx_examWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20sp"
+            android:paddingTop="20sp"
+            android:text="TextView"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20sp">
+
+            <EditText
+                android:id="@+id/et_checkAnswer"
+                android:layout_width="282dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                 />
+
+            <Button
+                android:id="@+id/btn_examCheckAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Check" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingLeft="20sp"
+            android:paddingTop="20sp">
+
+            <Button
+                android:id="@+id/btn_examPassedFail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fail" />
+
+            <Button
+                android:id="@+id/btn_examHelp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Help" />
+
+            <Button
+                android:id="@+id/btn_examPassedOK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ok" />
+        </TableRow>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

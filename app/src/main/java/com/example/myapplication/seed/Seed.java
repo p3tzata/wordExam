@@ -5,18 +5,21 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 
-import com.example.myapplication.database.DatabaseClient;
-import com.example.myapplication.database.WordRoomDatabase;
 import com.example.myapplication.entity.HelpSentence;
 import com.example.myapplication.entity.Language;
 import com.example.myapplication.entity.PartOfSpeech;
 import com.example.myapplication.entity.Profile;
 import com.example.myapplication.entity.Translation;
-import com.example.myapplication.entity.TranslationWordRelation;
 import com.example.myapplication.entity.Word;
 import com.example.myapplication.entity.WordForm;
 import com.example.myapplication.entity.WordPartOfSpeech;
 import com.example.myapplication.entity.dto.WordCreationDTO;
+import com.example.myapplication.entity.exam.CFExamProfile;
+import com.example.myapplication.entity.exam.CFExamProfilePoint;
+import com.example.myapplication.entity.exam.CFExamTopicQuestionnaire;
+import com.example.myapplication.entity.exam.CFExamWordQuestionnaire;
+import com.example.myapplication.entity.exam.Topic;
+import com.example.myapplication.entity.exam.TopicType;
 import com.example.myapplication.factory.FactoryUtil;
 import com.example.myapplication.service.LanguageService;
 import com.example.myapplication.service.PartOfSpeechService;
@@ -26,8 +29,16 @@ import com.example.myapplication.service.TranslationWordRelationService;
 import com.example.myapplication.service.WordFormService;
 import com.example.myapplication.service.WordPartOfSpeechService;
 import com.example.myapplication.service.WordService;
+import com.example.myapplication.service.exam.CFExamProfilePointService;
+import com.example.myapplication.service.exam.CFExamProfileService;
+import com.example.myapplication.service.exam.CFExamTopicQuestionnaireService;
+import com.example.myapplication.service.exam.CFExamWordQuestionnaireService;
+import com.example.myapplication.service.exam.TopicService;
+import com.example.myapplication.service.exam.TopicTypeService;
 
 import org.modelmapper.ModelMapper;
+
+import java.util.Calendar;
 
 public class Seed extends Application {
     private Context context;
@@ -39,6 +50,14 @@ public class Seed extends Application {
     private PartOfSpeechService partOfSpeechService;
     private WordPartOfSpeechService wordPartOfSpeechService;
     private WordFormService wordFormService;
+    private TopicService topicService;
+    private TopicTypeService topicTypeService;
+    private CFExamTopicQuestionnaireService cfExamTopicQuestionnaireService;
+
+    private CFExamProfileService cfExamProfileService;
+    private CFExamProfilePointService cfExamProfilePointService;
+    private CFExamWordQuestionnaireService cfExamQuestionnaireService;
+
     public Seed(Application context){
 
 //        WordRoomDatabase appDatabase = DatabaseClient.getInstance(context).getAppDatabase();
@@ -51,7 +70,15 @@ public class Seed extends Application {
         this.partOfSpeechService=FactoryUtil.createPartOfSpeechService(this);
         this.wordPartOfSpeechService=FactoryUtil.createWordPartOfSpeechService(this);
         this.wordFormService=FactoryUtil.createWordFormService(this);
+        this.cfExamProfileService=FactoryUtil.createCFExamProfileService(this);
+        this.cfExamProfilePointService=FactoryUtil.createCFExamProfilePointService(this);
+        this.cfExamQuestionnaireService=FactoryUtil.createCFExamQuestionnaireService(this);
+        this.topicService = FactoryUtil.createTopicService(this);
+        this.topicTypeService = FactoryUtil.createTopicTypeService(this);
+        this.cfExamTopicQuestionnaireService=FactoryUtil.createCFExamTopicQuestionnaireService(this);
     }
+
+
 
 
     public void seedDB(){
@@ -147,6 +174,9 @@ public class Seed extends Application {
             @Override
             protected Void doInBackground(Void... voids) {
                 /**/
+
+
+
                 Profile profileServiceByID = profileService.findByID(1L);
                 if (profileServiceByID!=null) {
                     return null;
@@ -178,6 +208,72 @@ public class Seed extends Application {
 
                 wordFormService.insert(wordForm);
                 wordFormService.insert(wordForm1);
+
+
+
+                //Exam
+                cfExamProfileService.insert(new CFExamProfile(){{
+                    setName("Default Curve");
+                    setProfileID(1L);
+                }});
+
+                cfExamProfilePointService.insert(new CFExamProfilePoint(){{
+                    setName("1 min.");
+                    setCFExamProfileID(1L);
+                    setLastOfPeriodInMinute(1L);
+                }});
+
+                cfExamProfilePointService.insert(new CFExamProfilePoint(){{
+                    setName("3 min.");
+                    setCFExamProfileID(1L);
+                    setLastOfPeriodInMinute(3L);
+                }});
+
+                cfExamProfilePointService.insert(new CFExamProfilePoint(){{
+                    setName("5 min.");
+                    setCFExamProfileID(1L);
+                    setLastOfPeriodInMinute(5L);
+                }});
+
+
+
+                cfExamQuestionnaireService.insert(new CFExamWordQuestionnaire() {{
+                    setCurrentCFExamProfilePointID(1L);
+                    setTargetTranslationLanguageID(1L);
+                    setWordID(1L);
+                    setEntryPointDateTime(Calendar.getInstance().getTime());
+
+                }});
+
+                cfExamQuestionnaireService.insert(new CFExamWordQuestionnaire() {{
+                    setCurrentCFExamProfilePointID(1L);
+                    setTargetTranslationLanguageID(2L);
+                    setWordID(2L);
+                    setEntryPointDateTime(Calendar.getInstance().getTime());
+
+                }});
+
+
+
+                topicTypeService.insert(new TopicType(){{setProfileID(1L);
+                setTopicTypeName("Default topic type");}});
+
+                topicService.insert(new Topic(){{setTopicTypeID(1L);
+                setTopicQuestion("What is my name.");
+                setTopicAnswer("Какво е товето име.");}});
+
+                cfExamTopicQuestionnaireService.insert(new CFExamTopicQuestionnaire(){{
+                    setCurrentCFExamProfilePointID(1L);
+                    setEntryPointDateTime(Calendar.getInstance().getTime());
+                    setTopicID(1L);
+                }});
+
+
+
+
+
+
+
 
                 String debug=null;
                 return null;

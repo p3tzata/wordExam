@@ -122,7 +122,8 @@ public abstract class BaseListableAppCompatActivity<T,
             @Override
             public List<T> doInBackground() {
 
-                return getItemsExecutor.execute();
+                List<T> execute = getItemsExecutor.execute();
+                return execute;
             }
 
             @Override

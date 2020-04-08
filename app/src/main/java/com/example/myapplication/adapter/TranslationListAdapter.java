@@ -79,6 +79,7 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
         private final TextView toForeignItemView;
 
         private TranslationViewHolder(View itemView) {
+
             super(itemView);
             fromForeignItemView = itemView.findViewById(R.id.tx_fromForeign);
             toForeignItemView = itemView.findViewById(R.id.tx_toForeign);
@@ -103,21 +104,10 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
             });
 
 
-            //itemView.setOnClickListener(this);
+
         }
 
-        /*
-        @Override
-        public void onClick(View v) {
-            TranslationAndLanguages word = mTranslations.get(getAdapterPosition());
 
-            Intent intent = new Intent(context, UpdateWordActivity.class);
-            intent.putExtra("translation_id", word.getTranslation().getTranslationID());
-
-
-            context.startActivity(intent);
-
-        }*/
 
     }
 

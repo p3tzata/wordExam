@@ -23,5 +23,8 @@ public class TranslationRepository extends BaseNameCrudRepository<TranslationDao
         return super.getDao().findAllTransAndLangByProfile(profileID);
     }
 
+    public Translation findByNativeLanguageIDAndForeignLanguageID(Long profileID,Long nativeLanguageID, Long foreignLanguageID){
+        return getDao().findByNativeLanguageIDAndForeignLanguageID(profileID, nativeLanguageID, foreignLanguageID);
+    }
 
-}
+    }

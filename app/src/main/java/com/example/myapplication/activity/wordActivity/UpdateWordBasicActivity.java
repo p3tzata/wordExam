@@ -79,7 +79,7 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
 
         /**/
         findViewById(R.id.btn_UpdateForeignWord).setOnClickListener(new View.OnClickListener() {
-            @Override
+                @Override
             public void onClick(View view) {
                 exportFormToEntiy(word);
                 updateWord();

@@ -37,4 +37,6 @@ public abstract class WordDao implements CrudDao<Word> {
     abstract public List<Word> findByWordStringContainsAndProfileIDAndLanguageID(String wordStringContain,Long profileID,Long languageID);
 
 
+
+
 }

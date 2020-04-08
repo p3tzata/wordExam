@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -46,9 +47,10 @@ import java.util.stream.Collectors;
 
 public class ShowForeignWordActivity extends AppCompatActivity {
 
-    TranslationAndLanguages translationAndLanguages;
+
     private Word word;
     private Long translationFromLanguageID;
+    private Long translationToLanguageID;
 
 
     private TranslationWordRelationService translationWordRelationService;
@@ -58,9 +60,22 @@ public class ShowForeignWordActivity extends AppCompatActivity {
     private LanguageService languageService;
     private HelpSentenceService helpSentenceService;
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_show_foreign_word);
         this.translationWordRelationService = FactoryUtil.createTranslationWordRelationService(getApplication());
         this.wordFormService = FactoryUtil.createWordFormService(getApplication());
@@ -68,8 +83,9 @@ public class ShowForeignWordActivity extends AppCompatActivity {
         this.wordPartOfSpeechService=FactoryUtil.createWordPartOfSpeechService(getApplication());
         this.languageService=FactoryUtil.createLanguageService(getApplication());
         this.helpSentenceService=FactoryUtil.createHelpSentenceService(getApplication());
-        this.translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
+      //  this.translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
         this.translationFromLanguageID = (Long) getIntent().getSerializableExtra("translationFromLanguageID");
+        this.translationToLanguageID = (Long) getIntent().getSerializableExtra("translationToLanguageID");
         this.word= (Word) getIntent().getSerializableExtra("word");
         getSupportActionBar().setTitle(word.getWordString());
 
@@ -276,7 +292,8 @@ public class ShowForeignWordActivity extends AppCompatActivity {
             @Override
             public List<Word> doInBackground() {
 
-                return translationWordRelationService.translateFromForeign(foreignWord.getWordID(),translationAndLanguages.getNativeLanguage().getLanguageID());
+                //return translationWordRelationService.translateFromForeign(foreignWord.getWordID(),translationAndLanguages.getNativeLanguage().getLanguageID());
+                return translationWordRelationService.translateFromForeign(foreignWord.getWordID(),translationToLanguageID);
 
             }
 

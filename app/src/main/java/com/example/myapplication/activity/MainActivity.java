@@ -1,10 +1,8 @@
 package com.example.myapplication.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,24 +11,35 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.exam.CFExamWordQuestionnaireNeedProceedActivity;
+import com.example.myapplication.activity.exam.RandomExamListAllDictionaryActivity;
 import com.example.myapplication.seed.Seed;
 import com.example.myapplication.utitliy.MenuUtility;
 import com.example.myapplication.utitliy.Session;
 import com.example.myapplication.utitliy.SessionNameAttribute;
 
 public class MainActivity extends AppCompatActivity {
+/*TODO
+define CF profile Point.
+attach and unattach to CF exam.
+
+
+
+
+ */
 
 
     private Menu mOptionsMenu;
 
     ListView mainListMenu;
 
-    String[] mainListMenuOptions = new String[]{"Dictionaries","Item1"};
-    Class<?>[] mainListMenuOptionsNavigate = new Class[]{ListAllDictionary.class,ListAllDictionary.class};
+    String[] mainListMenuOptions = new String[]{"Dictionaries","CF Word exam","Random Word exam"};
+    Class<?>[] mainListMenuOptionsNavigate = new Class[]{ListAllDictionary.class,
+            CFExamWordQuestionnaireNeedProceedActivity.class,
+            RandomExamListAllDictionaryActivity.class};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Seed seed = new Seed(this.getApplication());
+
         seed.seedDB();
 
 

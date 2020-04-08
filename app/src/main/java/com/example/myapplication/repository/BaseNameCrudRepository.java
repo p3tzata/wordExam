@@ -9,7 +9,7 @@ import java.util.List;
 public abstract class BaseNameCrudRepository<Dao extends NameableCrudDao,T> extends BaseCrudRepository<Dao,T>
         implements NameableCrudRepository<T> {
 
-    BaseNameCrudRepository(Context application) {
+    protected BaseNameCrudRepository(Context application) {
         super(application);
     }
 
