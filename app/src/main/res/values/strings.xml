@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">WordCFExam</string>
     <string name="hint_word">Word...</string>
     <string name="button_save">Save</string>
     <string name="button_viewAllWords">View All Words</string>

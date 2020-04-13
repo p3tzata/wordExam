@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myapplication">
+    package="com.example.WordCFExam">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
 
     <application
         android:allowBackup="true"
@@ -11,7 +15,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.exam.CFExamWordProceedQuestionActivity"></activity>
+
+
+
+
+        <service
+            android:name=".background.YourService"
+            android:enabled="true"
+            android:process=":your_service" >
+        </service>
+
+        <receiver android:name=".background.AutoStart">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".background.NotificationPublisher"
+            android:process=":remote" />
+
+
+
+
+
+
+
+        <activity android:name=".activity.configureActivity.ConfigDBImportExport" />
+        <activity android:name=".activity.exam.CFExamWordProceedQuestionActivity" />
         <activity android:name=".activity.exam.CFExamWordQuestionnaireNeedProceedActivity" />
         <activity
             android:name=".activity.configureActivity.ConfigLanguageWordForm"
@@ -19,7 +50,21 @@
         <activity
             android:name=".activity.configureActivity.ConfigLanguagePartOfSpeech"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.wordActivity.WordAssignToExam" />
+        <activity
+            android:name=".activity.configureActivity.ConfigCFExamProfileActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.configureActivity.ConfigCFExamProfilePointActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.wordActivity.ListWordEditableActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.wordActivity.ListWordListableActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.configureActivity.ConfigTopicTypeActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.ChangeSelectedProfile"
             android:windowSoftInputMode="adjustPan" />
@@ -59,19 +104,27 @@
         <activity
             android:name=".activity.exam.RandomExamListAllDictionaryActivity"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".activity.exam.RandomExamWordProceedQuestionActivity"
             android:windowSoftInputMode="adjustPan" />
-
-
         <activity
             android:name=".activity.exam.RandomExamQuestionnaireNeedProceedActivity"
             android:windowSoftInputMode="adjustPan" />
-
-
-
-
+        <activity
+            android:name=".activity.exam.CFExamTopicProceedQuestionActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.exam.CFExamTopicQuestionnaireNeedProceedActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.topic.TopicListableActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.topic.TopicEditableActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.topic.TopicTypeActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
