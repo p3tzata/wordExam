@@ -173,6 +173,16 @@ public class ConfigCFExamProfilePointActivity extends
                try {
 
                 int checkedRadioButtonId = radioGroupPeriod.getCheckedRadioButtonId();
+                if (checkedRadioButtonId<1) {
+                    isOnError=true;
+                    Toast.makeText(getContext(), "Error: Select Period", Toast.LENGTH_SHORT).show();
+                }
+                if (et_newItem.getText().toString().length()<1) {
+                    isOnError=true;
+                    Toast.makeText(getContext(), "Error: Type Name", Toast.LENGTH_SHORT).show();
+                }
+
+
                 if (checkedRadioButtonId == myDialog.findViewById(R.id.rg_period_minute).getId()) {
                     calcPeriod = Long.valueOf(et_period.getText().toString());
                 } else if (checkedRadioButtonId == myDialog.findViewById(R.id.rg_period_day).getId()) {

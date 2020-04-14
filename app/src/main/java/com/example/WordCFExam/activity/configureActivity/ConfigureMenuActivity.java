@@ -2,6 +2,7 @@ package com.example.WordCFExam.activity.configureActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -12,6 +13,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.WordCFExam.R;
+import com.example.WordCFExam.activity.MainActivity;
+import com.example.WordCFExam.background.ManualStartCFExamService;
 import com.example.WordCFExam.utitliy.Session;
 import com.example.WordCFExam.utitliy.SessionNameAttribute;
 
@@ -25,13 +28,16 @@ public class ConfigureMenuActivity extends AppCompatActivity {
             "Translation",
             "CF Exam profile",
             "TopicType",
-            "DB Import / Export"};
+            "Preference",
+            "DB Import / Export"
+            };
     Class<?>[] mainListMenuOptionsNavigate = new Class[]{
             ConfigProfileActivity.class,
             ConfigLanguageActivity.class,
             ConfigTranslationActivity.class,
             ConfigCFExamProfileActivity.class,
             ConfigTopicTypeActivity.class,
+            ConfigPreferenceActivity.class,
             ConfigDBImportExport.class};
 
     Class<?>[] mainListMenuNeedProfile = new Class[]{
@@ -43,7 +49,9 @@ public class ConfigureMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configure_menu);
-        getSupportActionBar().setTitle("Configure Menu");
+        getSupportActionBar().setTitle("Configure " + "("+
+                Session.getStringAttribute(ConfigureMenuActivity.this, SessionNameAttribute.ProfileName, "")
+                +")");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mainListMenu = (ListView) findViewById(R.id.configureListMenu);
 
@@ -73,6 +81,11 @@ public class ConfigureMenuActivity extends AppCompatActivity {
 
             }
         });
+
+        ComponentName componentName = startService(new Intent(ConfigureMenuActivity.this, ManualStartCFExamService.class));
+        if (componentName!=null) {
+            Toast.makeText(getApplicationContext(), "Scheduled Started", Toast.LENGTH_LONG).show();
+        }
 
 
     }

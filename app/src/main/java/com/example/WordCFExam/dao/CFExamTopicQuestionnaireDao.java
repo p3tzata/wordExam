@@ -9,6 +9,7 @@ import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.example.WordCFExam.dao.base.CrudDao;
+import com.example.WordCFExam.entity.Profile;
 import com.example.WordCFExam.entity.exam.CFExamTopicQuestionnaire;
 import com.example.WordCFExam.entity.exam.CFExamTopicQuestionnaireCross;
 
@@ -31,14 +32,32 @@ public abstract class CFExamTopicQuestionnaireDao implements CrudDao<CFExamTopic
 
 
     @Transaction
-    @Query("SELECT q.* FROM CFExamTopicQuestionnaire q INNER JOIN CFExamProfilePoint p " +
+    @Query("SELECT pf.* FROM CFExamTopicQuestionnaire q INNER JOIN CFExamProfilePoint p " +
             "on q.currentCFExamProfilePointID=p.CFExamProfilePointID " +
+            "INNER JOIN topic t on t.topicID=q.topicID " +
+            "INNER JOIN topictype tt on tt.topicTypeID=t.topicTypeID " +
+            "INNER JOIN profile pf on pf.profileID=tt.profileID " +
             "where " +
             "q.entryPointDateTime + " +
             "(IFNULL((q.postponeInMinute*60*1000),0)) " +
-            "+ (p.lastOfPeriodInMinute*60*1000) < :currentTime"
+            "+ (p.lastOfPeriodInMinute*60*1000) < :currentTime " +
+            "group by pf.profileID"
     )
-    abstract public List<CFExamTopicQuestionnaireCross> findAllNeedProceed(Long currentTime);
+    abstract public List<Profile> findAllProfileNeedProceed(Long currentTime);
+
+    @Transaction
+    @Query("SELECT q.* FROM CFExamTopicQuestionnaire q INNER JOIN CFExamProfilePoint p " +
+            "on q.currentCFExamProfilePointID=p.CFExamProfilePointID " +
+            "INNER JOIN topic t on t.topicID=q.topicID " +
+            "INNER JOIN topictype tt on tt.topicTypeID=t.topicTypeID and tt.profileID=:profileID " +
+            "INNER JOIN profile pf on pf.profileID=tt.profileID " +
+            "where " +
+            "q.entryPointDateTime + " +
+            "(IFNULL((q.postponeInMinute*60*1000),0)) " +
+            "+ (p.lastOfPeriodInMinute*60*1000) < :currentTime " )
+    abstract public List<CFExamTopicQuestionnaireCross> findAllNeedProceed(Long profileID, Long currentTime);
+
+
 
     @Transaction
     @Query("SELECT q.* FROM CFExamTopicQuestionnaire q WHere q.topicID=:wordID")

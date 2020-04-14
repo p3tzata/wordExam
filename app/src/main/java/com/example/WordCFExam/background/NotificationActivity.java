@@ -8,6 +8,9 @@ import com.example.WordCFExam.R;
 
 public class NotificationActivity extends AppCompatActivity {
 
+    public NotificationActivity() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

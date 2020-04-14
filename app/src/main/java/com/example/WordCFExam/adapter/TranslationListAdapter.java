@@ -45,10 +45,10 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
         if (mTranslations != null) {
             TranslationAndLanguages current = mTranslations.get(position);
 
-            holder.fromForeignItemView.setText(current.getForeignLanguage().getLanguageName() + " -> " +
+            holder.fromForeignItemView.setText(current.getForeignLanguage().getLanguageName() + " to " +
                     current.getNativeLanguage().getLanguageName());
 
-            holder.toForeignItemView.setText(current.getNativeLanguage().getLanguageName() + " -> " +
+            holder.toForeignItemView.setText(current.getNativeLanguage().getLanguageName() + " to " +
                     current.getForeignLanguage().getLanguageName());
 
         } else {

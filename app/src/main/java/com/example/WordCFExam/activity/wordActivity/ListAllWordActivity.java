@@ -17,7 +17,6 @@ import android.widget.SearchView;
 
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.ListAllDictionary;
 import com.example.WordCFExam.adapter.WordListAdapter;
 import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.dto.TranslationAndLanguages;

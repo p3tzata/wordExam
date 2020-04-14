@@ -1,4 +1,4 @@
-package com.example.WordCFExam.seed;
+package com.example.WordCFExam.utitliy;
 
 import android.app.Application;
 import android.content.Context;
@@ -39,8 +39,9 @@ import com.example.WordCFExam.service.exam.TopicTypeService;
 import org.modelmapper.ModelMapper;
 
 import java.util.Calendar;
+import java.util.List;
 
-public class Seed extends Application {
+public class DBUtil extends Application {
     private Context context;
     private ProfileService profileService;
     private LanguageService languageService;
@@ -58,7 +59,7 @@ public class Seed extends Application {
     private CFExamProfilePointService cfExamProfilePointService;
     private CFExamWordQuestionnaireService cfExamQuestionnaireService;
 
-    public Seed(Application context){
+    public DBUtil(Application context){
 
 //        WordRoomDatabase appDatabase = DatabaseClient.getInstance(context).getAppDatabase();
 
@@ -295,6 +296,37 @@ public class Seed extends Application {
 
 
 
+
+
+    }
+
+    public void testCFExamAlarm(){
+
+
+        DbExecutorImp<String> dbExecutor = FactoryUtil.<String>createDbExecutor();
+        dbExecutor.execute_(new DbExecutor<String>() {
+            @Override
+            public String doInBackground() {
+                List<Profile> allProfileNeedProceed = cfExamQuestionnaireService.findAllProfileNeedProceed();
+                StringBuilder stringBuilder = new StringBuilder();
+                if (allProfileNeedProceed.size() > 0) {
+
+                    stringBuilder.append("CF Word Exam: ");
+                    stringBuilder.append("\n");
+                    for (Profile profile : allProfileNeedProceed
+                    ) {
+                        stringBuilder.append(profile.getProfileName() + ",");
+                    }
+
+                }
+                return stringBuilder.toString();
+            }
+
+            @Override
+            public void onPostExecute(String item) {
+                ;
+            }
+        });
 
 
     }

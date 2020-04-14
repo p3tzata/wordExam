@@ -1,46 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.WordCFExam">
-
+    <!--  -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".CFExamApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-
+        <activity android:name=".activity.configureActivity.ConfigPreferenceActivity"></activity>
 
         <service
-            android:name=".background.YourService"
+            android:name=".background.ManualStartCFExamService"
             android:enabled="true"
-            android:process=":your_service" >
-        </service>
+            android:exported="true" />
 
-        <receiver android:name=".background.AutoStart">
+        <receiver
+            android:name=".background.AutoStartCFExamBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
         <receiver
-            android:name=".background.NotificationPublisher"
+            android:name=".background.CFExamAlarm"
+            android:enabled="true"
+            android:exported="true"
             android:process=":remote" />
 
-
-
-
-
-
-
+        <activity android:name=".background.NotificationActivity" />
         <activity android:name=".activity.configureActivity.ConfigDBImportExport" />
         <activity android:name=".activity.exam.CFExamWordProceedQuestionActivity" />
         <activity android:name=".activity.exam.CFExamWordQuestionnaireNeedProceedActivity" />
@@ -76,7 +72,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.configureActivity.ConfigLanguageActivity"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan" /> <!--  -->
         <activity
             android:name=".activity.configureActivity.ConfigureMenuActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -90,7 +86,7 @@
         <activity
             android:name=".activity.wordActivity.ShowNativeWordActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.ListAllDictionary" />
+        <activity android:name=".activity.wordActivity.ListAllDictionary" />
         <activity
             android:name=".activity.wordActivity.UpdateWordBasicActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -121,7 +117,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.topic.TopicEditableActivity"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan" /> <!--  -->
         <activity
             android:name=".activity.topic.TopicTypeActivity"
             android:windowSoftInputMode="adjustPan" />

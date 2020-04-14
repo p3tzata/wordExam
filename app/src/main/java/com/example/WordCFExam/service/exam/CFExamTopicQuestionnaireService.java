@@ -2,6 +2,7 @@ package com.example.WordCFExam.service.exam;
 
 import android.app.Application;
 
+import com.example.WordCFExam.entity.Profile;
 import com.example.WordCFExam.entity.exam.CFExamProfile;
 import com.example.WordCFExam.entity.exam.CFExamProfilePoint;
 import com.example.WordCFExam.entity.exam.CFExamTopicQuestionnaire;
@@ -93,9 +94,14 @@ public class CFExamTopicQuestionnaireService extends
 
 
 
-    public List<CFExamTopicQuestionnaireCross> findAllNeedProceed(){
+    public List<Profile> findAllProfileNeedProceed(){
 
-        return getRepository().findAllNeedProceed(System.currentTimeMillis());
+        return getRepository().findAllProfileNeedProceed(System.currentTimeMillis());
+    }
+
+    public List<CFExamTopicQuestionnaireCross> findAllNeedProceed(Long profileID){
+
+        return getRepository().findAllNeedProceed(profileID,System.currentTimeMillis());
     }
 
 

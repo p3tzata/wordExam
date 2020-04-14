@@ -13,7 +13,7 @@
 >
 
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
@@ -22,18 +22,9 @@
 
             <Button
                 android:id="@+id/btn_openLink"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="295dp"
-                android:layout_marginLeft="70dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="22dp"
-                android:paddingStart="10sp"
-                android:paddingLeft="10sp"
-                android:paddingTop="10sp"
+
                 android:text="Open link" />
 
             <ListView

@@ -1,4 +1,4 @@
-package com.example.WordCFExam.activity;
+package com.example.WordCFExam.activity.wordActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.WordCFExam.R;
+import com.example.WordCFExam.activity.MainActivity;
 import com.example.WordCFExam.adapter.TranslationListAdapter;
 import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
 import com.example.WordCFExam.factory.FactoryUtil;

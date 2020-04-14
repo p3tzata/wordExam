@@ -11,6 +11,8 @@ import com.example.WordCFExam.adapter.exam.CFExamWordQuestionnaireNeedProceedAda
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaireCross;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.exam.CFExamWordQuestionnaireService;
+import com.example.WordCFExam.utitliy.Session;
+import com.example.WordCFExam.utitliy.SessionNameAttribute;
 
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class CFExamWordQuestionnaireNeedProceedActivity
         setGetItemsExecutor(new GetItemsExecutorBlock<CFExamWordQuestionnaireCross>() {
             @Override
             public List<CFExamWordQuestionnaireCross> execute() {
-                List<CFExamWordQuestionnaireCross> allOrderAlphabetic = getItemService().findAllNeedProceed();
+                List<CFExamWordQuestionnaireCross> allOrderAlphabetic = getItemService().findAllNeedProceed(Session.getLongAttribute(getContext(), SessionNameAttribute.ProfileID,-1L));
                 return allOrderAlphabetic;
             }
         });

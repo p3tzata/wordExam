@@ -8,6 +8,6 @@
         style="@style/word_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="#FFFFFFFF"
         android:fontFamily="serif" />
 </LinearLayout>

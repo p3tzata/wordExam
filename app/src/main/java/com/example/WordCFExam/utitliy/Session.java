@@ -57,6 +57,24 @@ public class Session {
         editor.apply();
     }
 
+    public static int getIntAttribute(Context context, SessionNameAttribute sessionNameAttribute, int defaultValue) {
+
+        SharedPreferences sharedpreferences;
+        sharedpreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        int value = sharedpreferences.getInt(sessionNameAttribute.getValue(), defaultValue);
+        return value;
+    }
+
+
+    public static void setIntAttribute(Context context, SessionNameAttribute sessionNameAttribute, int value ) {
+        SharedPreferences sharedpreferences;
+        sharedpreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putInt(sessionNameAttribute.getValue(),value);
+        editor.apply();
+    }
+
+
 
 
 

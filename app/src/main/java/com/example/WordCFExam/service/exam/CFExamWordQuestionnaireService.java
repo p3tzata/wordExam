@@ -1,7 +1,9 @@
 package com.example.WordCFExam.service.exam;
 
 import android.app.Application;
+import android.content.Context;
 
+import com.example.WordCFExam.entity.Profile;
 import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.exam.CFExamProfile;
 import com.example.WordCFExam.entity.exam.CFExamProfilePoint;
@@ -32,10 +34,17 @@ implements CrudService<CFExamWordQuestionnaire>,ExamQuestionnaireService<CFExamW
         translationWordRelationService = FactoryUtil.createTranslationWordRelationService(getApplication());
     }
 
-    public List<CFExamWordQuestionnaireCross> findAllNeedProceed(){
+    public List<Profile> findAllProfileNeedProceed(){
 
-        return getRepository().findAllNeedProceed(System.currentTimeMillis());
+        return getRepository().findAllProfileNeedProceed(System.currentTimeMillis());
     }
+
+    public List<CFExamWordQuestionnaireCross> findAllNeedProceed(Long profileID){
+
+        return getRepository().findAllNeedProceed(profileID, System.currentTimeMillis());
+    }
+
+
 
     @Override
     public boolean examProcessedOK(CFExamWordQuestionnaire item) {

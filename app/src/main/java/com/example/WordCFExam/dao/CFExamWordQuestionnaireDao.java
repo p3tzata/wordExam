@@ -9,6 +9,7 @@ import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.example.WordCFExam.dao.base.CrudDao;
+import com.example.WordCFExam.entity.Profile;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaireCross;
 
@@ -31,14 +32,31 @@ public abstract class CFExamWordQuestionnaireDao implements CrudDao<CFExamWordQu
 
 
     @Transaction
+    @Query("SELECT pf.* FROM CFExamWordQuestionnaire q INNER JOIN CFExamProfilePoint p " +
+            "on q.currentCFExamProfilePointID=p.CFExamProfilePointID " +
+            "INNER JOIN word w on w.wordID=q.wordID " +
+            "INNER JOIN profile pf on pf.profileID=w.profileID " +
+            "where " +
+            "q.entryPointDateTime + " +
+            "(IFNULL((q.postponeInMinute*60*1000),0)) " +
+            "+ (p.lastOfPeriodInMinute*60*1000) < :currentTime " +
+            "group by pf.profileID"
+    )
+    abstract public List<Profile> findAllProfileNeedProceed(Long currentTime);
+
+    @Transaction
     @Query("SELECT q.* FROM CFExamWordQuestionnaire q INNER JOIN CFExamProfilePoint p " +
             "on q.currentCFExamProfilePointID=p.CFExamProfilePointID " +
+            "INNER JOIN word w on w.wordID=q.wordID and w.profileID=:profileID " +
             "where " +
             "q.entryPointDateTime + " +
             "(IFNULL((q.postponeInMinute*60*1000),0)) " +
             "+ (p.lastOfPeriodInMinute*60*1000) < :currentTime"
     )
-    abstract public List<CFExamWordQuestionnaireCross> findAllNeedProceed(Long currentTime);
+    abstract public List<CFExamWordQuestionnaireCross> findAllNeedProceed(Long profileID,Long currentTime);
+
+
+
 
     @Transaction
     @Query("SELECT q.* FROM CFExamWordQuestionnaire q WHere q.wordID=:wordID and q.targetTranslationLanguageID=:toLanguageID" )

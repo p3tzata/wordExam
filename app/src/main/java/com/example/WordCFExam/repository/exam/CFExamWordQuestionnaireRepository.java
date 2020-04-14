@@ -1,8 +1,10 @@
 package com.example.WordCFExam.repository.exam;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.example.WordCFExam.dao.CFExamWordQuestionnaireDao;
+import com.example.WordCFExam.entity.Profile;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaireCross;
 import com.example.WordCFExam.repository.BaseCrudRepository;
@@ -11,14 +13,20 @@ import java.util.List;
 
 public class CFExamWordQuestionnaireRepository extends BaseCrudRepository<CFExamWordQuestionnaireDao, CFExamWordQuestionnaire> {
 
-    public CFExamWordQuestionnaireRepository(Application application) {
-        super(application);
+    public CFExamWordQuestionnaireRepository(Context context) {
+        super(context);
         super.setDao(super.getAppDatabase().cfExamQuestionnaireDao());
     }
 
-    public List<CFExamWordQuestionnaireCross> findAllNeedProceed(Long currentTime){
-        return getDao().findAllNeedProceed(currentTime);
+    public List<Profile> findAllProfileNeedProceed(Long currentTime){
+        return getDao().findAllProfileNeedProceed(currentTime);
     }
+
+    public List<CFExamWordQuestionnaireCross> findAllNeedProceed(Long profileID,Long currentTime){
+        return getDao().findAllNeedProceed(profileID,currentTime);
+    }
+
+
 
     public CFExamWordQuestionnaire findByWordID(Long wordID, Long toLanguageID){
        return getDao().findByWordID(wordID, toLanguageID);

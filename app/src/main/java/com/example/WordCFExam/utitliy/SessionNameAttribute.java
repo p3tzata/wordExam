@@ -4,7 +4,10 @@ public enum SessionNameAttribute {
 
     ProfileID("ProfileID"),
     ProfileName("ProfileName"),
-    IsEditMode("IsEditMode");
+    IsEditMode("IsEditMode"),
+    CfExamEnabledFromHour("CfExamEnabledFromHour"),
+    CfExamEnabledToHour("CfExamEnabledToHour"),
+    CfExamSearchRateMinute("CfExamSearchRateMinute");
 
     private String value;
 

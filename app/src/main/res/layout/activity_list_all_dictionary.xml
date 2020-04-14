@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ListAllDictionary">
+    tools:context=".activity.wordActivity.ListAllDictionary">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_list_all_dictionary"
