@@ -138,6 +138,15 @@ Testing.
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        getSupportActionBar().setTitle("Main " + "("+
+                Session.getStringAttribute(MainActivity.this, SessionNameAttribute.ProfileName, "")
+                +")");
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {

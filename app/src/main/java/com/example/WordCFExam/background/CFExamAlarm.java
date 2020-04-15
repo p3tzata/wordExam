@@ -27,6 +27,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CFExamAlarm extends BroadcastReceiver {
 
@@ -35,7 +37,7 @@ public class CFExamAlarm extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context=context;
-        android.os.Debug.waitForDebugger();
+       // android.os.Debug.waitForDebugger();
         boolean isInDoNotDisturb = false;
         DateFormat dateFormat = new SimpleDateFormat("HH");
         String formattedEntryPointDate = dateFormat.format(Calendar.getInstance().getTime());
@@ -111,10 +113,8 @@ public class CFExamAlarm extends BroadcastReceiver {
     public void setAlarm(Context context)
     {
         //android.os.Debug.waitForDebugger();
-
         int searchRateMinute = Session.getIntAttribute(context, SessionNameAttribute.CfExamSearchRateMinute, 1);
         int intervalMilliSecs = 1000 * 60 * searchRateMinute;
-       // intervalMilliSecs=1000*10;
         AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, CFExamAlarm.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
@@ -140,8 +140,18 @@ public class CFExamAlarm extends BroadcastReceiver {
                 .setFullScreenIntent(pendingIntent,true)
                 .setAutoCancel(true);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.notify(1, builder.build());
+        new Timer().schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+                notificationManager.notify(1, builder.build());
+
+            }
+        }, 1000);
+
+
+
 
     }
 

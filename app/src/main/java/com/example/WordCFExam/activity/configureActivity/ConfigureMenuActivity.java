@@ -104,4 +104,14 @@ public class ConfigureMenuActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        getSupportActionBar().setTitle("Configure " + "("+
+                Session.getStringAttribute(ConfigureMenuActivity.this, SessionNameAttribute.ProfileName, "")
+                +")");
+
+    }
+
+
 }
