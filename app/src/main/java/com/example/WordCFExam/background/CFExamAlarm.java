@@ -35,17 +35,14 @@ public class CFExamAlarm extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context=context;
-     //   android.os.Debug.waitForDebugger();
+        android.os.Debug.waitForDebugger();
         boolean isInDoNotDisturb = false;
         DateFormat dateFormat = new SimpleDateFormat("HH");
         String formattedEntryPointDate = dateFormat.format(Calendar.getInstance().getTime());
         int currentHour=Integer.valueOf(formattedEntryPointDate);
         int enabledFromHour= Session.getIntAttribute(context, SessionNameAttribute.CfExamEnabledFromHour,6);
-        int enabledToHour=Session.getIntAttribute(context, SessionNameAttribute.CfExamEnabledFromHour,22);
+        int enabledToHour=Session.getIntAttribute(context, SessionNameAttribute.CfExamEnabledToHour,22);
 
-        currentHour=21;
-        enabledFromHour=20;
-        enabledToHour=6;
 
         if ( enabledFromHour<=enabledToHour && (currentHour<enabledFromHour || currentHour>enabledToHour) )  {
             isInDoNotDisturb=true;
@@ -113,10 +110,11 @@ public class CFExamAlarm extends BroadcastReceiver {
 
     public void setAlarm(Context context)
     {
-      //  android.os.Debug.waitForDebugger();
+        //android.os.Debug.waitForDebugger();
 
-        int searchRateMinute = Session.getIntAttribute(context, SessionNameAttribute.CfExamSearchRateMinute, 15);
+        int searchRateMinute = Session.getIntAttribute(context, SessionNameAttribute.CfExamSearchRateMinute, 1);
         int intervalMilliSecs = 1000 * 60 * searchRateMinute;
+       // intervalMilliSecs=1000*10;
         AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, CFExamAlarm.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);

@@ -81,11 +81,13 @@ public class ConfigureMenuActivity extends AppCompatActivity {
 
             }
         });
-
+        /*
         ComponentName componentName = startService(new Intent(ConfigureMenuActivity.this, ManualStartCFExamService.class));
         if (componentName!=null) {
             Toast.makeText(getApplicationContext(), "Scheduled Started", Toast.LENGTH_LONG).show();
         }
+        */
+
 
 
     }

@@ -25,7 +25,8 @@
         <receiver
             android:name=".background.AutoStartCFExamBroadcastReceiver"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"
+            android:process=":remoteAutoStart">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

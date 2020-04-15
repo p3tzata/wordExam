@@ -1,5 +1,6 @@
 package com.example.WordCFExam.utitliy;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.WordCFExam.R;
 import com.example.WordCFExam.activity.ChangeSelectedProfile;
 import com.example.WordCFExam.activity.configureActivity.ConfigureMenuActivity;
+import com.example.WordCFExam.background.ManualStartCFExamService;
 
 public class MenuUtility {
 
@@ -80,6 +82,17 @@ public class MenuUtility {
 
                 MenuUtility.changeIsEditMode(activity.getApplicationContext(),menuItem);
                 return true;
+            case R.id.item_startSchedule:
+                ComponentName componentName = activity.startService(new Intent(activity, ManualStartCFExamService.class));
+                if (componentName!=null) {
+                    Toast.makeText(activity.getApplicationContext(), "Scheduled Started", Toast.LENGTH_LONG).show();
+                }
+
+
+                return true;
+
+
+
             default:
                 return activity.onOptionsItemSelected(menuItem);
         }
