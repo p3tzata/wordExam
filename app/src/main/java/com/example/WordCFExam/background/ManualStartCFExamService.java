@@ -15,14 +15,19 @@ public class ManualStartCFExamService extends Service
         @Override
         public int onStartCommand(Intent intent, int flags, int startId)
         {
+
             alarm.setAlarm(this);
+            alarm.sendNotification(this,"Schedule CFExam started manual","Started");
             return START_STICKY;
         }
 
         @Override
         public void onStart(Intent intent, int startId)
         {
+
+
             alarm.setAlarm(this);
+            alarm.sendNotification(this,"Schedule CFExam started manual","Started");
         }
 
         @Override

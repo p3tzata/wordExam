@@ -97,7 +97,7 @@ public class CFExamAlarm extends BroadcastReceiver {
             @Override
             public void onPostExecute(String item) {
                 if (item.length()>0) {
-                    sendNotification("CF Exam need to proceed", item);
+                    sendNotification(CFExamAlarm.this.context,"CF Exam need to proceed", item);
                 }
             }
         });
@@ -129,7 +129,7 @@ public class CFExamAlarm extends BroadcastReceiver {
                 intervalMilliSecs, alarmIntent);
     }
 
-    private void sendNotification(String contentTitle, String contentText){
+    public void sendNotification(Context context,String contentTitle, String contentText){
         Intent intent = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);

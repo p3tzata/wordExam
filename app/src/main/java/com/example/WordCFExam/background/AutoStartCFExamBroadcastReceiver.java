@@ -12,7 +12,9 @@ public class AutoStartCFExamBroadcastReceiver extends BroadcastReceiver
     {
         if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED))
         {
+
            cfExamAlarm.setAlarm(context);
+            cfExamAlarm.sendNotification(context,"Schedule CFExam started automatic","Started");
         }
     }
 }
