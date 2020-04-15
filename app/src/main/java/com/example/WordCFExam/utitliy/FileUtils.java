@@ -27,7 +27,13 @@ public class FileUtils {
             fromChannel = fromFile.getChannel();
             toChannel = toFile.getChannel();
             fromChannel.transferTo(0, fromChannel.size(), toChannel);
-        } finally {
+        } catch (Exception ex) {
+            String message = ex.getMessage();
+            ex.printStackTrace();
+        }
+
+
+        finally {
             try {
                 if (fromChannel != null) {
                     fromChannel.close();

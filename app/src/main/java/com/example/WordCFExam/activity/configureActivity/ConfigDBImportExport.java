@@ -256,7 +256,7 @@ public class ConfigDBImportExport extends AppCompatActivity {
 
 
                 String backupDBPath  = backupDir + "/" + databaseName+"_"+formattedCurrentTime+".db";
-
+                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().close();
                 File currentDB = new File(data, currentDBPath);
                 File backupDB = new File(sd, backupDBPath);
 

@@ -12,11 +12,11 @@
     <item  android:id="@+id/item_editMode"
         android:title="Edit Mode"
         app:showAsAction="withText"/>
-    <!--
+    <!-- -->
     <item
         android:id="@+id/item_startSchedule"
         android:title="Start Schedule" />
-     -->
+
 
 
 </menu>

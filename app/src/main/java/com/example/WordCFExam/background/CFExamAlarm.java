@@ -40,7 +40,7 @@ public class CFExamAlarm extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context=context;
-       // android.os.Debug.waitForDebugger();
+        android.os.Debug.waitForDebugger();
         boolean isInDoNotDisturb = false;
         DateFormat dateFormat = new SimpleDateFormat("HH");
         String formattedEntryPointDate = dateFormat.format(Calendar.getInstance().getTime());
@@ -115,7 +115,7 @@ public class CFExamAlarm extends BroadcastReceiver {
 
     public void setAlarm(Context context)
     {
-        //android.os.Debug.waitForDebugger();
+     //   android.os.Debug.waitForDebugger();
         int searchRateMinute = Session.getIntAttribute(context, SessionNameAttribute.CfExamSearchRateMinute, 1);
         int intervalMilliSecs = 1000 * 60 * searchRateMinute;
         AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
