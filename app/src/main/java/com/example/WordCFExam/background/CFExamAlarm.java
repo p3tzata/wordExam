@@ -1,10 +1,13 @@
 package com.example.WordCFExam.background;
 
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -130,12 +133,14 @@ public class CFExamAlarm extends BroadcastReceiver {
         Intent intent = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-
+        Uri soundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "1")
+               // .setDefaults(Notification.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_menu_camera)
                 .setContentTitle(contentTitle)
                 .setContentText(contentText)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setSound(soundUri)
                 // Set the intent that will fire when the user taps the notification
                 .setFullScreenIntent(pendingIntent,true)
                 .setAutoCancel(true);
@@ -145,6 +150,7 @@ public class CFExamAlarm extends BroadcastReceiver {
             @Override
             public void run() {
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
                 notificationManager.notify(1, builder.build());
 
             }
