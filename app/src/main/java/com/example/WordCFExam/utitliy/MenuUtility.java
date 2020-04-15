@@ -82,7 +82,7 @@ public class MenuUtility {
 
                 MenuUtility.changeIsEditMode(activity.getApplicationContext(),menuItem);
                 return true;
-
+/*
             case R.id.item_startSchedule:
                 ComponentName componentName = activity.startService(new Intent(activity, ManualStartCFExamService.class));
                 if (componentName!=null) {
@@ -90,6 +90,8 @@ public class MenuUtility {
                 }
 
                 return true;
+
+ */
 
 
 
