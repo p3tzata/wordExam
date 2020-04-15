@@ -82,14 +82,16 @@ public class MenuUtility {
 
                 MenuUtility.changeIsEditMode(activity.getApplicationContext(),menuItem);
                 return true;
+                /*
             case R.id.item_startSchedule:
                 ComponentName componentName = activity.startService(new Intent(activity, ManualStartCFExamService.class));
                 if (componentName!=null) {
                     Toast.makeText(activity.getApplicationContext(), "Scheduled Started", Toast.LENGTH_LONG).show();
                 }
 
-
                 return true;
+
+                 */
 
 
 
