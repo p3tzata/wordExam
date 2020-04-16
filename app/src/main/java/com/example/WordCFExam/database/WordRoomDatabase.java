@@ -30,13 +30,14 @@ import com.example.WordCFExam.entity.WordForm;
 import com.example.WordCFExam.entity.WordPartOfSpeech;
 import com.example.WordCFExam.entity.exam.CFExamProfile;
 import com.example.WordCFExam.entity.exam.CFExamProfilePoint;
+import com.example.WordCFExam.entity.exam.CFExamSchedule;
 import com.example.WordCFExam.entity.exam.CFExamTopicQuestionnaire;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
 import com.example.WordCFExam.entity.exam.RandomExamPassedQuestionnaire;
 import com.example.WordCFExam.entity.exam.Topic;
 import com.example.WordCFExam.entity.exam.TopicType;
 
-@Database(entities = {Topic.class, TopicType.class, CFExamTopicQuestionnaire.class, RandomExamPassedQuestionnaire.class,CFExamProfile.class, CFExamProfilePoint.class, CFExamWordQuestionnaire.class, WordForm.class,HelpSentence.class,WordPartOfSpeech.class,PartOfSpeech.class, Profile.class, Language.class, Translation.class, Word.class, TranslationWordRelation.class},
+@Database(entities = {CFExamSchedule.class, Topic.class, TopicType.class, CFExamTopicQuestionnaire.class, RandomExamPassedQuestionnaire.class,CFExamProfile.class, CFExamProfilePoint.class, CFExamWordQuestionnaire.class, WordForm.class,HelpSentence.class,WordPartOfSpeech.class,PartOfSpeech.class, Profile.class, Language.class, Translation.class, Word.class, TranslationWordRelation.class},
         version =5, exportSchema = false)
 public abstract class WordRoomDatabase extends RoomDatabase {
 
