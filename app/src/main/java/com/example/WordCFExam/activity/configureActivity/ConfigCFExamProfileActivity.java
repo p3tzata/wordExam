@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.PopupMenu;
 
 import com.example.WordCFExam.R;
+import com.example.WordCFExam.activity.MainActivity;
 import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivity;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.activity.base.onMenuItemClickHandlerExecutor;
@@ -46,7 +47,9 @@ public class ConfigCFExamProfileActivity extends
         super.setAdapter(adapter);
         super.setContext(ConfigCFExamProfileActivity.this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(profileName +" | "+ "CF Profiles");
+        getSupportActionBar().setTitle("CFExamProfile " + "("+
+                Session.getStringAttribute(this, SessionNameAttribute.ProfileName, "")
+                +")");
         setGetItemsExecutor(new GetItemsExecutorBlock<CFExamProfile>() {
             @Override
             public List<CFExamProfile> execute() {
@@ -60,6 +63,14 @@ public class ConfigCFExamProfileActivity extends
     }
 
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        getSupportActionBar().setTitle("CFExamProfile " + "("+
+                Session.getStringAttribute(this, SessionNameAttribute.ProfileName, "")
+                +")");
+
+    }
 
     @Override
     public void onSearchBarGetItemsExecutorHandler(String contains) {

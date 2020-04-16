@@ -44,7 +44,7 @@ public abstract class CFExamWordQuestionnaireDao implements CrudDao<CFExamWordQu
             " and ( " +
             "(s.fromHour<=s.toHour and s.fromHour<=:currentHour and s.toHour>=:currentHour ) " +
             "or " +
-            "(s.fromHour>s.toHour and s.fromHour<=:currentHour or s.toHour>=:currentHour) " +
+            "(s.fromHour>s.toHour and (s.fromHour<=:currentHour or s.toHour>=:currentHour)) " +
             ")) " +
             "group by pf.profileID"
     )
