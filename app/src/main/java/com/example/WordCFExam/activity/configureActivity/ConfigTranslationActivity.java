@@ -49,7 +49,9 @@ public class ConfigTranslationActivity extends
         super.setAdapter(adapter);
         super.setContext(ConfigTranslationActivity.this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(profileName +" | "+ "Translation");
+        getSupportActionBar().setTitle("Translation " + "("+
+                Session.getStringAttribute(this, SessionNameAttribute.ProfileName, "")
+                +")");
         setGetItemsExecutor(new GetItemsExecutorBlock<Translation>() {
             @Override
             public List<Translation> execute() {
@@ -62,6 +64,14 @@ public class ConfigTranslationActivity extends
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        getSupportActionBar().setTitle("Translation " + "("+
+                Session.getStringAttribute(this, SessionNameAttribute.ProfileName, "")
+                +")");
+
+    }
 
 
     @Override

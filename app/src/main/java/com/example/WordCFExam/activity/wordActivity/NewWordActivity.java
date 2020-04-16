@@ -13,9 +13,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.WordCFExam.R;
+import com.example.WordCFExam.activity.MainActivity;
 import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
 import com.example.WordCFExam.service.WordService;
+import com.example.WordCFExam.utitliy.Session;
+import com.example.WordCFExam.utitliy.SessionNameAttribute;
 
 public class NewWordActivity extends AppCompatActivity {
 
@@ -38,6 +41,9 @@ public class NewWordActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_new_word);
         mEditWordView = findViewById(R.id.edit_word);
+
+        getSupportActionBar().setTitle("From " + translationAndLanguages.getForeignLanguage().getLanguageName());
+
 
         final Button btn_save = findViewById(R.id.btn_save);
         btn_save.setOnClickListener(new View.OnClickListener() {

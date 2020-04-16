@@ -3,6 +3,7 @@ package com.example.WordCFExam.factory;
 import android.app.Application;
 
 
+import com.example.WordCFExam.entity.exam.CFExamSchedule;
 import com.example.WordCFExam.service.HelpSentenceService;
 import com.example.WordCFExam.service.LanguageService;
 import com.example.WordCFExam.service.PartOfSpeechService;
@@ -15,6 +16,7 @@ import com.example.WordCFExam.service.WordPartOfSpeechService;
 import com.example.WordCFExam.service.WordService;
 import com.example.WordCFExam.service.exam.CFExamProfilePointService;
 import com.example.WordCFExam.service.exam.CFExamProfileService;
+import com.example.WordCFExam.service.exam.CFExamScheduleService;
 import com.example.WordCFExam.service.exam.CFExamTopicQuestionnaireService;
 import com.example.WordCFExam.service.exam.CFExamWordQuestionnaireService;
 import com.example.WordCFExam.service.exam.RandomExamWordQuestionnaireService;
@@ -25,6 +27,10 @@ import com.example.WordCFExam.utitliy.DbExecutorImp;
 import org.modelmapper.ModelMapper;
 
 public class FactoryUtil {
+
+    static public CFExamScheduleService createCFExamScheduleService(Application application) {
+        return new CFExamScheduleService(application);
+    }
 
         static public ProfileService createProfileService(Application application) {
             return new ProfileService(application);

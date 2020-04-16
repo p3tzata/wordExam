@@ -40,9 +40,15 @@ public abstract class CFExamWordQuestionnaireDao implements CrudDao<CFExamWordQu
             "q.entryPointDateTime + " +
             "(IFNULL((q.postponeInMinute*60*1000),0)) " +
             "+ (p.lastOfPeriodInMinute*60*1000) < :currentTime " +
+            "AND EXISTS (select 1 from CFExamSchedule s where s.profileID=pf.profileID " +
+            " and ( " +
+            "(s.fromHour<=s.toHour and s.fromHour<=:currentHour and s.toHour>=:currentHour ) " +
+            "or " +
+            "(s.fromHour>s.toHour and s.fromHour<=:currentHour or s.toHour>=:currentHour) " +
+            ")) " +
             "group by pf.profileID"
     )
-    abstract public List<Profile> findAllProfileNeedProceed(Long currentTime);
+    abstract public List<Profile> findAllProfileNeedProceed(Long currentTime,int currentHour);
 
     @Transaction
     @Query("SELECT q.* FROM CFExamWordQuestionnaire q INNER JOIN CFExamProfilePoint p " +
@@ -60,7 +66,7 @@ public abstract class CFExamWordQuestionnaireDao implements CrudDao<CFExamWordQu
 
     @Transaction
     @Query("SELECT q.* FROM CFExamWordQuestionnaire q WHere q.wordID=:wordID and q.targetTranslationLanguageID=:toLanguageID" )
-    abstract public CFExamWordQuestionnaire findByWordID(Long wordID, Long toLanguageID);
+    abstract public CFExamWordQuestionnaireCross findByWordID(Long wordID, Long toLanguageID);
 
 
 

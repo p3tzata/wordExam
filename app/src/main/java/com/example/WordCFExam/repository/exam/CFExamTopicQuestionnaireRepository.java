@@ -21,8 +21,8 @@ public class CFExamTopicQuestionnaireRepository extends BaseCrudRepository<CFExa
         return getDao().findAllNeedProceed(profileID,currentTime);
     }
 
-    public List<Profile> findAllProfileNeedProceed(Long currentTime){
-        return getDao().findAllProfileNeedProceed(currentTime);
+    public List<Profile> findAllProfileNeedProceed(Long currentTime,int currentHour){
+        return getDao().findAllProfileNeedProceed(currentTime,currentHour);
     }
 
 

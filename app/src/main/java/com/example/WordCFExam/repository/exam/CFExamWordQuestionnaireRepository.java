@@ -18,8 +18,8 @@ public class CFExamWordQuestionnaireRepository extends BaseCrudRepository<CFExam
         super.setDao(super.getAppDatabase().cfExamQuestionnaireDao());
     }
 
-    public List<Profile> findAllProfileNeedProceed(Long currentTime){
-        return getDao().findAllProfileNeedProceed(currentTime);
+    public List<Profile> findAllProfileNeedProceed(Long currentTime,int currentHour){
+        return getDao().findAllProfileNeedProceed(currentTime,currentHour);
     }
 
     public List<CFExamWordQuestionnaireCross> findAllNeedProceed(Long profileID,Long currentTime){
@@ -28,7 +28,7 @@ public class CFExamWordQuestionnaireRepository extends BaseCrudRepository<CFExam
 
 
 
-    public CFExamWordQuestionnaire findByWordID(Long wordID, Long toLanguageID){
+    public CFExamWordQuestionnaireCross findByWordID(Long wordID, Long toLanguageID){
        return getDao().findByWordID(wordID, toLanguageID);
     }
 

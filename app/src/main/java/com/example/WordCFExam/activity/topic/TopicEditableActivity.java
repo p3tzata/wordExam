@@ -181,7 +181,43 @@ public class TopicEditableActivity extends BaseEditableAppCompatActivity<Topic, 
         myDialog.show();
     }
 
+    @Override
+    public void handlerViewClick(Topic item){
+        this.myDialog = new Dialog(this);
+        myDialog.setContentView(R.layout.dialog_base_crud_two_item);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        myDialog.getWindow().setLayout((6 * width)/7, (4 * height)/7);
 
+        Button btn_Submit = (Button) myDialog.findViewById(R.id.btn_dialog_newItem);
+
+        TextView lbl_newItem = (TextView) myDialog.findViewById(R.id.lbl_dialog_new_item);
+        TextView lbl_newItem2 = (TextView) myDialog.findViewById(R.id.lbl_dialog_new_item2);
+        btn_Submit.setText("Close");
+        lbl_newItem.setText("Question");
+        lbl_newItem2.setText("Answer");
+        EditText newItem = (EditText) myDialog.findViewById(R.id.et_dialog_newItem);
+        EditText newItem2 = (EditText) myDialog.findViewById(R.id.et_dialog_newItem2);
+
+
+        newItem.setText(item.getTopicQuestion());
+        newItem2.setText(item.getTopicAnswer());
+
+        btn_Submit.setOnClickListener(new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v)
+            {
+                myDialog.dismiss();
+            }
+        });
+
+
+        //myDialog.setCancelable(false);
+        myDialog.show();
+    }
 
 
     @Override
@@ -224,6 +260,13 @@ public class TopicEditableActivity extends BaseEditableAppCompatActivity<Topic, 
             @Override
             public void execute() {
                 handlerSetCFExamClick(selectedItem);
+            }
+        });
+
+        mapping.put( R.id.menu_view,new onMenuItemClickHandlerExecutor() {
+            @Override
+            public void execute() {
+                handlerViewClick(selectedItem);
             }
         });
 

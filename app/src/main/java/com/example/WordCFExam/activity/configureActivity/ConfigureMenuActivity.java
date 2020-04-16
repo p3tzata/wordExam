@@ -27,6 +27,7 @@ public class ConfigureMenuActivity extends AppCompatActivity {
             "Language",
             "Translation",
             "CF Exam profile",
+            "CF Exam schedule",
             "TopicType",
             "Preference",
             "DB Import / Export"
@@ -36,6 +37,7 @@ public class ConfigureMenuActivity extends AppCompatActivity {
             ConfigLanguageActivity.class,
             ConfigTranslationActivity.class,
             ConfigCFExamProfileActivity.class,
+            ConfigCFExamScheduleActivity.class,
             ConfigTopicTypeActivity.class,
             ConfigPreferenceActivity.class,
             ConfigDBImportExport.class};
@@ -43,6 +45,7 @@ public class ConfigureMenuActivity extends AppCompatActivity {
     Class<?>[] mainListMenuNeedProfile = new Class[]{
             ConfigTranslationActivity.class,
             ConfigCFExamProfileActivity.class,
+            ConfigCFExamScheduleActivity.class,
             ConfigTopicTypeActivity.class};
 
     @Override

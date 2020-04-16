@@ -15,6 +15,8 @@ import com.example.WordCFExam.service.TranslationWordRelationService;
 import com.example.WordCFExam.service.base.BaseCrudService;
 import com.example.WordCFExam.service.base.CrudService;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -35,8 +37,10 @@ implements CrudService<CFExamWordQuestionnaire>,ExamQuestionnaireService<CFExamW
     }
 
     public List<Profile> findAllProfileNeedProceed(){
-
-        return getRepository().findAllProfileNeedProceed(System.currentTimeMillis());
+        DateFormat dateFormat = new SimpleDateFormat("HH");
+        String formattedEntryPointDate = dateFormat.format(Calendar.getInstance().getTime());
+        int currentHour=Integer.valueOf(formattedEntryPointDate);
+        return getRepository().findAllProfileNeedProceed(System.currentTimeMillis(),currentHour);
     }
 
     public List<CFExamWordQuestionnaireCross> findAllNeedProceed(Long profileID){
@@ -136,7 +140,7 @@ implements CrudService<CFExamWordQuestionnaire>,ExamQuestionnaireService<CFExamW
         return result;
     }
 
-    public CFExamWordQuestionnaire findByWordID(Long wordID, Long toLanguageID){
+    public CFExamWordQuestionnaireCross findByWordID(Long wordID, Long toLanguageID){
         return getRepository().findByWordID(wordID, toLanguageID);
     }
 

@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.WordCFExam.dao.CFExamProfileDao;
 import com.example.WordCFExam.dao.CFExamProfilePointDao;
+import com.example.WordCFExam.dao.CFExamScheduleDao;
 import com.example.WordCFExam.dao.CFExamTopicQuestionnaireDao;
 import com.example.WordCFExam.dao.CFExamWordQuestionnaireDao;
 import com.example.WordCFExam.dao.HelpSentenceDao;
@@ -38,10 +39,10 @@ import com.example.WordCFExam.entity.exam.Topic;
 import com.example.WordCFExam.entity.exam.TopicType;
 
 @Database(entities = {CFExamSchedule.class, Topic.class, TopicType.class, CFExamTopicQuestionnaire.class, RandomExamPassedQuestionnaire.class,CFExamProfile.class, CFExamProfilePoint.class, CFExamWordQuestionnaire.class, WordForm.class,HelpSentence.class,WordPartOfSpeech.class,PartOfSpeech.class, Profile.class, Language.class, Translation.class, Word.class, TranslationWordRelation.class},
-        version =5, exportSchema = false)
+        version =6, exportSchema = false)
 public abstract class WordRoomDatabase extends RoomDatabase {
 
-
+    public abstract CFExamScheduleDao cfExamScheduleDao();
 
     public abstract RandomExamPassedQuestionnaireDao randomExamPassedQuestionnaireDao();
 

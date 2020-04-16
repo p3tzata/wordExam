@@ -44,6 +44,12 @@ public abstract class BaseListableAppCompatActivity<T,
 
     }
 
+    public void handlerViewClick(T selectedItem) {
+
+
+    }
+
+
     public boolean onMenuItemClickHandler(MenuItem item){
 
         mappingMenuItemHandler.get(item.getItemId()).execute();

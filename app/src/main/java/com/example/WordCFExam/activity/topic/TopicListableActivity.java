@@ -154,8 +154,8 @@ public class TopicListableActivity
 
     }
 
-
-    private void handlerViewClick(Topic item){
+    @Override
+    public void handlerViewClick(Topic item){
         this.myDialog = new Dialog(this);
         myDialog.setContentView(R.layout.dialog_base_crud_two_item);
         DisplayMetrics metrics = getResources().getDisplayMetrics();

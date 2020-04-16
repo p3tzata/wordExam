@@ -41,9 +41,17 @@ public abstract class CFExamTopicQuestionnaireDao implements CrudDao<CFExamTopic
             "q.entryPointDateTime + " +
             "(IFNULL((q.postponeInMinute*60*1000),0)) " +
             "+ (p.lastOfPeriodInMinute*60*1000) < :currentTime " +
+            "AND EXISTS (select 1 from CFExamSchedule s where s.profileID=pf.profileID " +
+                        " and ( " +
+                                "(s.fromHour<=s.toHour and s.fromHour<=:currentHour and s.toHour>=:currentHour ) " +
+                                "or " +
+                                "(s.fromHour>s.toHour and s.fromHour<=:currentHour or s.toHour>=:currentHour) " +
+                        ")) " +
+            "" +
             "group by pf.profileID"
     )
-    abstract public List<Profile> findAllProfileNeedProceed(Long currentTime);
+    //I don't have time to look for date function in the Dao
+    abstract public List<Profile> findAllProfileNeedProceed(Long currentTime, int currentHour);
 
     @Transaction
     @Query("SELECT q.* FROM CFExamTopicQuestionnaire q INNER JOIN CFExamProfilePoint p " +

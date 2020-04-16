@@ -11,6 +11,8 @@ public interface EditableAppCompatActivity<T> extends ListableAppCompatActivity<
 
      void handlerCreateUpdateClick(boolean isEditableMode,T selectedItem);
 
+     void handlerViewClick(T selectedItem);
+
      void callShowCrudMenu(View v, T selectedItem);
 
      void callShowNewItemButton(FloatingActionButton fab_newItem);

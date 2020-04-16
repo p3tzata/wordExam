@@ -16,6 +16,7 @@ import com.example.WordCFExam.entity.WordPartOfSpeech;
 import com.example.WordCFExam.entity.dto.WordCreationDTO;
 import com.example.WordCFExam.entity.exam.CFExamProfile;
 import com.example.WordCFExam.entity.exam.CFExamProfilePoint;
+import com.example.WordCFExam.entity.exam.CFExamSchedule;
 import com.example.WordCFExam.entity.exam.CFExamTopicQuestionnaire;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
 import com.example.WordCFExam.entity.exam.Topic;
@@ -31,6 +32,7 @@ import com.example.WordCFExam.service.WordPartOfSpeechService;
 import com.example.WordCFExam.service.WordService;
 import com.example.WordCFExam.service.exam.CFExamProfilePointService;
 import com.example.WordCFExam.service.exam.CFExamProfileService;
+import com.example.WordCFExam.service.exam.CFExamScheduleService;
 import com.example.WordCFExam.service.exam.CFExamTopicQuestionnaireService;
 import com.example.WordCFExam.service.exam.CFExamWordQuestionnaireService;
 import com.example.WordCFExam.service.exam.TopicService;
@@ -58,6 +60,7 @@ public class DBUtil extends Application {
     private CFExamProfileService cfExamProfileService;
     private CFExamProfilePointService cfExamProfilePointService;
     private CFExamWordQuestionnaireService cfExamQuestionnaireService;
+    private CFExamScheduleService cfExamScheduleService;
 
     public DBUtil(Application context){
 
@@ -77,6 +80,7 @@ public class DBUtil extends Application {
         this.topicService = FactoryUtil.createTopicService(this);
         this.topicTypeService = FactoryUtil.createTopicTypeService(this);
         this.cfExamTopicQuestionnaireService=FactoryUtil.createCFExamTopicQuestionnaireService(this);
+        this.cfExamScheduleService=FactoryUtil.createCFExamScheduleService(this);
     }
 
 
@@ -270,10 +274,11 @@ public class DBUtil extends Application {
                 }});
 
 
-
-
-
-
+                Long insert2 = cfExamScheduleService.insert(new CFExamSchedule() {{
+                    setProfileID(1L);
+                    setFromHour(8);
+                    setToHour(20);
+                }});
 
 
                 String debug=null;
@@ -300,36 +305,6 @@ public class DBUtil extends Application {
 
     }
 
-    public void testCFExamAlarm(){
-
-
-        DbExecutorImp<String> dbExecutor = FactoryUtil.<String>createDbExecutor();
-        dbExecutor.execute_(new DbExecutor<String>() {
-            @Override
-            public String doInBackground() {
-                List<Profile> allProfileNeedProceed = cfExamQuestionnaireService.findAllProfileNeedProceed();
-                StringBuilder stringBuilder = new StringBuilder();
-                if (allProfileNeedProceed.size() > 0) {
-
-                    stringBuilder.append("CF Word Exam: ");
-                    stringBuilder.append("\n");
-                    for (Profile profile : allProfileNeedProceed
-                    ) {
-                        stringBuilder.append(profile.getProfileName() + ",");
-                    }
-
-                }
-                return stringBuilder.toString();
-            }
-
-            @Override
-            public void onPostExecute(String item) {
-                ;
-            }
-        });
-
-
-    }
 
 
 

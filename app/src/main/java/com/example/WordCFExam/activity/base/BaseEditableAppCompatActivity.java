@@ -91,7 +91,6 @@ public abstract class BaseEditableAppCompatActivity<T extends TextLabelable,
 
 
 
-
     public void handlerDeleteClick(T selectedItem) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

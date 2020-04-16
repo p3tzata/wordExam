@@ -45,6 +45,10 @@
             android:name=".activity.configureActivity.ConfigLanguageWordForm"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".activity.configureActivity.ConfigCFExamScheduleActivity"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
             android:name=".activity.configureActivity.ConfigLanguagePartOfSpeech"
             android:windowSoftInputMode="adjustPan" />
         <activity

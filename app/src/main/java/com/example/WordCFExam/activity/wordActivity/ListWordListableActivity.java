@@ -24,6 +24,7 @@ import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
 import com.example.WordCFExam.entity.exam.CFExamProfile;
 import com.example.WordCFExam.entity.exam.CFExamProfilePointCross;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
+import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaireCross;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.WordService;
 import com.example.WordCFExam.service.exam.CFExamProfilePointService;
@@ -48,7 +49,7 @@ public class ListWordListableActivity
     Long toLanguageID;
 
     private Boolean isSetToCFExam;
-    private CFExamWordQuestionnaire cfExamWordQuestionnaire;
+    private CFExamWordQuestionnaireCross cfExamWordQuestionnaireCross;
     private CFExamProfilePointCross cfExamProfilePointCross;
     private CFProfileSpinAdapter cfProfileSpinAdapter;
     private CFExamWordQuestionnaireService cfExamWordQuestionnaireService;
@@ -191,9 +192,9 @@ public class ListWordListableActivity
         dbExecutor.execute_(new DbExecutor<Boolean>() {
             @Override
             public Boolean doInBackground() {
-                cfExamWordQuestionnaire = cfExamWordQuestionnaireService.findByWordID(selectedItem.getWordID(), toLanguageID);
-                if(cfExamWordQuestionnaire!=null) {
-                    cfExamProfilePointCross = cfExamProfilePointService.findCrossByID(cfExamWordQuestionnaire.getCurrentCFExamProfilePointID());
+                cfExamWordQuestionnaireCross = cfExamWordQuestionnaireService.findByWordID(selectedItem.getWordID(), toLanguageID);
+                if(cfExamWordQuestionnaireCross!=null) {
+                    cfExamProfilePointCross = cfExamProfilePointService.findCrossByID(cfExamWordQuestionnaireCross.getCfExamQuestionnaire().getCurrentCFExamProfilePointID());
                     return true;
                 } else {
                     return false;
@@ -206,8 +207,9 @@ public class ListWordListableActivity
 
                 if (getSetToCFExam()) {
                     DateFormat dateFormat = new SimpleDateFormat("dd.M.yyyy HH:mm:ss");
-                    String formattedEntryPointDate = dateFormat.format(cfExamWordQuestionnaire.getEntryPointDateTime());
+                    String formattedEntryPointDate = dateFormat.format(cfExamWordQuestionnaireCross.getCfExamQuestionnaire().getEntryPointDateTime());
                     String sourceString="This word is set to CF Exam. Details: " +
+                            "<br>To Language: <i><u>" + cfExamWordQuestionnaireCross.getLanguage().getLanguageName()+ "</u></i>" +
                             "<br>Profile Name: <i><u>" + cfExamProfilePointCross.getCfExamProfile().getName()+ "</u></i>" +
                             "<br>Point Name: <i><u>" + cfExamProfilePointCross.getCfExamProfilePoint().getLabelText()  + "</u></i>" +
                             "<br>Current Entry Date Point: <i><u>" + formattedEntryPointDate + "</u></i>" +
@@ -280,7 +282,7 @@ public class ListWordListableActivity
                     public Boolean doInBackground() {
                         if (getSetToCFExam()) {
 
-                            Integer delete = cfExamWordQuestionnaireService.delete(cfExamWordQuestionnaire);
+                            Integer delete = cfExamWordQuestionnaireService.delete(cfExamWordQuestionnaireCross.getCfExamQuestionnaire());
                             if (delete>0) {
                                 return true;
                             } else {

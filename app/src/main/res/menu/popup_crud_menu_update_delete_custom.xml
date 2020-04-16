@@ -5,6 +5,9 @@
         android:id="@+id/menu_custom"
         android:title="Custom" />
 
+    <item
+        android:id="@+id/menu_view"
+        android:title="View" />
 
     <item
         android:id="@+id/menu_update"

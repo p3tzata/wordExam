@@ -27,6 +27,7 @@ import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
 import com.example.WordCFExam.entity.exam.CFExamProfile;
 import com.example.WordCFExam.entity.exam.CFExamProfilePointCross;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
+import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaireCross;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.WordService;
 import com.example.WordCFExam.service.exam.CFExamProfilePointService;
@@ -59,7 +60,7 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivity<Word
     Long toLanguageID;
     private Dialog myDialog;
     private Boolean isSetToCFExam;
-    private CFExamWordQuestionnaire cfExamWordQuestionnaire;
+    private CFExamWordQuestionnaireCross cfExamWordQuestionnaireCross;
     private CFExamProfilePointCross cfExamProfilePointCross;
     private CFProfileSpinAdapter cfProfileSpinAdapter;
 
@@ -216,6 +217,14 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivity<Word
             }
         });
 
+        mapping.put( R.id.menu_view,new onMenuItemClickHandlerExecutor() {
+            @Override
+            public void execute() {
+                handlerViewClick(selectedItem);
+            }
+        });
+
+
         mapping.put( R.id.menu_update,new onMenuItemClickHandlerExecutor() {
             @Override
             public void execute() {
@@ -249,6 +258,23 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivity<Word
 
     }
 
+
+    @Override
+    public void handlerViewClick(Word selectedItem) {
+        Intent activity2Intent=null;
+        if (translationAndLanguages.getForeignLanguage().getLanguageID().equals(fromLanguageID)) {
+            activity2Intent = new Intent(getContext(), ShowForeignWordActivity.class);
+            activity2Intent.putExtra("translationToLanguageID", translationAndLanguages.getNativeLanguage().getLanguageID());
+        } else {
+            activity2Intent = new Intent(getContext(), ShowNativeWordActivity.class);
+            activity2Intent.putExtra("translationToLanguageID", translationAndLanguages.getForeignLanguage().getLanguageID());
+        }
+        activity2Intent.putExtra("translationAndLanguages", translationAndLanguages);
+        activity2Intent.putExtra("translationFromLanguageID", fromLanguageID);
+        activity2Intent.putExtra("word", selectedItem);
+        startActivity(activity2Intent);
+    }
+
     private void handlerSetCFExamClick(Word selectedItem) {
 
         this.myDialog = new Dialog(this);
@@ -269,9 +295,9 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivity<Word
         dbExecutor.execute_(new DbExecutor<Boolean>() {
             @Override
             public Boolean doInBackground() {
-                cfExamWordQuestionnaire = cfExamWordQuestionnaireService.findByWordID(selectedItem.getWordID(), toLanguageID);
-                if(cfExamWordQuestionnaire!=null) {
-                    cfExamProfilePointCross = cfExamProfilePointService.findCrossByID(cfExamWordQuestionnaire.getCurrentCFExamProfilePointID());
+                cfExamWordQuestionnaireCross = cfExamWordQuestionnaireService.findByWordID(selectedItem.getWordID(), toLanguageID);
+                if(cfExamWordQuestionnaireCross!=null) {
+                    cfExamProfilePointCross = cfExamProfilePointService.findCrossByID(cfExamWordQuestionnaireCross.getCfExamQuestionnaire().getCurrentCFExamProfilePointID());
                     return true;
                 } else {
                     return false;
@@ -284,8 +310,9 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivity<Word
 
                 if (getSetToCFExam()) {
                     DateFormat dateFormat = new SimpleDateFormat("dd.M.yyyy HH:mm:ss");
-                    String formattedEntryPointDate = dateFormat.format(cfExamWordQuestionnaire.getEntryPointDateTime());
+                    String formattedEntryPointDate = dateFormat.format(cfExamWordQuestionnaireCross.getCfExamQuestionnaire().getEntryPointDateTime());
                     String sourceString="This word is set to CF Exam. " +
+                            "<br>To Language: <i><u>" + cfExamWordQuestionnaireCross.getLanguage().getLanguageName()+ "</u></i>" +
                             "<br>Profile Name: <i><u>" + cfExamProfilePointCross.getCfExamProfile().getName()+ "</u></i>" +
                             "<br>Point Name: <i><u>" + cfExamProfilePointCross.getCfExamProfilePoint().getLabelText()  + "</u></i>" +
                             "<br>Current Entry Date Point: <i><u>" + formattedEntryPointDate + "</u></i>" +
@@ -358,7 +385,7 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivity<Word
                     public Boolean doInBackground() {
                         if (getSetToCFExam()) {
 
-                            Integer delete = cfExamWordQuestionnaireService.delete(cfExamWordQuestionnaire);
+                            Integer delete = cfExamWordQuestionnaireService.delete(cfExamWordQuestionnaireCross.getCfExamQuestionnaire());
                             if (delete>0) {
                                 return true;
                             } else {

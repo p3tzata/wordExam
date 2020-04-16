@@ -8,6 +8,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.example.WordCFExam.entity.Profile;
+import com.example.WordCFExam.entity.TextLabelable;
 
 @Entity(
         indices = {
@@ -16,7 +17,7 @@ import com.example.WordCFExam.entity.Profile;
                 @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = Profile.class, parentColumns = "profileID", childColumns = "profileID")
         }
 )
-public class CFExamSchedule {
+public class CFExamSchedule implements TextLabelable {
 
     @PrimaryKey
     private Long CFExamSchedule;
@@ -63,5 +64,10 @@ public class CFExamSchedule {
 
     public void setToHour(int toHour) {
         this.toHour = toHour;
+    }
+
+    @Override
+    public String getLabelText() {
+        return String.format("from %d to %d",getFromHour(),getToHour());
     }
 }

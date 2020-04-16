@@ -10,6 +10,8 @@ import com.example.WordCFExam.entity.exam.CFExamTopicQuestionnaireCross;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.repository.exam.CFExamTopicQuestionnaireRepository;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -95,8 +97,10 @@ public class CFExamTopicQuestionnaireService extends
 
 
     public List<Profile> findAllProfileNeedProceed(){
-
-        return getRepository().findAllProfileNeedProceed(System.currentTimeMillis());
+        DateFormat dateFormat = new SimpleDateFormat("HH");
+        String formattedEntryPointDate = dateFormat.format(Calendar.getInstance().getTime());
+        int currentHour=Integer.valueOf(formattedEntryPointDate);
+        return getRepository().findAllProfileNeedProceed(System.currentTimeMillis(),currentHour);
     }
 
     public List<CFExamTopicQuestionnaireCross> findAllNeedProceed(Long profileID){

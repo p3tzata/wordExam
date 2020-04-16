@@ -40,10 +40,9 @@ public class CFExamAlarm extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context=context;
-        android.os.Debug.waitForDebugger();
-        boolean isInDoNotDisturb = false;
-        DateFormat dateFormat = new SimpleDateFormat("HH");
-        String formattedEntryPointDate = dateFormat.format(Calendar.getInstance().getTime());
+       // android.os.Debug.waitForDebugger();
+        /*
+     boolean isInDoNotDisturb = false;
         int currentHour=Integer.valueOf(formattedEntryPointDate);
         int enabledFromHour= Session.getIntAttribute(context, SessionNameAttribute.CfExamEnabledFromHour,6);
         int enabledToHour=Session.getIntAttribute(context, SessionNameAttribute.CfExamEnabledToHour,22);
@@ -60,7 +59,7 @@ public class CFExamAlarm extends BroadcastReceiver {
         if (isInDoNotDisturb) {
             return;
         }
-
+ */
 
 
         CFExamWordQuestionnaireService cfExamWordQuestionnaireService = CFExamApplication.cfExamWordQuestionnaireService;

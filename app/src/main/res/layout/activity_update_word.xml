@@ -16,12 +16,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="Word" />
+            android:hint="Word" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="WordForm:" />
 
         <Spinner
             android:id="@+id/spn_wordForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PartOfSpeech" />
 
         <Spinner
             android:id="@+id/spn_partOfSpeech"
@@ -29,8 +39,10 @@
             android:layout_height="wrap_content" />
 
 
-
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="List of added PartOfSpeech:" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
@@ -39,6 +51,12 @@
             tools:listitem="@layout/recyclerview_item" >
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/btn_setUnsetCFExam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Set / Unset CFExam" />
 
         <Button
             android:id="@+id/btn_UpdateForeignWord"
