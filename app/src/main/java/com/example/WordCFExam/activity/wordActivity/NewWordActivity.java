@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -41,6 +42,16 @@ public class NewWordActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_new_word);
         mEditWordView = findViewById(R.id.edit_word);
+        mEditWordView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+
+
 
         getSupportActionBar().setTitle("From " + translationAndLanguages.getForeignLanguage().getLanguageName());
 
@@ -99,21 +110,19 @@ public class NewWordActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Word word) {
                 super.onPostExecute(word);
-                finish();
+                if (word!=null) {
+                    finish();
+                    Intent i = getIntent();
+                    Intent intent = new Intent(getApplicationContext(), UpdateWordBasicActivity.class);
+                    intent.putExtra("translationAndLanguages", translationAndLanguages);
+                    intent.putExtra("translationFromLanguageID", translationAndLanguages.getForeignLanguage().getLanguageID());
+                    intent.putExtra("word", word);
+                    startActivity(intent);
 
-
-
-
-                Intent i = getIntent();
-
-
-                Intent intent = new Intent(getApplicationContext(), UpdateWordBasicActivity.class);
-                intent.putExtra("translationAndLanguages",translationAndLanguages);
-                intent.putExtra("translationFromLanguageID",translationAndLanguages.getForeignLanguage().getLanguageID());
-                intent.putExtra("word",word);
-                startActivity(intent);
-
-                Toast.makeText(getApplicationContext(), "Word Saved", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Word Saved", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
+                }
             }
         }
 

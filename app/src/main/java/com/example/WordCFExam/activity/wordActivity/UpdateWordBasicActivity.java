@@ -210,26 +210,32 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
 
     private void updateWord() {
 
-        class updateAsync extends AsyncTask<Void, Void, Void> {
+        class updateAsync extends AsyncTask<Void, Void, Integer> {
 
             @Override
-            protected Void doInBackground(Void... voids) {
+            protected Integer doInBackground(Void... voids) {
 
 
-                wordService.update(word);
-                return null;
+                return wordService.update(word);
+
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_LONG).show();
-                //finish();
-                Intent activity2Intent = new Intent(UpdateWordBasicActivity.this, UpdateWordMenuActivity.class);
-                activity2Intent.putExtra("translationAndLanguages", UpdateWordBasicActivity.this.translationAndLanguages);
-                activity2Intent.putExtra("translationFromLanguageID", UpdateWordBasicActivity.this.fromLanguageID);
-                activity2Intent.putExtra("word", word);
-                startActivity(activity2Intent);
+            protected void onPostExecute(Integer result) {
+                super.onPostExecute(result);
+
+                if (result>0) {
+                    finish();
+                   // Intent activity2Intent = new Intent(UpdateWordBasicActivity.this, UpdateWordMenuActivity.class);
+                   // activity2Intent.putExtra("translationAndLanguages", UpdateWordBasicActivity.this.translationAndLanguages);
+                   // activity2Intent.putExtra("translationFromLanguageID", UpdateWordBasicActivity.this.fromLanguageID);
+                   // activity2Intent.putExtra("word", word);
+                    //startActivity(activity2Intent);
+                    Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_LONG).show();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_LONG).show();
+                }
             }
         }
 

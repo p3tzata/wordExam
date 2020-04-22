@@ -76,7 +76,7 @@ public class ChangeSelectedProfile extends AppCompatActivity {
                 Profile blankProfile = new Profile();
 
                 blankProfile.setProfileID(-1L);
-                blankProfile.setProfileName("Select Profile");
+                blankProfile.setProfileName("...");
 
                 items.add(0,blankProfile);
 

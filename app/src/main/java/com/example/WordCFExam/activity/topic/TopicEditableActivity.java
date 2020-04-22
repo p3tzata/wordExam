@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupMenu;
@@ -149,6 +150,15 @@ public class TopicEditableActivity extends BaseEditableAppCompatActivity<Topic, 
         lbl_newItem2.setText("Answer");
         EditText newItem = (EditText) myDialog.findViewById(R.id.et_dialog_newItem);
         EditText newItem2 = (EditText) myDialog.findViewById(R.id.et_dialog_newItem2);
+
+        newItem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    myDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
 
         if (isEditMode && item!=null) {
             newItem.setText(item.getTopicQuestion());

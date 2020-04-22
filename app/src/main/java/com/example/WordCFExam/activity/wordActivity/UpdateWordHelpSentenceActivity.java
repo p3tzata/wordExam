@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -116,6 +117,15 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
 
 
         EditText newItem = (EditText) myDialog.findViewById(R.id.et_dialog_newItem);
+        newItem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    myDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+
 
         if (isEditMode && helpSentence!=null) {
             newItem.setText(helpSentence.getSentenceString());

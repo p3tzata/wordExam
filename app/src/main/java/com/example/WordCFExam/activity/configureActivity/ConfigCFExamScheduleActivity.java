@@ -7,6 +7,7 @@ import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -145,6 +146,16 @@ public class ConfigCFExamScheduleActivity extends
         EditText newItem2 = (EditText) myDialog.findViewById(R.id.et_dialog_newItem2);
         newItem.setInputType(InputType.TYPE_CLASS_NUMBER);
         newItem2.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        newItem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    myDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+
 
         if (isEditMode && item!=null) {
             newItem.setText(String.valueOf(item.getFromHour()));

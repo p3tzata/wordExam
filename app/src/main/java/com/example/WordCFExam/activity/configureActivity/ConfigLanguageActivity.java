@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupMenu;
@@ -98,6 +99,16 @@ public class ConfigLanguageActivity extends BaseEditableAppCompatActivity<Langua
 
         EditText et_newItem = (EditText) myDialog.findViewById(R.id.et_dialog_newItem);
         EditText et_url = (EditText) myDialog.findViewById(R.id.et_dialog_lang_url);
+
+        et_newItem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    myDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+
 
         if (isEditMode && selectedItem!=null) {
             et_newItem.setText(selectedItem.getLabelText());

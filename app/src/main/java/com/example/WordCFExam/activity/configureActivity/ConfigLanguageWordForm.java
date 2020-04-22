@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -66,7 +67,14 @@ public class ConfigLanguageWordForm extends BaseEditableAppCompatActivity<WordFo
 
 
         EditText et_newItem = (EditText) myDialog.findViewById(R.id.et_dialog_newItem);
-
+        et_newItem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    myDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
         if (isEditMode && selectedItem!=null) {
             et_newItem.setText(selectedItem.getWordFormName());
         }

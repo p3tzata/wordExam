@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -192,7 +193,14 @@ public class ConfigTranslationActivity extends
 
         Button btn_Submit = (Button) myDialog.findViewById(R.id.btn_dialog_newItem);
         EditText et_newItem = (EditText) myDialog.findViewById(R.id.et_dialog_newItem);
-
+        et_newItem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    myDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
 
         Spinner spn_item_native = (Spinner) myDialog.findViewById(R.id.spn_nativeLanguage);
         spn_item_native.setAdapter(nativeSpinnerAdapter); // Set the custom adapter to the spinner

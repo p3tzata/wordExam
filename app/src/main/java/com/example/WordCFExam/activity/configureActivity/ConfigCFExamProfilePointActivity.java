@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -128,6 +129,15 @@ public class ConfigCFExamProfilePointActivity extends
         EditText et_period = (EditText) myDialog.findViewById(R.id.et_dialog_period);
         RadioGroup radioGroupPeriod = (RadioGroup) myDialog.findViewById(R.id.rg_periodType);
         CheckBox chb_looped = (CheckBox) myDialog.findViewById(R.id.chkb_dialog_edit_cfprofile_point_loop);
+
+        et_newItem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    myDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
 
 
         if (isEditMode && selectedItem!=null) {

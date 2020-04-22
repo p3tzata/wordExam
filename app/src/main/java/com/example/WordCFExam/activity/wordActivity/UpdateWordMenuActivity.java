@@ -3,7 +3,9 @@ package com.example.WordCFExam.activity.wordActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -23,10 +25,12 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
 
     String[] mainListMenuOptions = new String[]{"Basic",
             "Translation",
-            "Help sentence"};
-    Class<?>[] mainListMenuOptionsNavigate = new Class[]{UpdateWordBasicActivity.class,
-            UpdateWordTranslationActivity.class,
-            UpdateWordHelpSentenceActivity.class};
+            "Help sentence",
+            "Open Url link"};
+
+    AdapterView.OnItemClickListener[]  OnItemClickListenerArray= new AdapterView.OnItemClickListener[mainListMenuOptions.length];
+
+
     Word word;
     private TranslationAndLanguages translationAndLanguages;
     private Long fromLanguageID;
@@ -41,8 +45,7 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
         this.fromLanguageID = (Long) getIntent().getSerializableExtra("translationFromLanguageID");
         getSupportActionBar().setTitle(word.getWordString());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
+        seedOnClickListener();
 
         mainListMenu = (ListView) findViewById(R.id.updateWordListMenu);
 
@@ -55,12 +58,7 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                Intent activity2Intent = new Intent(getApplicationContext(), mainListMenuOptionsNavigate[position]);
-
-                activity2Intent.putExtra("translationAndLanguages", UpdateWordMenuActivity.this.translationAndLanguages);
-                activity2Intent.putExtra("translationFromLanguageID", UpdateWordMenuActivity.this.fromLanguageID);
-                activity2Intent.putExtra("word", UpdateWordMenuActivity.this.word);
-                startActivity(activity2Intent);
+                OnItemClickListenerArray[position].onItemClick(adapterView,view,position,l);
 
             }
         });
@@ -76,6 +74,77 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(word.getWordString());
     }
 
+    private void seedOnClickListener(){
+        OnItemClickListenerArray[0] = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                Intent activity2Intent = new Intent(getApplicationContext(), UpdateWordBasicActivity.class);
+
+                activity2Intent.putExtra("translationAndLanguages", UpdateWordMenuActivity.this.translationAndLanguages);
+                activity2Intent.putExtra("translationFromLanguageID", UpdateWordMenuActivity.this.fromLanguageID);
+                activity2Intent.putExtra("word", UpdateWordMenuActivity.this.word);
+                startActivity(activity2Intent);
+            }
+
+
+        };
+
+        OnItemClickListenerArray[1] = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                Intent activity2Intent = new Intent(getApplicationContext(), UpdateWordTranslationActivity.class);
+
+                activity2Intent.putExtra("translationAndLanguages", UpdateWordMenuActivity.this.translationAndLanguages);
+                activity2Intent.putExtra("translationFromLanguageID", UpdateWordMenuActivity.this.fromLanguageID);
+                activity2Intent.putExtra("word", UpdateWordMenuActivity.this.word);
+                startActivity(activity2Intent);
+            }
+
+
+        };
+
+        OnItemClickListenerArray[2] = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                Intent activity2Intent = new Intent(getApplicationContext(), UpdateWordHelpSentenceActivity.class);
+
+                activity2Intent.putExtra("translationAndLanguages", UpdateWordMenuActivity.this.translationAndLanguages);
+                activity2Intent.putExtra("translationFromLanguageID", UpdateWordMenuActivity.this.fromLanguageID);
+                activity2Intent.putExtra("word", UpdateWordMenuActivity.this.word);
+                startActivity(activity2Intent);
+            }
+
+
+        };
+        OnItemClickListenerArray[3] = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                try {
+                    final String url = String.format(translationAndLanguages.getForeignLanguage().getDefinitionUrl(), word.getWordString());
+                    String urlString = url;
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setPackage("com.android.chrome");
+                    try {
+                        getApplicationContext().startActivity(intent);
+                    } catch (ActivityNotFoundException ex) {
+                        // Chrome browser presumably not installed and open Kindle Browser
+                        intent.setPackage("com.amazon.cloud9");
+                        getApplicationContext().startActivity(intent);
+                    }
+
+                } catch (Exception ex) {
+                   ;
+                }
+            }
+        };
+
+
+
+    }
 
 
 

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -82,7 +83,14 @@ public class UpdateWordTranslationActivity extends AppCompatActivity {
         Button btn_Submit = (Button) myDialog.findViewById(R.id.btn_dialog_newItem);
 
         EditText newItem = (EditText) myDialog.findViewById(R.id.et_dialog_newItem);
-
+        newItem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    myDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
         btn_Submit.setOnClickListener(new View.OnClickListener()
         {
 
