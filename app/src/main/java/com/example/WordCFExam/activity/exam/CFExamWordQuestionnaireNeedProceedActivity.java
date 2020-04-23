@@ -8,6 +8,7 @@ import com.example.WordCFExam.R;
 import com.example.WordCFExam.activity.base.BaseListableAppCompatActivity;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.exam.CFExamWordQuestionnaireNeedProceedAdapter;
+import com.example.WordCFExam.entity.Profile;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaireCross;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.exam.CFExamWordQuestionnaireService;
@@ -42,6 +43,13 @@ public class CFExamWordQuestionnaireNeedProceedActivity
         super.setContext(CFExamWordQuestionnaireNeedProceedActivity.this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("List of CF questions");
+        Profile targetProfile = (Profile) getIntent().getSerializableExtra("targetProfile");
+        if (targetProfile!=null) {
+            Session.setLongAttribute(getContext(), SessionNameAttribute.ProfileID,targetProfile.getProfileID());
+            Session.setStringAttribute(getContext(), SessionNameAttribute.ProfileName,targetProfile.getProfileName());
+        }
+
+
         setGetItemsExecutor(new GetItemsExecutorBlock<CFExamWordQuestionnaireCross>() {
             @Override
             public List<CFExamWordQuestionnaireCross> execute() {

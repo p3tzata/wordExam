@@ -4,8 +4,10 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "profile",indices = {@Index(unique = true, value = {"profileName"})})
-public class Profile implements TextLabelable {
+public class Profile implements Serializable,TextLabelable {
 
     @PrimaryKey
     private Long profileID;

@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.example.WordCFExam.R;
 import com.example.WordCFExam.activity.exam.CFExamTopicQuestionnaireNeedProceedActivity;
 import com.example.WordCFExam.activity.exam.CFExamWordQuestionnaireNeedProceedActivity;
+import com.example.WordCFExam.activity.exam.ExamMenuActivity;
 import com.example.WordCFExam.activity.exam.RandomExamListAllDictionaryActivity;
 import com.example.WordCFExam.activity.topic.TopicTypeActivity;
 import com.example.WordCFExam.activity.wordActivity.ListAllDictionary;
@@ -59,17 +60,14 @@ Testing.
     ListView mainListMenu;
 
     String[] mainListMenuOptions = new String[]{
-            "Dictionaries",
+            "Words",
             "Topics",
-            "CF Word exam",
-            "CF Topic exam",
-            "Random Word exam"};
+            "Exams"
+};
     Class<?>[] mainListMenuOptionsNavigate = new Class[]{
             ListAllDictionary.class,
             TopicTypeActivity.class,
-            CFExamWordQuestionnaireNeedProceedActivity.class,
-            CFExamTopicQuestionnaireNeedProceedActivity.class,
-            RandomExamListAllDictionaryActivity.class
+            ExamMenuActivity.class
             };
 
     @Override

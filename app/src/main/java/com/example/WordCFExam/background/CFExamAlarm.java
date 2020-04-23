@@ -1,7 +1,6 @@
 package com.example.WordCFExam.background;
 
 import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,6 +14,8 @@ import androidx.core.app.NotificationManagerCompat;
 import com.example.WordCFExam.R;
 import com.example.WordCFExam.CFExamApplication;
 import com.example.WordCFExam.activity.MainActivity;
+import com.example.WordCFExam.activity.exam.CFExamTopicQuestionnaireNeedProceedActivity;
+import com.example.WordCFExam.activity.exam.CFExamWordQuestionnaireNeedProceedActivity;
 import com.example.WordCFExam.dao.CFExamTopicQuestionnaireDao;
 import com.example.WordCFExam.dao.CFExamWordQuestionnaireDao;
 import com.example.WordCFExam.entity.Profile;
@@ -29,6 +30,7 @@ import com.example.WordCFExam.utitliy.SessionNameAttribute;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -68,49 +70,75 @@ public class CFExamAlarm extends BroadcastReceiver {
 
 
 
-        DbExecutorImp<String> dbExecutor = FactoryUtil.<String>createDbExecutor();
-        dbExecutor.execute_(new DbExecutor<String>() {
+        DbExecutorImp<NotificationMessenger> dbExecutor = FactoryUtil.<NotificationMessenger>createDbExecutor();
+        dbExecutor.execute_(new DbExecutor<NotificationMessenger>() {
             @Override
-            public String doInBackground() {
+            public NotificationMessenger doInBackground() {
 
 
-                StringBuilder stringBuilder = new StringBuilder();
+                // StringBuilder stringBuilder = new StringBuilder();
                 List<Profile> allProfileNeedPassCFExamWord = cfExamWordQuestionnaireService.findAllProfileNeedProceed();
                 List<Profile> allProfileNeedProceedCFExamTopic = cfExamTopicQuestionnaireService.findAllProfileNeedProceed();
-                if (allProfileNeedPassCFExamWord.size()>0) {
-                    stringBuilder.append(profileListToStringMsg("Word Exam: ", allProfileNeedPassCFExamWord));
-                }
 
+
+                NotificationMessenger notificationMessenger = new NotificationMessenger();
+/*
+                if (allProfileNeedPassCFExamWord.size()>0) {
+                stringBuilder.append(profileListToStringMsg("Word Exam: ", allProfileNeedPassCFExamWord));
+                 }
                 if (allProfileNeedPassCFExamWord.size()>0 && allProfileNeedProceedCFExamTopic.size()>0 ) {
                     stringBuilder.append(" | ");
                 }
+
+
 
                 if (allProfileNeedProceedCFExamTopic.size()>0) {
                     stringBuilder.append(profileListToStringMsg("Topic Exam: ", allProfileNeedProceedCFExamTopic));
                 }
 
+                }
 
-                return stringBuilder.toString();
+ */
+
+                for (Profile profile :
+                        allProfileNeedPassCFExamWord) {
+                    String title = String.format("[%s] need to proceed", profile.getLabelText());
+                    notificationMessenger.addNotify(CFExamWordQuestionnaireNeedProceedActivity.class,profile, title, "CFExam Word");
+                }
+
+                for (Profile profile :
+                        allProfileNeedProceedCFExamTopic) {
+                    String title = String.format("[%s] need to proceed", profile.getLabelText());
+                    notificationMessenger.addNotify(CFExamTopicQuestionnaireNeedProceedActivity.class,profile,  title, "CFExam Topic");
+                }
+
+                return notificationMessenger;
+                // return stringBuilder.toString();
             }
 
             @Override
-            public void onPostExecute(String item) {
-                if (item.length()>0) {
-                    sendNotification(CFExamAlarm.this.context,"CF Exam need to proceed", item);
+            public void onPostExecute(NotificationMessenger item) {
+                Iterator<Notify> notifyIterator = item.getIterator();
+                Integer id=1;
+                while (notifyIterator.hasNext()) {
+                    Notify notify = notifyIterator.next();
+                    sendNotification(CFExamAlarm.this.context, id++,notify.getTargetActivity(),notify.getTargetProfile(),notify.getTitle(), notify.getMessage());
                 }
+
+                /*
+                if (item.length()>0) {
+                    sendNotification(CFExamAlarm.this.context,1,"CF Exam need to proceed", item);
+                }
+
+                 */
             }
+
         });
-
-
-
-
-
-
-
-
-
-
     }
+
+
+
+
 
     public void setAlarm(Context context)
     {
@@ -128,9 +156,12 @@ public class CFExamAlarm extends BroadcastReceiver {
                 intervalMilliSecs, alarmIntent);
     }
 
-    public void sendNotification(Context context,String contentTitle, String contentText){
-        Intent intent = new Intent(context, MainActivity.class);
+    public void sendNotification(Context context,Integer id,Class<?> targetActivity, Profile targetProfile,String contentTitle, String contentText){
+        Intent intent = new Intent(context, targetActivity);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        intent.putExtra("targetProfile", targetProfile);
+
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         Uri soundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "1")
@@ -150,7 +181,7 @@ public class CFExamAlarm extends BroadcastReceiver {
             public void run() {
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
-                notificationManager.notify(1, builder.build());
+                notificationManager.notify(id, builder.build());
 
             }
         }, 1000);

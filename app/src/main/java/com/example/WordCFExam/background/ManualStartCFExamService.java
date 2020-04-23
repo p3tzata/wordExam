@@ -4,6 +4,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import com.example.WordCFExam.activity.MainActivity;
+
 public class ManualStartCFExamService extends Service
     {
         CFExamAlarm alarm = new CFExamAlarm();
@@ -17,7 +19,7 @@ public class ManualStartCFExamService extends Service
         {
 
             alarm.setAlarm(this);
-            alarm.sendNotification(this,"Schedule CFExam started manual","Started");
+            alarm.sendNotification(this,100, MainActivity.class,null,"Schedule CFExam started manual","Started");
             return START_STICKY;
         }
 
@@ -27,7 +29,7 @@ public class ManualStartCFExamService extends Service
 
 
             alarm.setAlarm(this);
-            alarm.sendNotification(this,"Schedule CFExam started manual","Started");
+            alarm.sendNotification(this,100, MainActivity.class,null,"Schedule CFExam started manual","Started");
         }
 
         @Override

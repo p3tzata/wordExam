@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.WordCFExam.activity.MainActivity;
+
 public class AutoStartCFExamBroadcastReceiver extends BroadcastReceiver
 {
     CFExamAlarm cfExamAlarm = new CFExamAlarm();
@@ -14,7 +16,7 @@ public class AutoStartCFExamBroadcastReceiver extends BroadcastReceiver
         {
 
            cfExamAlarm.setAlarm(context);
-            cfExamAlarm.sendNotification(context,"Schedule CFExam started automatic","Started");
+            cfExamAlarm.sendNotification(context,101, MainActivity.class,null,"Schedule CFExam started automatic","Started");
         }
     }
 }
