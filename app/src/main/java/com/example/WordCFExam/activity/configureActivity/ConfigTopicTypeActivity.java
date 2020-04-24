@@ -14,6 +14,7 @@ import com.example.WordCFExam.R;
 import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivity;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.topic.TopicTypeEditableAdapter;
+import com.example.WordCFExam.entity.Profile;
 import com.example.WordCFExam.entity.exam.TopicType;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.exam.TopicTypeService;

@@ -14,16 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseListableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseListableAppCompatActivityFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.activity.base.onMenuItemClickHandlerExecutor;
 import com.example.WordCFExam.adapter.ListWordListableAdapter;
 import com.example.WordCFExam.adapter.spinnerAdapter.CFProfileSpinAdapter;
 import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
+import com.example.WordCFExam.entity.dto.WordCFExamCross;
 import com.example.WordCFExam.entity.exam.CFExamProfile;
 import com.example.WordCFExam.entity.exam.CFExamProfilePointCross;
-import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaireCross;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.WordService;
@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ListWordListableActivity
-        extends BaseListableAppCompatActivity<Word, WordService, ListWordListableActivity, ListWordListableAdapter> {
+        extends BaseListableAppCompatActivityFaced<WordCFExamCross,Word, WordService, ListWordListableActivity, ListWordListableAdapter> {
 
     TranslationAndLanguages translationAndLanguages;
     Long fromLanguageID;
@@ -103,14 +103,17 @@ public class ListWordListableActivity
         } else {
             getSupportActionBar().setTitle(String.format(formatTitle,translationAndLanguages.getNativeLanguage().getLanguageName()));
         }
-        setGetItemsExecutor(new GetItemsExecutorBlock<Word>() {
+        setGetItemsExecutor(new GetItemsExecutorBlock<WordCFExamCross>() {
             @Override
-            public List<Word> execute() {
-                   return new ArrayList<Word>();
+            public List<WordCFExamCross> execute() {
+                   return new ArrayList<WordCFExamCross>();
             }
         });
 
     }
+
+
+
 
     @Override
     public void onResume(){
@@ -128,14 +131,15 @@ public class ListWordListableActivity
 
     @Override
     public void onSearchBarGetItemsExecutorHandler(String contains) {
-        setGetItemsExecutor(new GetItemsExecutorBlock<Word>() {
+        setGetItemsExecutor(new GetItemsExecutorBlock<WordCFExamCross>() {
             @Override
-            public List<Word> execute() {
+            public List<WordCFExamCross> execute() {
                 if (contains.length()<2) {
-                    return new ArrayList<Word>();
+                    return new ArrayList<WordCFExamCross>();
                 }
-                return getItemService().findByWordStringContainsAndProfileIDAndLanguageID(contains,translationAndLanguages.getTranslation().getProfileID(),fromLanguageID);
-
+                //
+                List<WordCFExamCross> byWordStringContainsAndProfileIDAndLanguageIDCFExamCross = getItemService().findByWordStringContainsAndProfileIDAndLanguageIDCFExamCross(contains, translationAndLanguages.getTranslation().getProfileID(), fromLanguageID, toLanguageID);
+                return byWordStringContainsAndProfileIDAndLanguageIDCFExamCross;
             }
         });
     }

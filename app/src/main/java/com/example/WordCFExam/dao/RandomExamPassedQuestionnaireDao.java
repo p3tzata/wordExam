@@ -42,7 +42,10 @@ public abstract class RandomExamPassedQuestionnaireDao implements CrudDao<Random
 
             " where nWord.languageID=:fromLanguageID and fWord.languageID=:toLanguageID " +
             "and nWord.profileID=:profileID " +
-            "and not EXISTS (select 1 from randomexampassedquestionnaire rExam where rExam.wordID=nWord.wordID and rExam.targetTranslationLanguageID=:toLanguageID)" +
+            "and not EXISTS (select 1 from randomexampassedquestionnaire rExam where rExam.wordID=nWord.wordID and rExam.targetTranslationLanguageID=:toLanguageID) " +
+            "and not EXISTS (select 1 from cfexamwordquestionnaire cfexam,cfexamprofilepoint cfexamPP where cfexamPP.CFExamProfilePointID=cfexam.currentCFExamProfilePointID and " +
+            "nWord.wordID=cfexam.wordID and cfexam.targetTranslationLanguageID=:toLanguageID and " +
+            "cfexamPP.isLoopRepeat!=1 ) " +
             "ORDER BY RANDOM() LIMIT :countNumber" +
             ") t " +
             "ORDER BY t.wordString")
@@ -55,6 +58,10 @@ public abstract class RandomExamPassedQuestionnaireDao implements CrudDao<Random
             "and EXISTS (select 1 from translationwordrelation r INNER JOIN word nWord on nWord.wordID=r.nativeWordID " +
             "           where r.foreignWordID=fWord.wordID and nWord.languageID=:toLanguageID) " +
             "and not EXISTS (select 1 from randomexampassedquestionnaire rExam where rExam.wordID=fWord.wordID and rExam.targetTranslationLanguageID=:toLanguageID) " +
+            "and not EXISTS (select 1 from cfexamwordquestionnaire cfexam,cfexamprofilepoint cfexamPP where cfexamPP.CFExamProfilePointID=cfexam.currentCFExamProfilePointID and " +
+                            "fWord.wordID=cfexam.wordID and cfexam.targetTranslationLanguageID=:toLanguageID and " +
+                            "cfexamPP.isLoopRepeat!=1 ) " +
+
             "and fWord.profileID=:profileID ORDER BY RANDOM() LIMIT :countNumber" +
             ") t " +
             "ORDER BY t.wordString")

@@ -17,16 +17,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivityFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.activity.base.onMenuItemClickHandlerExecutor;
 import com.example.WordCFExam.adapter.ListWordEditableAdapter;
 import com.example.WordCFExam.adapter.spinnerAdapter.CFProfileSpinAdapter;
 import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
+import com.example.WordCFExam.entity.dto.WordCFExamCross;
 import com.example.WordCFExam.entity.exam.CFExamProfile;
 import com.example.WordCFExam.entity.exam.CFExamProfilePointCross;
-import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaireCross;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.WordService;
@@ -47,7 +47,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ListWordEditableActivity extends BaseEditableAppCompatActivity<Word, WordService,
+public class ListWordEditableActivity extends BaseEditableAppCompatActivityFaced<WordCFExamCross,Word, WordService,
         ListWordEditableActivity, ListWordEditableAdapter> {
 
     TranslationAndLanguages translationAndLanguages;
@@ -90,14 +90,14 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivity<Word
         } else {
             getSupportActionBar().setTitle(String.format(formatTitle,translationAndLanguages.getNativeLanguage().getLanguageName()));
         }
-        setGetItemsExecutor(new GetItemsExecutorBlock<Word>() {
+        setGetItemsExecutor(new GetItemsExecutorBlock<WordCFExamCross>() {
             @Override
-            public List<Word> execute() {
+            public List<WordCFExamCross> execute() {
                 /*
                 List<Topic> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(topicType.getTopicTypeID(), "");
                 return allOrderAlphabetic;
                 */
-                return new ArrayList<Word>();
+                return new ArrayList<WordCFExamCross>();
             }
         });
 
@@ -443,14 +443,14 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivity<Word
 
     @Override
     public void onSearchBarGetItemsExecutorHandler(String contains) {
-        setGetItemsExecutor(new GetItemsExecutorBlock<Word>() {
+        setGetItemsExecutor(new GetItemsExecutorBlock<WordCFExamCross>() {
             @Override
-            public List<Word> execute() {
+            public List<WordCFExamCross> execute() {
                 if (contains.length()<2) {
-                    return new ArrayList<Word>();
+                    return new ArrayList<WordCFExamCross>();
                 }
-                return getItemService().findByWordStringContainsAndProfileIDAndLanguageID(contains,translationAndLanguages.getTranslation().getProfileID(),fromLanguageID);
-
+                //return getItemService().findByWordStringContainsAndProfileIDAndLanguageID(contains,translationAndLanguages.getTranslation().getProfileID(),fromLanguageID);
+                return getItemService().findByWordStringContainsAndProfileIDAndLanguageIDCFExamCross(contains,translationAndLanguages.getTranslation().getProfileID(),fromLanguageID,toLanguageID);
             }
         });
     }

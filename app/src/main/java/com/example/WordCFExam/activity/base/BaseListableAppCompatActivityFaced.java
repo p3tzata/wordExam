@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.adapter.BaseRecycleAdapter;
+import com.example.WordCFExam.adapter.BaseRecycleAdapterFaced;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.utitliy.DbExecutor;
 import com.example.WordCFExam.utitliy.DbExecutorImp;
@@ -25,11 +25,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class BaseListableAppCompatActivity<
+public abstract class BaseListableAppCompatActivityFaced<
+        V,
         T,
         S,
-        C extends BaseListableAppCompatActivity,
-        A extends BaseRecycleAdapter>
+        C extends BaseListableAppCompatActivityFaced,
+        A extends BaseRecycleAdapterFaced>
         extends AppCompatActivity implements ListableAppCompatActivity<T> {
 
     private S itemService;
@@ -37,7 +38,7 @@ public abstract class BaseListableAppCompatActivity<
     private A adapter;
     public Dialog myDialog;
     public SearchView searchView;
-    private GetItemsExecutorBlock<T> getItemsExecutor;
+    private GetItemsExecutorBlock<V> getItemsExecutor;
 
     protected Map<Integer,onMenuItemClickHandlerExecutor> mappingMenuItemHandler;
 
@@ -58,13 +59,13 @@ public abstract class BaseListableAppCompatActivity<
     }
 
 
-    public GetItemsExecutorBlock<T> getGetItemsExecutor() {
-        return getItemsExecutor;
-    }
+        public GetItemsExecutorBlock<V> getGetItemsExecutor() {
+            return getItemsExecutor;
+        }
 
-    public void setGetItemsExecutor(GetItemsExecutorBlock<T> getItemsExecutor) {
-        this.getItemsExecutor = getItemsExecutor;
-    }
+        public void setGetItemsExecutor(GetItemsExecutorBlock<V> getItemsExecutor) {
+            this.getItemsExecutor = getItemsExecutor;
+        }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,7 +74,12 @@ public abstract class BaseListableAppCompatActivity<
         onCreateCustom();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+       getItems();
 
+    }
 
 
 
@@ -135,17 +141,17 @@ public abstract class BaseListableAppCompatActivity<
 
     protected void getItems() {
 
-        DbExecutorImp<List<T>> dbExecutor = FactoryUtil.<List<T>>createDbExecutor();
-        dbExecutor.execute_(new DbExecutor<List<T>>() {
+        DbExecutorImp<List<V>> dbExecutor = FactoryUtil.<List<V>>createDbExecutor();
+        dbExecutor.execute_(new DbExecutor<List<V>>() {
             @Override
-            public List<T> doInBackground() {
+            public List<V> doInBackground() {
 
-                List<T> execute = getItemsExecutor.execute();
+                List<V> execute = getItemsExecutor.execute();
                 return execute;
             }
 
             @Override
-            public void onPostExecute(List<T> item) {
+            public void onPostExecute(List<V> item) {
                 adapter.setItems(item);
                 RecyclerView recyclerView = findViewById(R.id.recyclerview);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -190,6 +196,7 @@ public abstract class BaseListableAppCompatActivity<
     public void callShowViewMenu(View v, T selectedItem) {
         callShowViewMenu(R.menu.popup_view_menu_custom,v,selectedItem);
     }
+
 
 
 }

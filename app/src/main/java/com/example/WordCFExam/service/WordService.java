@@ -3,6 +3,7 @@ package com.example.WordCFExam.service;
 import android.app.Application;
 
 import com.example.WordCFExam.entity.Word;
+import com.example.WordCFExam.entity.dto.WordCFExamCross;
 import com.example.WordCFExam.repository.WordRepository;
 import com.example.WordCFExam.service.base.BaseCrudService;
 import com.example.WordCFExam.service.base.CrudService;
@@ -28,6 +29,10 @@ public class WordService extends BaseCrudService<WordRepository, Word> implement
 
     }
 
+
+    public List<WordCFExamCross> findByWordStringContainsAndProfileIDAndLanguageIDCFExamCross(String wordStringContain, Long profileId, Long langID, Long targetTranslateLangID){
+        return super.getRepository().findByWordStringContainsAndProfileIDAndLanguageIDCFExamCross(wordStringContain, profileId, langID,targetTranslateLangID);
+    }
 
 
 

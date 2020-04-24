@@ -8,20 +8,20 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseListableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseListableAppCompatActivityFaced;
 import com.example.WordCFExam.entity.TextLabelable;
 
 import java.util.List;
 
-public abstract class BaseRecycleAdapter<C extends BaseListableAppCompatActivity,I extends TextLabelable,V extends BaseRecycleAdapter.ItemViewHolder>  extends RecyclerView.Adapter<BaseRecycleAdapter<C,I, V>.ItemViewHolder> {
+public abstract class BaseRecycleAdapterFaced<C extends BaseListableAppCompatActivityFaced,V extends TextLabelable,T extends TextLabelable,A extends BaseRecycleAdapterFaced.ItemViewHolder>  extends RecyclerView.Adapter<BaseRecycleAdapterFaced<C,V,T, A>.ItemViewHolder> {
 
    // abstract public void callOnClick(View v,I selectedItem);
 
     private final LayoutInflater mInflater;
     protected C context;
-    protected List<I> mItems;
+    protected List<V> mItems;
 
-    public BaseRecycleAdapter(C context) {
+    public BaseRecycleAdapterFaced(C context) {
         mInflater = LayoutInflater.from(context);
         this.context=context;
     }
@@ -35,9 +35,9 @@ public abstract class BaseRecycleAdapter<C extends BaseListableAppCompatActivity
     }
 
     @Override
-    public void onBindViewHolder(BaseRecycleAdapter.ItemViewHolder holder, int position) {
+    public void onBindViewHolder(BaseRecycleAdapterFaced.ItemViewHolder holder, int position) {
         if (mItems != null) {
-            I current = mItems.get(position);
+            V current = mItems.get(position);
             holder.wordItemView.setText(current.getLabelText());
         } else {
             // Covers the case of data not being ready yet.
@@ -52,7 +52,7 @@ public abstract class BaseRecycleAdapter<C extends BaseListableAppCompatActivity
         else return 0;
     }
 
-    public void setItems(List<I> items){
+    public void setItems(List<V> items){
         mItems = items;
         notifyDataSetChanged();
     }
@@ -71,21 +71,16 @@ public abstract class BaseRecycleAdapter<C extends BaseListableAppCompatActivity
         @Override
         public void onClick(View v) {
 
-            I selectedItem = mItems.get(getAdapterPosition());
+            V selectedItem = mItems.get(getAdapterPosition());
             //callOnClick(v,selectedItem);
-            context.recyclerViewOnClickHandler(v,selectedItem);
+            T t = castViewTypeToEntityType(selectedItem);
+            context.recyclerViewOnClickHandler(v,t);
 
 
         }
     }
 
-
-
-
-
-
-
-
+    abstract public T castViewTypeToEntityType(V selectedItem);
 
 
 }

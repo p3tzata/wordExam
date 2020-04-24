@@ -21,6 +21,7 @@ import com.example.WordCFExam.entity.PartOfSpeech;
 import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.WordForm;
 import com.example.WordCFExam.entity.dto.ForeignWordWithDefPartOfSpeech;
+import com.example.WordCFExam.entity.dto.WordCFExamCross;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.HelpSentenceService;
 import com.example.WordCFExam.service.LanguageService;
@@ -277,25 +278,25 @@ public class ShowForeignWordActivity extends AppCompatActivity {
     }
 
     private void getNativeWords(Word foreignWord) {
-        DbExecutorImp<List<Word>> dbExecutor = FactoryUtil.<List<Word>>createDbExecutor();
-        dbExecutor.execute_(new DbExecutor<List<Word>>() {
+        DbExecutorImp<List<WordCFExamCross>> dbExecutor = FactoryUtil.<List<WordCFExamCross>>createDbExecutor();
+        dbExecutor.execute_(new DbExecutor<List<WordCFExamCross>>() {
             @Override
-            public List<Word> doInBackground() {
+            public List<WordCFExamCross> doInBackground() {
 
-                //return translationWordRelationService.translateFromForeign(foreignWord.getWordID(),translationAndLanguages.getNativeLanguage().getLanguageID());
-                return translationWordRelationService.translateFromForeign(foreignWord.getWordID(),translationToLanguageID);
+
+                return translationWordRelationService.translateFromForeignCFExamCross(foreignWord.getWordID(),translationToLanguageID);
 
             }
 
             @Override
-            public void onPostExecute(List<Word> item) {
+            public void onPostExecute(List<WordCFExamCross> item) {
                 if (item==null) {
                     return;
                 }
                     List<String> nativeWordStringList=new ArrayList<>();
-                Iterator<Word> iterator = item.iterator();
+                Iterator<WordCFExamCross> iterator = item.iterator();
                 while(iterator.hasNext()) {
-                    nativeWordStringList.add(iterator.next().getWordString());
+                    nativeWordStringList.add(iterator.next().getLabelText());
                 }
                 View header1 = getLayoutInflater().inflate(R.layout.arraylist_header, null);
                 TextView headerTextView1  = (TextView) header1.findViewById(R.id.arrayListHeader);

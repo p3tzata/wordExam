@@ -7,9 +7,11 @@ import android.widget.Toast;
 
 import com.example.WordCFExam.R;
 import com.example.WordCFExam.activity.base.BaseListableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseListableAppCompatActivityFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.NativeWordListableAdapter;
 import com.example.WordCFExam.entity.Word;
+import com.example.WordCFExam.entity.dto.WordCFExamCross;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.TranslationWordRelationService;
 import com.example.WordCFExam.service.WordService;
@@ -17,7 +19,7 @@ import com.example.WordCFExam.service.WordService;
 import java.util.List;
 
 //public class ShowNativeWordActivity extends AppCompatActivity {
-public class ShowNativeWordActivity extends BaseListableAppCompatActivity<Word, WordService, ShowNativeWordActivity, NativeWordListableAdapter> {
+public class ShowNativeWordActivity extends BaseListableAppCompatActivityFaced<WordCFExamCross,Word, WordService, ShowNativeWordActivity, NativeWordListableAdapter> {
 
         private Word word;
     private Long translationFromLanguageID;
@@ -53,12 +55,12 @@ public class ShowNativeWordActivity extends BaseListableAppCompatActivity<Word, 
         this.word= (Word) i.getSerializableExtra("word");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(word.getWordString());
-        setGetItemsExecutor(new GetItemsExecutorBlock<Word>() {
+        setGetItemsExecutor(new GetItemsExecutorBlock<WordCFExamCross>() {
             @Override
-            public List<Word> execute() {
+            public List<WordCFExamCross> execute() {
 
                 //return translationWordRelationService.translateFromNative(word.getWordID(),translationAndLanguages.getForeignLanguage().getLanguageID());
-                return translationWordRelationService.translateFromNative(word.getWordID(),translationToLanguageID);
+                return translationWordRelationService.translateFromNativeCFExamCross(word.getWordID(),translationToLanguageID);
             }
         });
         getItems();
@@ -76,11 +78,11 @@ public class ShowNativeWordActivity extends BaseListableAppCompatActivity<Word, 
 
     @Override
     public void onSearchBarGetItemsExecutorHandler(String contains) {
-        setGetItemsExecutor(new GetItemsExecutorBlock<Word>() {
+        setGetItemsExecutor(new GetItemsExecutorBlock<WordCFExamCross>() {
             @Override
-            public List<Word> execute() {
+            public List<WordCFExamCross> execute() {
                 //return translationWordRelationService.translateFromNative(word.getWordID(),translationAndLanguages.getForeignLanguage().getLanguageID());
-                return translationWordRelationService.translateFromNative(word.getWordID(),translationToLanguageID);
+                return translationWordRelationService.translateFromNativeCFExamCross(word.getWordID(),translationToLanguageID);
 
             }
         });

@@ -1,5 +1,7 @@
 package com.example.WordCFExam.dao;
 
+import android.database.Cursor;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -67,6 +69,23 @@ public abstract class TranslationWordRelationDao implements CrudDao<TranslationW
     abstract public List<TranslationWordRelation> findByNativeWordID(Long nativeWordID);
 
 
+    @Transaction
+    @Query("SELECT wf.*,cfPP.isLoopRepeat,cfPP.CFExamProfileID,cfPP.CFExamProfilePointID,cfPP.lastOfPeriodInMinute,cfPP.name FROM word l " +
+            "INNER JOIN translationwordrelation rwr on rwr.nativeWordID=l.wordID " +
+            "INNER JOIN word wf on rwr.foreignWordID=wf.wordID " +
+            "LEFT JOIN cfexamwordquestionnaire cf on wf.wordID=cf.wordID and cf.targetTranslationLanguageID=l.languageID " +
+            "LEFT JOIN CFExamProfilePoint cfPP on cf.currentCFExamProfilePointID=cfPP.CFExamProfilePointID " +
+            " where l.wordID=:nativeWordID and wf.languageID=:toLanguageID")
+    abstract public Cursor translateFromNativeCFExamCross(Long nativeWordID,Long toLanguageID);
+
+    @Transaction
+    @Query("SELECT wf.*,cfPP.isLoopRepeat,cfPP.CFExamProfileID,cfPP.CFExamProfilePointID,cfPP.lastOfPeriodInMinute,cfPP.name FROM word l " +
+            "INNER JOIN translationwordrelation rwr on rwr.foreignWordID=l.wordID " +
+            "INNER JOIN word wf on rwr.nativeWordID=wf.wordID " +
+            "LEFT JOIN cfexamwordquestionnaire cf on wf.wordID=cf.wordID and cf.targetTranslationLanguageID=l.languageID " +
+            "LEFT JOIN CFExamProfilePoint cfPP on cf.currentCFExamProfilePointID=cfPP.CFExamProfilePointID " +
+            " where l.wordID=:foreignWordID and wf.languageID=:toLanguageID")
+    abstract public Cursor translateFromForeignCFExamCross(Long foreignWordID, Long toLanguageID);
 
 
 

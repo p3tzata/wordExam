@@ -1,5 +1,7 @@
 package com.example.WordCFExam.dao;
 
+import android.database.Cursor;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -34,6 +36,13 @@ public abstract class WordDao implements CrudDao<Word> {
 
     @Query("SELECT * FROM word p where p.wordString like '%'||:wordStringContain||'%'  and p.profileID=:profileID and p.languageID=:languageID")
     abstract public List<Word> findByWordStringContainsAndProfileIDAndLanguageID(String wordStringContain,Long profileID,Long languageID);
+
+    @Query("SELECT p.*,cfPP.isLoopRepeat,cfPP.CFExamProfileID,cfPP.CFExamProfilePointID,cfPP.lastOfPeriodInMinute,cfPP.name FROM word p " +
+            "LEFT JOIN cfexamwordquestionnaire cf on p.wordID=cf.wordID and cf.targetTranslationLanguageID=:targetTranslateLangID " +
+            "LEFT JOIN CFExamProfilePoint cfPP on cf.currentCFExamProfilePointID=cfPP.CFExamProfilePointID " +
+            " where p.wordString like '%'||:wordStringContain||'%'  and p.profileID=:profileID and p.languageID=:languageID")
+    abstract public Cursor findByWordStringContainsAndProfileIDAndLanguageIDCFExamCross(String wordStringContain, Long profileID, Long languageID,Long targetTranslateLangID);
+
 
 
 

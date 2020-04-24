@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.WordCFExam.entity.TranslationWordRelation;
 import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.dto.ForeignWithNativeWords;
+import com.example.WordCFExam.entity.dto.WordCFExamCross;
 import com.example.WordCFExam.entity.dto.WordCreationDTO;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.repository.TranslationWordRelationRepository;
@@ -100,6 +101,15 @@ public class TranslationWordRelationService extends BaseCrudService<TranslationW
 
     public List<TranslationWordRelation> findByNativeWordID(Long nativeWordID){
         return super.getRepository().findByNativeWordID(nativeWordID);
+    }
+
+
+    public List<WordCFExamCross> translateFromNativeCFExamCross(Long nativeWordID, Long toLanguageID){
+        return super.getRepository().translateFromNativeCFExamCross(nativeWordID,toLanguageID);
+    }
+
+    public List<WordCFExamCross> translateFromForeignCFExamCross(Long foreignWordID,Long toLanguageID){
+        return super.getRepository().translateFromForeignCFExamCross(foreignWordID, toLanguageID);
     }
 
 
