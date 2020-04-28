@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:text="Open link" />
+                android:text="Open URL link" />
 
             <ListView
                 android:id="@+id/show_foreign_helpSentence"

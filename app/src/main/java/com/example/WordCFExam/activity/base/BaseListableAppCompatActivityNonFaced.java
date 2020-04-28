@@ -10,13 +10,12 @@ import android.widget.PopupMenu;
 import android.widget.SearchView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.adapter.BaseRecycleAdapterFaced;
+import com.example.WordCFExam.adapter.BaseRecycleAdapterNonFaced;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.utitliy.DbExecutor;
 import com.example.WordCFExam.utitliy.DbExecutorImp;
@@ -25,52 +24,49 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class BaseListableAppCompatActivityFaced<
-        V,
+public abstract class BaseListableAppCompatActivityNonFaced<
         T,
         S,
-        C extends BaseListableAppCompatActivityFaced,
-        A extends BaseRecycleAdapterFaced>
+        C extends BaseListableAppCompatActivityNonFaced,
+        A extends BaseRecycleAdapterNonFaced>
         extends BaseListableAppCompatActivity<T,S,C> implements ListableAppCompatActivity<T> {
 
-
     private A adapter;
-    public Dialog myDialog;
-    private GetItemsExecutorBlock<V> getItemsExecutor;
+    private GetItemsExecutorBlock<T> getItemsExecutor;
 
-    public GetItemsExecutorBlock<V> getGetItemsExecutor() {
-            return getItemsExecutor;
-        }
 
-    public void setGetItemsExecutor(GetItemsExecutorBlock<V> getItemsExecutor) {
-            this.getItemsExecutor = getItemsExecutor;
-        }
+    public GetItemsExecutorBlock<T> getGetItemsExecutor() {
+        return getItemsExecutor;
+    }
+
+    public void setGetItemsExecutor(GetItemsExecutorBlock<T> getItemsExecutor) {
+        this.getItemsExecutor = getItemsExecutor;
+    }
+
 
 
     public void setAdapter(A adapter) {
         this.adapter = adapter;
     }
-
-
-
     public A getAdapter() {
         return adapter;
     }
 
+
     @Override
     public void getItems() {
 
-        DbExecutorImp<List<V>> dbExecutor = FactoryUtil.<List<V>>createDbExecutor();
-        dbExecutor.execute_(new DbExecutor<List<V>>() {
+        DbExecutorImp<List<T>> dbExecutor = FactoryUtil.<List<T>>createDbExecutor();
+        dbExecutor.execute_(new DbExecutor<List<T>>() {
             @Override
-            public List<V> doInBackground() {
+            public List<T> doInBackground() {
 
-                List<V> execute = getItemsExecutor.execute();
+                List<T> execute = getItemsExecutor.execute();
                 return execute;
             }
 
             @Override
-            public void onPostExecute(List<V> item) {
+            public void onPostExecute(List<T> item) {
                 adapter.setItems(item);
                 RecyclerView recyclerView = findViewById(R.id.recyclerview);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -78,9 +74,8 @@ public abstract class BaseListableAppCompatActivityFaced<
             }
         });
 
-
-
     }
+
 
 
 

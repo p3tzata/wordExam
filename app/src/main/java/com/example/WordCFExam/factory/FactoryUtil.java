@@ -19,6 +19,7 @@ import com.example.WordCFExam.service.exam.CFExamProfileService;
 import com.example.WordCFExam.service.exam.CFExamScheduleService;
 import com.example.WordCFExam.service.exam.CFExamTopicQuestionnaireService;
 import com.example.WordCFExam.service.exam.CFExamWordQuestionnaireService;
+import com.example.WordCFExam.service.exam.RandomExamHelpSentenceQuestionnaireService;
 import com.example.WordCFExam.service.exam.RandomExamWordQuestionnaireService;
 import com.example.WordCFExam.service.exam.TopicService;
 import com.example.WordCFExam.service.exam.TopicTypeService;
@@ -85,6 +86,9 @@ public class FactoryUtil {
         return new RandomExamWordQuestionnaireService(application);
     }
 
+    static public RandomExamHelpSentenceQuestionnaireService createRandomExamHelpSentenceQuestionnaireService(Application application) {
+        return new RandomExamHelpSentenceQuestionnaireService(application);
+    }
 
     static public CFExamTopicQuestionnaireService createCFExamTopicQuestionnaireService(Application application) {
         return new CFExamTopicQuestionnaireService(application);

@@ -9,10 +9,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.WordCFExam.R;
 
-import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivityNonFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.HelpSentenceEditableAdapter;
 import com.example.WordCFExam.entity.HelpSentence;
@@ -24,12 +25,13 @@ import com.example.WordCFExam.service.HelpSentenceService;
 import java.util.List;
 
 
-public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivity<HelpSentence,HelpSentenceService,
+public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivityNonFaced<HelpSentence,HelpSentenceService,
         UpdateWordHelpSentenceActivity,HelpSentenceEditableAdapter> {
 
 
     private TranslationAndLanguages translationAndLanguages;
     private Long fromLanguageID;
+    private Long toLanguageID;
     private Word word;
     private Dialog myDialog;
 
@@ -46,6 +48,7 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
 
         this.translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
         this.fromLanguageID = (Long) getIntent().getSerializableExtra("translationFromLanguageID");
+        this.toLanguageID = (Long) getIntent().getSerializableExtra("translationToLanguageID");
         this.word = (Word) getIntent().getSerializableExtra("word");
         getSupportActionBar().setTitle(word.getWordString() + " | " + "Sentences");
         setGetItemsExecutor(new GetItemsExecutorBlock<HelpSentence>() {
@@ -107,16 +110,23 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
 
     public void  handlerCreateUpdateClick(boolean isEditMode,HelpSentence helpSentence){
         this.myDialog = new Dialog(this);
-        myDialog.setContentView(R.layout.dialog_base_crud_item);
+        myDialog.setContentView(R.layout.dialog_base_crud_two_item);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
-        myDialog.getWindow().setLayout((6 * width)/7, (4 * height)/10);
+        myDialog.getWindow().setLayout((6 * width)/7, (4 * height)/7);
 
         Button btn_Submit = (Button) myDialog.findViewById(R.id.btn_dialog_newItem);
 
 
+        TextView lbl_newItem = (TextView) myDialog.findViewById(R.id.lbl_dialog_new_item);
+        TextView lbl_newItem2 = (TextView) myDialog.findViewById(R.id.lbl_dialog_new_item2);
+        lbl_newItem.setText("Help Sentence");
+        lbl_newItem2.setText("Translation");
         EditText newItem = (EditText) myDialog.findViewById(R.id.et_dialog_newItem);
+        EditText newItem2 = (EditText) myDialog.findViewById(R.id.et_dialog_newItem2);
+
+
         newItem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -129,6 +139,7 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
 
         if (isEditMode && helpSentence!=null) {
             newItem.setText(helpSentence.getSentenceString());
+            newItem2.setText(helpSentence.getSentenceTranslation());
         }
 
             btn_Submit.setOnClickListener(new View.OnClickListener()
@@ -139,12 +150,15 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
             {
                 if (isEditMode) {
                     helpSentence.setSentenceString(newItem.getText().toString());
+                    helpSentence.setSentenceTranslation(newItem2.getText().toString());
                     updateItem(helpSentence);
                     myDialog.dismiss();
                 } else {
                     HelpSentence helpSentence = new HelpSentence();
                     helpSentence.setWordID(word.getWordID());
+                    helpSentence.setToLanguageID(toLanguageID);
                     helpSentence.setSentenceString(newItem.getText().toString());
+                    helpSentence.setSentenceTranslation(newItem2.getText().toString());
                     createItem(helpSentence);
                     myDialog.dismiss();
                 }

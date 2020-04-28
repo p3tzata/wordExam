@@ -8,12 +8,14 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseListableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseListableAppCompatActivityNonFaced;
 import com.example.WordCFExam.entity.TextLabelable;
 
 import java.util.List;
 
-public abstract class BaseRecycleAdapter<C extends BaseListableAppCompatActivity,I extends TextLabelable,V extends BaseRecycleAdapter.ItemViewHolder>  extends RecyclerView.Adapter<BaseRecycleAdapter<C,I, V>.ItemViewHolder> {
+public abstract class BaseRecycleAdapterNonFaced<C extends BaseListableAppCompatActivityNonFaced,I extends TextLabelable,V extends BaseRecycleAdapterNonFaced.ItemViewHolder>  extends RecyclerView.Adapter<BaseRecycleAdapterNonFaced<C,I, V>.ItemViewHolder>
+
+{
 
    // abstract public void callOnClick(View v,I selectedItem);
 
@@ -21,7 +23,7 @@ public abstract class BaseRecycleAdapter<C extends BaseListableAppCompatActivity
     protected C context;
     protected List<I> mItems;
 
-    public BaseRecycleAdapter(C context) {
+    public BaseRecycleAdapterNonFaced(C context) {
         mInflater = LayoutInflater.from(context);
         this.context=context;
     }
@@ -35,7 +37,7 @@ public abstract class BaseRecycleAdapter<C extends BaseListableAppCompatActivity
     }
 
     @Override
-    public void onBindViewHolder(BaseRecycleAdapter.ItemViewHolder holder, int position) {
+    public void onBindViewHolder(BaseRecycleAdapterNonFaced.ItemViewHolder holder, int position) {
         if (mItems != null) {
             I current = mItems.get(position);
             holder.wordItemView.setText(current.getLabelText());
@@ -60,7 +62,7 @@ public abstract class BaseRecycleAdapter<C extends BaseListableAppCompatActivity
 
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final TextView wordItemView;
+        public final TextView wordItemView;
 
         protected ItemViewHolder(View itemView) {
             super(itemView);

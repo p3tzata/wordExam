@@ -16,27 +16,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.WordCFExam.R;
 import com.example.WordCFExam.activity.wordActivity.ShowForeignWordActivity;
 import com.example.WordCFExam.activity.wordActivity.ShowNativeWordActivity;
+import com.example.WordCFExam.entity.HelpSentence;
 import com.example.WordCFExam.entity.Language;
 import com.example.WordCFExam.entity.Word;
+import com.example.WordCFExam.entity.exam.RandomExamHelpSentencePassedQuestionnaire;
 import com.example.WordCFExam.entity.exam.RandomExamWordPassedQuestionnaire;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.TranslationService;
+import com.example.WordCFExam.service.exam.RandomExamHelpSentenceQuestionnaireService;
 import com.example.WordCFExam.service.exam.RandomExamWordQuestionnaireService;
 import com.example.WordCFExam.utitliy.DbExecutor;
 import com.example.WordCFExam.utitliy.DbExecutorImp;
 import com.example.WordCFExam.utitliy.Session;
 import com.example.WordCFExam.utitliy.SessionNameAttribute;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class RandomExamWordProceedQuestionActivity extends AppCompatActivity {
+public class RandomExamHelpSentenceProceedQuestionActivity extends AppCompatActivity {
 
     private Language toLanguage;
-    private Word word;
+    private Language fromLanguage;
+
+    private HelpSentence helpSentence;
     private TranslationService translationService;
     private boolean isTranslateToForeign;
-    private RandomExamWordQuestionnaireService randomExamWordQuestionnaireService;
+    private RandomExamHelpSentenceQuestionnaireService randomExamHelpSentenceQuestionnaireService;
     private Dialog myDialog;
 
     @Override
@@ -56,13 +62,24 @@ public class RandomExamWordProceedQuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exam_proceed_question);
 
         toLanguage = (Language) getIntent().getSerializableExtra("toLanguage");
-        word = (Word) getIntent().getSerializableExtra("word");
+        fromLanguage = (Language) getIntent().getSerializableExtra("fromLanguage");
+        this.helpSentence = (HelpSentence) getIntent().getSerializableExtra("helpSentence");
         translationService=FactoryUtil.createTranslationService(getApplication());
-        randomExamWordQuestionnaireService=FactoryUtil.createRandomExamWordQuestionnaireService(getApplication());
+        randomExamHelpSentenceQuestionnaireService=FactoryUtil.createRandomExamHelpSentenceQuestionnaireService(getApplication());
         TextView tx_examWord = (TextView) findViewById(R.id.tx_examWord);
         TextView tx_examTask = (TextView) findViewById(R.id.tx_examTask);
+
         tx_examTask.setText(String.format("Translate to %s",toLanguage.getLanguageName()));
-        tx_examWord.setText(word.getWordString());
+
+        if (toLanguage.getLanguageID().equals(helpSentence.getToLanguageID())) {
+            tx_examWord.setText(helpSentence.getSentenceString());
+        } else {
+            tx_examWord.setText(helpSentence.getSentenceTranslation());
+        }
+
+
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Translate");
         checkIsTranslateToForeign();
@@ -82,9 +99,8 @@ public class RandomExamWordProceedQuestionActivity extends AppCompatActivity {
                 dbExecutor.execute_(new DbExecutor<List<String>>() {
                     @Override
                     public List<String> doInBackground() {
-                        return randomExamWordQuestionnaireService.examCheckAnswer(isTranslateToForeign,
-                                word,
-                                toLanguage.getLanguageID(),
+                        return randomExamHelpSentenceQuestionnaireService.examCheckAnswer(isTranslateToForeign,
+                                helpSentence,
                                 et_checkAnswer.getText().toString());
                     }
 
@@ -93,7 +109,7 @@ public class RandomExamWordProceedQuestionActivity extends AppCompatActivity {
                         if (item!=null) {
                             //Toast.makeText(getApplicationContext(), "Something gone wrong", Toast.LENGTH_SHORT).show();
 
-                            myDialog = new Dialog(RandomExamWordProceedQuestionActivity.this);
+                            myDialog = new Dialog(RandomExamHelpSentenceProceedQuestionActivity.this);
                             myDialog.setContentView(R.layout.dialog_list_view);
                             DisplayMetrics metrics = getResources().getDisplayMetrics();
                             int width = metrics.widthPixels;
@@ -101,7 +117,7 @@ public class RandomExamWordProceedQuestionActivity extends AppCompatActivity {
                             myDialog.getWindow().setLayout((6 * width)/7, (4 * height)/10);
 
                             ListView resultList = (ListView) myDialog.findViewById(R.id.dialog_list_view_list);
-                            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(RandomExamWordProceedQuestionActivity.this,
+                            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(RandomExamHelpSentenceProceedQuestionActivity.this,
                                     android.R.layout.simple_list_item_1, android.R.id.text1, item);
                             resultList.setAdapter(adapter);
                             myDialog.show();
@@ -127,6 +143,30 @@ public class RandomExamWordProceedQuestionActivity extends AppCompatActivity {
         findViewById(R.id.btn_examHelp).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                myDialog = new Dialog(RandomExamHelpSentenceProceedQuestionActivity.this);
+                myDialog.setContentView(R.layout.dialog_list_view);
+                DisplayMetrics metrics = getResources().getDisplayMetrics();
+                int width = metrics.widthPixels;
+                int height = metrics.heightPixels;
+                myDialog.getWindow().setLayout((6 * width)/7, (4 * height)/10);
+
+                List<String> item=new ArrayList<>();
+                if (isTranslateToForeign) {
+                    item.add(helpSentence.getSentenceString());
+                } else {
+                    item.add(helpSentence.getSentenceTranslation());
+                }
+
+
+
+                ListView resultList = (ListView) myDialog.findViewById(R.id.dialog_list_view_list);
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(RandomExamHelpSentenceProceedQuestionActivity.this,
+                        android.R.layout.simple_list_item_1, android.R.id.text1, item);
+                resultList.setAdapter(adapter);
+                myDialog.show();
+
+                /* TODO
                 Intent intent;
                 if (isTranslateToForeign) {
                     intent = new Intent(getApplicationContext(), ShowNativeWordActivity.class);
@@ -138,6 +178,9 @@ public class RandomExamWordProceedQuestionActivity extends AppCompatActivity {
                 intent.putExtra("translationFromLanguageID", word.getLanguageID());
                 intent.putExtra("word", word);
                 startActivity(intent);
+
+                 */
+
             }
         });
 
@@ -148,11 +191,11 @@ public class RandomExamWordProceedQuestionActivity extends AppCompatActivity {
                 dbExecutor.execute_(new DbExecutor<Boolean>() {
                     @Override
                     public Boolean doInBackground() {
-                        RandomExamWordPassedQuestionnaire randomExamPassedQuestionnaire = new RandomExamWordPassedQuestionnaire();
-                        randomExamPassedQuestionnaire.setWordID(word.getWordID());
-                        randomExamPassedQuestionnaire.setTargetTranslationLanguageID(toLanguage.getLanguageID());
-                        randomExamPassedQuestionnaire.setEntryPointDateTime(Calendar.getInstance().getTime());
-                        return randomExamWordQuestionnaireService.examProcessedFail(randomExamPassedQuestionnaire);
+                        RandomExamHelpSentencePassedQuestionnaire randomHelpSentencePassedQuestionnaire = new RandomExamHelpSentencePassedQuestionnaire();
+                        randomHelpSentencePassedQuestionnaire.setHelpSentenceID(helpSentence.getHelpSentenceID());
+                        randomHelpSentencePassedQuestionnaire.setTargetTranslationLanguageID(toLanguage.getLanguageID());
+                        randomHelpSentencePassedQuestionnaire.setEntryPointDateTime(Calendar.getInstance().getTime());
+                        return randomExamHelpSentenceQuestionnaireService.examProcessedFail(randomHelpSentencePassedQuestionnaire);
                     }
 
                     @Override
@@ -177,11 +220,11 @@ public class RandomExamWordProceedQuestionActivity extends AppCompatActivity {
                 dbExecutor.execute_(new DbExecutor<Boolean>() {
                     @Override
                     public Boolean doInBackground() {
-                        RandomExamWordPassedQuestionnaire randomExamPassedQuestionnaire = new RandomExamWordPassedQuestionnaire();
-                        randomExamPassedQuestionnaire.setWordID(word.getWordID());
-                        randomExamPassedQuestionnaire.setTargetTranslationLanguageID(toLanguage.getLanguageID());
-                        randomExamPassedQuestionnaire.setEntryPointDateTime(Calendar.getInstance().getTime());
-                        return randomExamWordQuestionnaireService.examProcessedOK(randomExamPassedQuestionnaire);
+                        RandomExamHelpSentencePassedQuestionnaire randomHelpSentencePassedQuestionnaire = new RandomExamHelpSentencePassedQuestionnaire();
+                        randomHelpSentencePassedQuestionnaire.setHelpSentenceID(helpSentence.getHelpSentenceID());
+                        randomHelpSentencePassedQuestionnaire.setTargetTranslationLanguageID(toLanguage.getLanguageID());
+                        randomHelpSentencePassedQuestionnaire.setEntryPointDateTime(Calendar.getInstance().getTime());
+                        return randomExamHelpSentenceQuestionnaireService.examProcessedOK(randomHelpSentencePassedQuestionnaire);
                     }
 
                     @Override
@@ -211,12 +254,8 @@ public class RandomExamWordProceedQuestionActivity extends AppCompatActivity {
             public Boolean doInBackground() {
 
                 try {
-                    return translationService.isToForeignTranslation(
-                            Session.getLongAttribute(getApplicationContext(), SessionNameAttribute.ProfileID, -1L),
-                            word.getLanguageID(),
-                            toLanguage.getLanguageID()
-                    );
-                } catch (Exception ex) {
+                    return !toLanguage.getLanguageID().equals(helpSentence.getToLanguageID());
+                 } catch (Exception ex) {
                     return null;
                 }
 

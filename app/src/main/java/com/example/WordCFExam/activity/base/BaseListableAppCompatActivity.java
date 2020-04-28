@@ -12,59 +12,21 @@ import android.widget.SearchView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuItemCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.adapter.BaseRecycleAdapter;
-import com.example.WordCFExam.factory.FactoryUtil;
-import com.example.WordCFExam.utitliy.DbExecutor;
-import com.example.WordCFExam.utitliy.DbExecutorImp;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public abstract class BaseListableAppCompatActivity<
+public abstract class BaseListableAppCompatActivity <
         T,
         S,
-        C extends BaseListableAppCompatActivity,
-        A extends BaseRecycleAdapter>
-        extends AppCompatActivity implements ListableAppCompatActivity<T> {
+        C extends BaseListableAppCompatActivity> extends AppCompatActivity  implements ListableAppCompatActivity<T> {
 
-    private S itemService;
-    private C context;
-    private A adapter;
-    public Dialog myDialog;
-    public SearchView searchView;
-    private GetItemsExecutorBlock<T> getItemsExecutor;
-
+    protected S itemService;
+    protected C context;
+    protected Dialog myDialog;
     protected Map<Integer,onMenuItemClickHandlerExecutor> mappingMenuItemHandler;
-
-    public void onMenuItemClickHandlerMappingConfig(Map<Integer,onMenuItemClickHandlerExecutor> mapping,MenuItem item,T selectedItem){
-
-    }
-
-    public void handlerViewClick(T selectedItem) {
-
-
-    }
-
-
-    public boolean onMenuItemClickHandler(MenuItem item){
-
-        mappingMenuItemHandler.get(item.getItemId()).execute();
-        return false;
-    }
-
-
-    public GetItemsExecutorBlock<T> getGetItemsExecutor() {
-        return getItemsExecutor;
-    }
-
-    public void setGetItemsExecutor(GetItemsExecutorBlock<T> getItemsExecutor) {
-        this.getItemsExecutor = getItemsExecutor;
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,8 +35,27 @@ public abstract class BaseListableAppCompatActivity<
         onCreateCustom();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        getItems();
+
+    }
+
+    public void onMenuItemClickHandlerMappingConfig(Map<Integer,onMenuItemClickHandlerExecutor> mapping, MenuItem item, T selectedItem){
+
+    }
+
+    public void handlerViewClick(T selectedItem) {
 
 
+    }
+
+    public boolean onMenuItemClickHandler(MenuItem item){
+
+        mappingMenuItemHandler.get(item.getItemId()).execute();
+        return false;
+    }
 
 
     @Override
@@ -87,11 +68,6 @@ public abstract class BaseListableAppCompatActivity<
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchView.clearFocus();
-             /*   if(list.contains(query)){
-                    adapter.getFilter().filter(query);
-                }else{
-                    Toast.makeText(MainActivity.this, "No Match found",Toast.LENGTH_LONG).show();
-                }*/
                 return false;
 
             }
@@ -107,18 +83,12 @@ public abstract class BaseListableAppCompatActivity<
         return super.onCreateOptionsMenu(menu);
     }
 
-
-
     public void setItemService(S itemService) {
         this.itemService = itemService;
     }
 
     public void setContext(C context) {
         this.context = context;
-    }
-
-    public void setAdapter(A adapter) {
-        this.adapter = adapter;
     }
 
     public C getContext() {
@@ -129,36 +99,6 @@ public abstract class BaseListableAppCompatActivity<
         return itemService;
     }
 
-    public A getAdapter() {
-        return adapter;
-    }
-
-    @Override
-    public void getItems() {
-
-        DbExecutorImp<List<T>> dbExecutor = FactoryUtil.<List<T>>createDbExecutor();
-        dbExecutor.execute_(new DbExecutor<List<T>>() {
-            @Override
-            public List<T> doInBackground() {
-
-                List<T> execute = getItemsExecutor.execute();
-                return execute;
-            }
-
-            @Override
-            public void onPostExecute(List<T> item) {
-                adapter.setItems(item);
-                RecyclerView recyclerView = findViewById(R.id.recyclerview);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                recyclerView.setAdapter(adapter);
-            }
-        });
-
-
-
-    }
-
-
     public Map<Integer, onMenuItemClickHandlerExecutor> getMappingMenuItemHandler() {
         return mappingMenuItemHandler;
     }
@@ -166,7 +106,6 @@ public abstract class BaseListableAppCompatActivity<
     public void setMappingMenuItemHandler(Map<Integer, onMenuItemClickHandlerExecutor> mappingMenuItemHandler) {
         this.mappingMenuItemHandler = mappingMenuItemHandler;
     }
-
 
     public void callShowViewMenu(int popupMenuID, View v, T selectedItem) {
         PopupMenu popupMenu = new PopupMenu(getContext(), v);
@@ -188,9 +127,11 @@ public abstract class BaseListableAppCompatActivity<
 
     }
 
+
     public void callShowViewMenu(View v, T selectedItem) {
         callShowViewMenu(R.menu.popup_view_menu_custom,v,selectedItem);
     }
+
 
 
 }

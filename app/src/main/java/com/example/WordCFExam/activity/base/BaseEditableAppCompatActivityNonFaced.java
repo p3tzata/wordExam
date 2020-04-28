@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.adapter.BaseRecycleAdapter;
+import com.example.WordCFExam.adapter.BaseRecycleAdapterNonFaced;
 import com.example.WordCFExam.entity.TextLabelable;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.base.CrudService;
@@ -21,12 +21,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Map;
 
-public abstract class BaseEditableAppCompatActivity<
+public abstract class BaseEditableAppCompatActivityNonFaced<
         T extends TextLabelable,
         S extends CrudService<T>,
-        C extends BaseEditableAppCompatActivity,
-        A extends BaseRecycleAdapter>
-        extends BaseListableAppCompatActivity<T,S,C,A> implements EditableAppCompatActivity<T> {
+        C extends BaseEditableAppCompatActivityNonFaced,
+        A extends BaseRecycleAdapterNonFaced>
+        extends BaseListableAppCompatActivityNonFaced<T,S,C,A> implements EditableAppCompatActivity<T> {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

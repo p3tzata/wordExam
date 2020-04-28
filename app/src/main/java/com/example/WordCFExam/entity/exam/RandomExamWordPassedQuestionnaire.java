@@ -25,7 +25,7 @@ import java.util.Date;
         }
 )
 @TypeConverters(DateConverter.class)
-public class RandomExamPassedQuestionnaire implements Serializable, TextLabelable {
+public class RandomExamWordPassedQuestionnaire implements Serializable, TextLabelable {
 
     @PrimaryKey
     private Long RandomExamPassedQuestionnaireID;

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import com.example.WordCFExam.R;
 import com.example.WordCFExam.activity.MainActivity;
 import com.example.WordCFExam.adapter.TranslationListAdapter;
+import com.example.WordCFExam.adapter.TranslationListAdapterOnClickExecutor;
 import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.TranslationService;
@@ -30,12 +31,15 @@ public class ListAllDictionary extends AppCompatActivity {
     TranslationService translationService;
     List<TranslationAndLanguages> allTranslationByProfile;
     private Menu mOptionsMenu;
+    private TranslationListAdapterOnClickExecutor translationListAdapterOnClickExecutor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_all_dictionary);
         translationService = FactoryUtil.createTranslationService(getApplication());
         getSupportActionBar().setTitle("List of Dictionaries");
+        this.translationListAdapterOnClickExecutor = (TranslationListAdapterOnClickExecutor) getIntent().getSerializableExtra("translationListAdapterOnClickExecutor");
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getTranslation();
         String debug=null;
@@ -92,7 +96,7 @@ public class ListAllDictionary extends AppCompatActivity {
                 super.onPostExecute(tasks);
 
 
-                TranslationListAdapter adapter = new TranslationListAdapter(getApplicationContext());
+                TranslationListAdapter adapter = new TranslationListAdapter(getApplicationContext(),translationListAdapterOnClickExecutor);
 
                 adapter.setWords(tasks);
                 RecyclerView recyclerView = findViewById(R.id.rc_list_all_dictionary);

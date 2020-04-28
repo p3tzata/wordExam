@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseListableAppCompatActivity;
 import com.example.WordCFExam.activity.base.BaseListableAppCompatActivityFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.NativeWordListableAdapter;

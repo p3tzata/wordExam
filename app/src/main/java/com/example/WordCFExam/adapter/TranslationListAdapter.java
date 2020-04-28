@@ -24,11 +24,12 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
     private final LayoutInflater mInflater;
     private Context context;
     private List<TranslationAndLanguages> mTranslations; // Cached copy of words
+    private TranslationListAdapterOnClickExecutor translationListAdapterOnClickExecutor;
 
-
-    public TranslationListAdapter(Context context) {
+    public TranslationListAdapter(Context context, TranslationListAdapterOnClickExecutor translationListAdapterOnClickExecutor) {
         mInflater = LayoutInflater.from(context);
         this.context=context;
+        this.translationListAdapterOnClickExecutor=translationListAdapterOnClickExecutor;
     }
 
 
@@ -87,10 +88,21 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
             toForeignItemView = itemView.findViewById(R.id.tx_toForeign);
             fromForeignItemView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                    Intent activity2Intent = null;
+
                     TranslationAndLanguages translationAndLanguages = mTranslations.get(getAdapterPosition());
+                    translationListAdapterOnClickExecutor.executeFromForeignItemClick(context,translationAndLanguages);
+
+                    /* Moved to executor
+                    Intent activity2Intent = null;
+
+                    TranslationAndLanguages translationAndLanguages = mTranslations.get(getAdapterPosition());
+
                     Long fromLanguageID=translationAndLanguages.getForeignLanguage().getLanguageID();
                     Long toLanguageID=translationAndLanguages.getNativeLanguage().getLanguageID();
+
+
+
+
                     if (MenuUtility.isEditMode(context) && fromLanguageID.equals(translationAndLanguages.getForeignLanguage().getLanguageID())) {
                         activity2Intent = new Intent(context, ListWordEditableActivity.class);
                     } else {
@@ -102,20 +114,17 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
                     activity2Intent.putExtra("translationFromLanguageID",fromLanguageID);
                     activity2Intent.putExtra("translationToLanguageID",toLanguageID);
                     context.startActivity(activity2Intent);
-
-                    /*
-                    TranslationAndLanguages translationAndLanguages = mTranslations.get(getAdapterPosition());
-                    Intent activity2Intent = new Intent(context, ListAllWordActivity.class);
-                    activity2Intent.putExtra("translationAndLanguages",translationAndLanguages);
-                    activity2Intent.putExtra("translationFromLanguageID",translationAndLanguages.getForeignLanguage().getLanguageID());
-                    context.startActivity(activity2Intent);
                     */
-
-                }
+                    }
             });
 
             toForeignItemView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
+
+                    TranslationAndLanguages translationAndLanguages = mTranslations.get(getAdapterPosition());
+                    translationListAdapterOnClickExecutor.executeToForeignItemClick(context,translationAndLanguages);
+
+                    /* Moved to executor;
 
                     Intent activity2Intent = null;
                     TranslationAndLanguages translationAndLanguages = mTranslations.get(getAdapterPosition());
@@ -131,15 +140,7 @@ public class TranslationListAdapter extends RecyclerView.Adapter<TranslationList
                     activity2Intent.putExtra("translationFromLanguageID",fromLanguageID);
                     activity2Intent.putExtra("translationToLanguageID",toLanguageID);
                     context.startActivity(activity2Intent);
-
-                    /*
-                    TranslationAndLanguages translationAndLanguages = mTranslations.get(getAdapterPosition());
-                    Intent activity2Intent = new Intent(context, ListAllWordActivity.class);
-                    activity2Intent.putExtra("translationAndLanguages",translationAndLanguages);
-                    activity2Intent.putExtra("translationFromLanguageID",translationAndLanguages.getNativeLanguage().getLanguageID());
-                    context.startActivity(activity2Intent);
-
-                     */
+                    */
                 }
             });
 

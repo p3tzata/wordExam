@@ -12,6 +12,8 @@ import com.example.WordCFExam.dao.HelpSentenceDao;
 import com.example.WordCFExam.dao.LanguageDao;
 import com.example.WordCFExam.dao.PartOfSpeechDao;
 import com.example.WordCFExam.dao.ProfileDao;
+import com.example.WordCFExam.dao.RandomExamHelpSentencePassedQuestionnaireDao;
+import com.example.WordCFExam.dao.RandomExamWordPassedQuestionnaireDao;
 import com.example.WordCFExam.dao.TopicDao;
 import com.example.WordCFExam.dao.TopicTypeDao;
 import com.example.WordCFExam.dao.TranslationDao;
@@ -19,7 +21,6 @@ import com.example.WordCFExam.dao.TranslationWordRelationDao;
 import com.example.WordCFExam.dao.WordDao;
 import com.example.WordCFExam.dao.WordFormDao;
 import com.example.WordCFExam.dao.WordPartOfSpeechDao;
-import com.example.WordCFExam.dao.RandomExamPassedQuestionnaireDao;
 import com.example.WordCFExam.entity.HelpSentence;
 import com.example.WordCFExam.entity.Language;
 import com.example.WordCFExam.entity.PartOfSpeech;
@@ -34,17 +35,20 @@ import com.example.WordCFExam.entity.exam.CFExamProfilePoint;
 import com.example.WordCFExam.entity.exam.CFExamSchedule;
 import com.example.WordCFExam.entity.exam.CFExamTopicQuestionnaire;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
-import com.example.WordCFExam.entity.exam.RandomExamPassedQuestionnaire;
+import com.example.WordCFExam.entity.exam.RandomExamHelpSentencePassedQuestionnaire;
+import com.example.WordCFExam.entity.exam.RandomExamWordPassedQuestionnaire;
 import com.example.WordCFExam.entity.exam.Topic;
 import com.example.WordCFExam.entity.exam.TopicType;
 
-@Database(entities = {CFExamSchedule.class, Topic.class, TopicType.class, CFExamTopicQuestionnaire.class, RandomExamPassedQuestionnaire.class,CFExamProfile.class, CFExamProfilePoint.class, CFExamWordQuestionnaire.class, WordForm.class,HelpSentence.class,WordPartOfSpeech.class,PartOfSpeech.class, Profile.class, Language.class, Translation.class, Word.class, TranslationWordRelation.class},
-        version =6, exportSchema = false)
+@Database(entities = {CFExamSchedule.class, Topic.class, TopicType.class, CFExamTopicQuestionnaire.class, RandomExamHelpSentencePassedQuestionnaire.class, RandomExamWordPassedQuestionnaire.class,CFExamProfile.class, CFExamProfilePoint.class, CFExamWordQuestionnaire.class, WordForm.class,HelpSentence.class,WordPartOfSpeech.class,PartOfSpeech.class, Profile.class, Language.class, Translation.class, Word.class, TranslationWordRelation.class},
+        version =8, exportSchema = false)
 public abstract class WordRoomDatabase extends RoomDatabase {
 
     public abstract CFExamScheduleDao cfExamScheduleDao();
 
-    public abstract RandomExamPassedQuestionnaireDao randomExamPassedQuestionnaireDao();
+    public abstract RandomExamHelpSentencePassedQuestionnaireDao randomExamHelpSentencePassedQuestionnaireDao();
+
+    public abstract RandomExamWordPassedQuestionnaireDao randomExamWordPassedQuestionnaireDao();
 
     public abstract TopicDao topicDao();
 

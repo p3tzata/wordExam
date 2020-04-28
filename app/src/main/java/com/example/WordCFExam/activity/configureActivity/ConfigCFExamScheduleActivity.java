@@ -13,24 +13,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.MainActivity;
-import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivityNonFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.exam.CFExamScheduleEditableAdapter;
-import com.example.WordCFExam.adapter.topic.TopicTypeEditableAdapter;
 import com.example.WordCFExam.entity.exam.CFExamSchedule;
-import com.example.WordCFExam.entity.exam.Topic;
-import com.example.WordCFExam.entity.exam.TopicType;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.exam.CFExamScheduleService;
-import com.example.WordCFExam.service.exam.TopicTypeService;
 import com.example.WordCFExam.utitliy.Session;
 import com.example.WordCFExam.utitliy.SessionNameAttribute;
 
 import java.util.List;
 
 public class ConfigCFExamScheduleActivity extends
-        BaseEditableAppCompatActivity<CFExamSchedule, CFExamScheduleService, ConfigCFExamScheduleActivity, CFExamScheduleEditableAdapter> {
+        BaseEditableAppCompatActivityNonFaced<CFExamSchedule, CFExamScheduleService, ConfigCFExamScheduleActivity, CFExamScheduleEditableAdapter> {
 
     private Long profileID;
     private String profileName;

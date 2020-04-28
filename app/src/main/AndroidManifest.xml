@@ -90,8 +90,12 @@
             android:name=".activity.configureActivity.ConfigureMenuActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.wordActivity.UpdateWordTranslationActivity"
+            android:name=".activity.exam.RandomExamHelpSentenceProceedQuestionActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.exam.RandomExamHelpSentenceQuestionnaireNeedProceedActivity"
+            android:windowSoftInputMode="adjustPan" />
+
         <activity android:name=".activity.wordActivity.UpdateWordMenuActivity" />
         <activity
             android:name=".activity.wordActivity.ShowForeignWordActivity"
@@ -110,14 +114,12 @@
             android:name=".activity.wordActivity.ListAllWordActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.wordActivity.NewWordActivity" />
-        <activity
-            android:name=".activity.exam.RandomExamListAllDictionaryActivity"
-            android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".activity.exam.RandomExamWordProceedQuestionActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.exam.RandomExamQuestionnaireNeedProceedActivity"
+            android:name=".activity.exam.RandomExamWordQuestionnaireNeedProceedActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.exam.CFExamTopicProceedQuestionActivity"

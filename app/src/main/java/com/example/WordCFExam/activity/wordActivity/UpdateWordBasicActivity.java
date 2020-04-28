@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Update;
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -79,9 +81,13 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
     private CFExamProfilePointCross cfExamProfilePointCross;
     private CFProfileSpinAdapter cfProfileSpinAdapter;
     private Boolean isSetToCFExam;
+    private Boolean isHaveToStartUpdateWordMenu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isHaveToStartUpdateWordMenu=getIntent().getBooleanExtra("isHaveToStartUpdateWordMenu",false);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.wordService = new ViewModelProvider(this).get(WordService.class);
         this.translationWordRelationService = FactoryUtil.createTranslationWordRelationService(getApplication());
@@ -127,6 +133,34 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
                 handlerSetCFExamClick(word);
             }
         });
+
+
+        try {
+            final String url = String.format(translationAndLanguages.getForeignLanguage().getDefinitionUrl(), word.getWordString());
+            findViewById(R.id.btn_openLink).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String urlString = url;
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setPackage("com.android.chrome");
+                    try {
+                        getApplicationContext().startActivity(intent);
+                    } catch (ActivityNotFoundException ex) {
+                        // Chrome browser presumably not installed and open Kindle Browser
+                        intent.setPackage("com.amazon.cloud9");
+                        getApplicationContext().startActivity(intent);
+                    }
+                }
+            });
+
+
+        } catch(Exception ex) {
+            ;
+        }
+
+
+
 
 
 
@@ -225,7 +259,18 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
                 super.onPostExecute(result);
 
                 if (result>0) {
-                    finish();
+                    if (isHaveToStartUpdateWordMenu) {
+                        Intent intent = new Intent(getApplicationContext(), UpdateWordMenuActivity.class);
+                        intent.putExtra("translationAndLanguages", translationAndLanguages);
+                        intent.putExtra("translationFromLanguageID", fromLanguageID);
+                        intent.putExtra("translationToLanguageID", toLanguageID);
+                        intent.putExtra("word", word);
+                        startActivity(intent);
+
+                    } else {
+
+                        finish();
+                    }
                    // Intent activity2Intent = new Intent(UpdateWordBasicActivity.this, UpdateWordMenuActivity.class);
                    // activity2Intent.putExtra("translationAndLanguages", UpdateWordBasicActivity.this.translationAndLanguages);
                    // activity2Intent.putExtra("translationFromLanguageID", UpdateWordBasicActivity.this.fromLanguageID);

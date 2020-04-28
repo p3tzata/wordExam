@@ -7,7 +7,6 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -26,29 +25,24 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.exam.CFExamTopicQuestionnaireNeedProceedActivity;
-import com.example.WordCFExam.activity.exam.CFExamWordQuestionnaireNeedProceedActivity;
 import com.example.WordCFExam.activity.exam.ExamMenuActivity;
-import com.example.WordCFExam.activity.exam.RandomExamListAllDictionaryActivity;
 import com.example.WordCFExam.activity.topic.TopicTypeActivity;
 import com.example.WordCFExam.activity.wordActivity.ListAllDictionary;
-import com.example.WordCFExam.background.CFExamAlarm;
-import com.example.WordCFExam.background.ManualStartCFExamService;
+import com.example.WordCFExam.activity.wordActivity.ListWordEditableActivity;
+import com.example.WordCFExam.activity.wordActivity.ListWordListableActivity;
+import com.example.WordCFExam.adapter.TranslationListAdapterOnClickExecutor;
+import com.example.WordCFExam.adapter.translationListOnClick.ClickFromMainActivity;
 import com.example.WordCFExam.background.NotificationActivity;
+import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
 import com.example.WordCFExam.utitliy.DBUtil;
 import com.example.WordCFExam.utitliy.MenuUtility;
 import com.example.WordCFExam.utitliy.Session;
 import com.example.WordCFExam.utitliy.SessionNameAttribute;
 
-import java.util.Calendar;
-
 public class MainActivity extends AppCompatActivity {
 /*TODO
 
 
-listable and editable recycler position
-
-Scheduler
 
 Testing.
 
@@ -64,17 +58,20 @@ Testing.
             "Topics",
             "Exams"
 };
+
+    AdapterView.OnItemClickListener[]  OnItemClickListenerArray= new AdapterView.OnItemClickListener[mainListMenuOptions.length];
+    /*
     Class<?>[] mainListMenuOptionsNavigate = new Class[]{
             ListAllDictionary.class,
             TopicTypeActivity.class,
             ExamMenuActivity.class
             };
-
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        seedOnClickListener();
 
 
 
@@ -117,8 +114,9 @@ Testing.
                     Toast.makeText(getApplicationContext(),"Please select Profile",Toast.LENGTH_SHORT).show();
                 } else {
 
-                    Intent activity2Intent = new Intent(getApplicationContext(), mainListMenuOptionsNavigate[position]);
-                    startActivity(activity2Intent);
+                    OnItemClickListenerArray[position].onItemClick(adapterView,view,position,l);
+                   // Intent activity2Intent = new Intent(getApplicationContext(), mainListMenuOptionsNavigate[position]);
+                   // startActivity(activity2Intent);
                 }
             }
         });
@@ -207,19 +205,49 @@ Testing.
         }
     }
 
-    private void setAlarm(){
-        AlarmManager alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, CFExamAlarm.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+    private void seedOnClickListener(){
+        OnItemClickListenerArray[0] = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent activity2Intent = new Intent(getApplicationContext(), ListAllDictionary.class);
+                TranslationListAdapterOnClickExecutor translationListAdapterOnClickExecutor = new ClickFromMainActivity();
 
-// Set the alarm to start at 8:30 a.m.
-        Calendar calendar = Calendar.getInstance();
+                activity2Intent.putExtra("translationListAdapterOnClickExecutor",translationListAdapterOnClickExecutor);
 
-// setRepeating() lets you specify a precise custom interval--in this case,
-// 20 minutes.
-        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                1000 * 10, alarmIntent);
+                startActivity(activity2Intent);
+
+            }
+
+
+        };
+
+        OnItemClickListenerArray[1] = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent activity2Intent = new Intent(getApplicationContext(), TopicTypeActivity.class);
+                startActivity(activity2Intent);
+
+            }
+
+
+        };
+
+        OnItemClickListenerArray[2] = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent activity2Intent = new Intent(getApplicationContext(), ExamMenuActivity.class);
+                startActivity(activity2Intent);
+
+            }
+
+
+        };
+
+
+
+
     }
+
 
 
 

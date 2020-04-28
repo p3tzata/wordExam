@@ -1,6 +1,5 @@
 package com.example.WordCFExam.adapter;
 
-import com.example.WordCFExam.activity.base.BaseListableAppCompatActivity;
 import com.example.WordCFExam.activity.base.BaseListableAppCompatActivityFaced;
 import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.dto.WordCFExamCross;

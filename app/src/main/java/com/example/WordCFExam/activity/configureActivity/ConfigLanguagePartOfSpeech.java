@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivityNonFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.configure.LanguagePartOfSpeechEditableAdapter;
 import com.example.WordCFExam.entity.Language;
@@ -19,7 +19,7 @@ import com.example.WordCFExam.service.PartOfSpeechService;
 
 import java.util.List;
 
-public class ConfigLanguagePartOfSpeech extends BaseEditableAppCompatActivity<PartOfSpeech, PartOfSpeechService, ConfigLanguagePartOfSpeech,
+public class ConfigLanguagePartOfSpeech extends BaseEditableAppCompatActivityNonFaced<PartOfSpeech, PartOfSpeechService, ConfigLanguagePartOfSpeech,
         LanguagePartOfSpeechEditableAdapter>
 {
     private Language language;

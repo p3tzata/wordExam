@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivityNonFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.activity.base.onMenuItemClickHandlerExecutor;
 import com.example.WordCFExam.adapter.spinnerAdapter.CFProfileSpinAdapter;
@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class TopicEditableActivity extends BaseEditableAppCompatActivity<Topic, TopicService,
+public class TopicEditableActivity extends BaseEditableAppCompatActivityNonFaced<Topic, TopicService,
         TopicEditableActivity, TopicEditableAdapter> {
 
 

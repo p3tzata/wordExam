@@ -26,7 +26,7 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
     String[] mainListMenuOptions = new String[]{"Basic",
             "Translation",
             "Help sentence",
-            "Open Url link"};
+            "Open URL link"};
 
     AdapterView.OnItemClickListener[]  OnItemClickListenerArray= new AdapterView.OnItemClickListener[mainListMenuOptions.length];
 

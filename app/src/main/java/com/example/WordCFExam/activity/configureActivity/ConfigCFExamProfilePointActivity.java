@@ -14,7 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivityNonFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.configure.CFExamProfilePointEditableAdapter;
 import com.example.WordCFExam.entity.exam.CFExamProfile;
@@ -26,7 +26,7 @@ import java.util.List;
 
 
 public class ConfigCFExamProfilePointActivity extends
-        BaseEditableAppCompatActivity<CFExamProfilePoint, CFExamProfilePointService, ConfigCFExamProfilePointActivity, CFExamProfilePointEditableAdapter> {
+        BaseEditableAppCompatActivityNonFaced<CFExamProfilePoint, CFExamProfilePointService, ConfigCFExamProfilePointActivity, CFExamProfilePointEditableAdapter> {
 
     private CFExamProfile CFExamProfile;
 

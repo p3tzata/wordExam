@@ -14,8 +14,7 @@ import android.widget.EditText;
 import android.widget.PopupMenu;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.MainActivity;
-import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivityNonFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.activity.base.onMenuItemClickHandlerExecutor;
 import com.example.WordCFExam.adapter.configure.CFExamProfileEditableAdapter;
@@ -29,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ConfigCFExamProfileActivity extends
-        BaseEditableAppCompatActivity<CFExamProfile, CFExamProfileService, ConfigCFExamProfileActivity, CFExamProfileEditableAdapter> {
+        BaseEditableAppCompatActivityNonFaced<CFExamProfile, CFExamProfileService, ConfigCFExamProfileActivity, CFExamProfileEditableAdapter> {
 
     private Long profileID;
     private String profileName;

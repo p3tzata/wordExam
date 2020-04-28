@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivityNonFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.configure.TranslationEditableAdapter;
 import com.example.WordCFExam.adapter.spinnerAdapter.LanguageSpinAdapter;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConfigTranslationActivity extends
-        BaseEditableAppCompatActivity<Translation, TranslationService, ConfigTranslationActivity, TranslationEditableAdapter> {
+        BaseEditableAppCompatActivityNonFaced<Translation, TranslationService, ConfigTranslationActivity, TranslationEditableAdapter> {
 
     private Long profileID;
     private String profileName;

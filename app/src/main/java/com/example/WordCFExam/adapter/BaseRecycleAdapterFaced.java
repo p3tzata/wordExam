@@ -13,7 +13,8 @@ import com.example.WordCFExam.entity.TextLabelable;
 
 import java.util.List;
 
-public abstract class BaseRecycleAdapterFaced<C extends BaseListableAppCompatActivityFaced,V extends TextLabelable,T extends TextLabelable,A extends BaseRecycleAdapterFaced.ItemViewHolder>  extends RecyclerView.Adapter<BaseRecycleAdapterFaced<C,V,T, A>.ItemViewHolder> {
+public abstract class BaseRecycleAdapterFaced<C extends BaseListableAppCompatActivityFaced,V extends TextLabelable,T extends TextLabelable,A extends BaseRecycleAdapterFaced.ItemViewHolder>  extends RecyclerView.Adapter<BaseRecycleAdapterFaced<C,V,T, A>.ItemViewHolder>
+{
 
    // abstract public void callOnClick(View v,I selectedItem);
 

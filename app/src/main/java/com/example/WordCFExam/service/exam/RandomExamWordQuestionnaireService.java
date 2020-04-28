@@ -3,31 +3,32 @@ package com.example.WordCFExam.service.exam;
 import android.app.Application;
 
 import com.example.WordCFExam.entity.Word;
-import com.example.WordCFExam.entity.exam.RandomExamPassedQuestionnaire;
-import com.example.WordCFExam.repository.exam.RandomExamPassedQuestionnaireRepository;
+import com.example.WordCFExam.entity.dto.RandomExamCounter;
+import com.example.WordCFExam.entity.exam.RandomExamWordPassedQuestionnaire;
+import com.example.WordCFExam.repository.exam.RandomExamWordPassedQuestionnaireRepository;
 
 import java.util.List;
 
 
-public class RandomExamWordQuestionnaireService extends BaseExamQuestionnaireService<RandomExamPassedQuestionnaireRepository,RandomExamPassedQuestionnaire> {
+public class RandomExamWordQuestionnaireService extends BaseExamQuestionnaireService<RandomExamWordPassedQuestionnaireRepository, RandomExamWordPassedQuestionnaire> {
 
     private CFExamProfilePointService cfExamProfilePointService;
 
 
     public RandomExamWordQuestionnaireService(Application application) {
-        super(application,new RandomExamPassedQuestionnaireRepository(application));
+        super(application,new RandomExamWordPassedQuestionnaireRepository(application));
 
     }
 
 
     @Override
-    public boolean examProcessedOK(RandomExamPassedQuestionnaire item) {
+    public boolean examProcessedOK(RandomExamWordPassedQuestionnaire item) {
         getRepository().inset(item);
         return true;
     }
 
     @Override
-    public boolean examProcessedFail(RandomExamPassedQuestionnaire item) {
+    public boolean examProcessedFail(RandomExamWordPassedQuestionnaire item) {
 
         return true;
 
@@ -60,7 +61,13 @@ public class RandomExamWordQuestionnaireService extends BaseExamQuestionnaireSer
 
 
 
+    public RandomExamCounter findAllNativeRandomCounter(Long profileID, Long fromLanguageID, Long toLanguageID){
+        return getRepository().findAllNativeRandomCounter(profileID,fromLanguageID,toLanguageID);
+    }
 
+    public RandomExamCounter findAllForeignRandomCounter(Long profileID, Long fromLanguageID, Long toLanguageID){
+        return getRepository().findAllForeignRandomCounter(profileID,fromLanguageID,toLanguageID);
+    }
 
 
 }

@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivityNonFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.configure.ProfileEditableAdapter;
 import com.example.WordCFExam.entity.Profile;
@@ -21,7 +21,7 @@ import com.example.WordCFExam.service.ProfileService;
 import java.util.List;
 
 public class ConfigProfileActivity extends
-        BaseEditableAppCompatActivity<Profile,ProfileService, ConfigProfileActivity,ProfileEditableAdapter> {
+        BaseEditableAppCompatActivityNonFaced<Profile,ProfileService, ConfigProfileActivity,ProfileEditableAdapter> {
 
     @Override
     public void onCreateCustom() {

@@ -1,13 +1,13 @@
 package com.example.WordCFExam.adapter.topic;
 
-import com.example.WordCFExam.activity.base.BaseListableAppCompatActivity;
-import com.example.WordCFExam.adapter.BaseRecycleAdapter;
+import com.example.WordCFExam.activity.base.BaseListableAppCompatActivityNonFaced;
+import com.example.WordCFExam.adapter.BaseRecycleAdapterNonFaced;
 import com.example.WordCFExam.entity.exam.Topic;
 
 public class TopicListableAdapter extends
-        BaseRecycleAdapter<BaseListableAppCompatActivity, Topic, BaseRecycleAdapter.ItemViewHolder> {
+        BaseRecycleAdapterNonFaced<BaseListableAppCompatActivityNonFaced, Topic, BaseRecycleAdapterNonFaced.ItemViewHolder> {
 
-    public TopicListableAdapter(BaseListableAppCompatActivity context) {
+    public TopicListableAdapter(BaseListableAppCompatActivityNonFaced context) {
         super(context);
     }
 

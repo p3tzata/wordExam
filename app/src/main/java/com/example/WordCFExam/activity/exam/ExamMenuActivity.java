@@ -20,6 +20,12 @@ import com.example.WordCFExam.activity.configureActivity.ConfigPreferenceActivit
 import com.example.WordCFExam.activity.configureActivity.ConfigProfileActivity;
 import com.example.WordCFExam.activity.configureActivity.ConfigTopicTypeActivity;
 import com.example.WordCFExam.activity.configureActivity.ConfigTranslationActivity;
+import com.example.WordCFExam.activity.topic.TopicTypeActivity;
+import com.example.WordCFExam.activity.wordActivity.ListAllDictionary;
+import com.example.WordCFExam.adapter.TranslationListAdapterOnClickExecutor;
+import com.example.WordCFExam.adapter.translationListOnClick.ClickFromExamMenuActivity_helpSentence;
+import com.example.WordCFExam.adapter.translationListOnClick.ClickFromExamMenuActivity_word;
+import com.example.WordCFExam.adapter.translationListOnClick.ClickFromMainActivity;
 import com.example.WordCFExam.utitliy.Session;
 import com.example.WordCFExam.utitliy.SessionNameAttribute;
 
@@ -30,18 +36,25 @@ public class ExamMenuActivity extends AppCompatActivity {
     String[] mainListMenuOptions = new String[]{
             "CF Word exam",
             "CF Topic exam",
-            "Random Word exam"
+            "Random Word exam",
+            "Random Help Sentence"
             };
+    AdapterView.OnItemClickListener[]  OnItemClickListenerArray= new AdapterView.OnItemClickListener[mainListMenuOptions.length];
+
+    /*
     Class<?>[] mainListMenuOptionsNavigate = new Class[]{
             CFExamWordQuestionnaireNeedProceedActivity.class,
             CFExamTopicQuestionnaireNeedProceedActivity.class,
             RandomExamListAllDictionaryActivity.class
     };
 
+     */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        seedOnClickListener();
         setContentView(R.layout.activity_configure_menu);
         getSupportActionBar().setTitle("Exams " + "("+
                 Session.getStringAttribute(ExamMenuActivity.this, SessionNameAttribute.ProfileName, "")
@@ -61,9 +74,9 @@ public class ExamMenuActivity extends AppCompatActivity {
 
 
 
-
-                Intent activity2Intent = new Intent(getApplicationContext(), mainListMenuOptionsNavigate[position]);
-                startActivity(activity2Intent);
+                OnItemClickListenerArray[position].onItemClick(adapterView,view,position,l);
+                //Intent activity2Intent = new Intent(getApplicationContext(), mainListMenuOptionsNavigate[position]);
+                //startActivity(activity2Intent);
 
             }
         });
@@ -98,6 +111,73 @@ public class ExamMenuActivity extends AppCompatActivity {
                 +")");
 
     }
+
+
+    private void seedOnClickListener(){
+
+        OnItemClickListenerArray[0] = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent activity2Intent = new Intent(getApplicationContext(), CFExamWordQuestionnaireNeedProceedActivity.class);
+                startActivity(activity2Intent);
+
+            }
+
+
+        };
+        OnItemClickListenerArray[1] = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent activity2Intent = new Intent(getApplicationContext(), CFExamTopicQuestionnaireNeedProceedActivity.class);
+                startActivity(activity2Intent);
+
+            }
+
+
+        };
+
+
+        OnItemClickListenerArray[2] = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent activity2Intent = new Intent(getApplicationContext(), ListAllDictionary.class);
+
+                //RandomExamListAllDictionaryActivity
+                TranslationListAdapterOnClickExecutor translationListAdapterOnClickExecutor = new ClickFromExamMenuActivity_word();
+
+                activity2Intent.putExtra("translationListAdapterOnClickExecutor",translationListAdapterOnClickExecutor);
+
+                startActivity(activity2Intent);
+
+            }
+
+
+        };
+
+        OnItemClickListenerArray[3] = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent activity2Intent = new Intent(getApplicationContext(), ListAllDictionary.class);
+
+                TranslationListAdapterOnClickExecutor translationListAdapterOnClickExecutor = new ClickFromExamMenuActivity_helpSentence();
+
+                activity2Intent.putExtra("translationListAdapterOnClickExecutor",translationListAdapterOnClickExecutor);
+
+                startActivity(activity2Intent);
+
+            }
+
+
+        };
+
+
+
+
+
+
+    }
+
+
 
 
 }

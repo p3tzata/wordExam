@@ -1,14 +1,14 @@
 package com.example.WordCFExam.adapter.configure;
 
-import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivity;
-import com.example.WordCFExam.adapter.BaseRecycleAdapter;
+import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivityNonFaced;
+import com.example.WordCFExam.adapter.BaseRecycleAdapterNonFaced;
 import com.example.WordCFExam.entity.Translation;
 
 //public class HelpSentenceEditableAdapterTEST extends RecyclerView.Adapter<HelpSentenceEditableAdapterTEST.ItemViewHolder>  {
 public class TranslationEditableAdapter extends
-        BaseRecycleAdapter<BaseEditableAppCompatActivity, Translation, BaseRecycleAdapter.ItemViewHolder> {
+        BaseRecycleAdapterNonFaced<BaseEditableAppCompatActivityNonFaced, Translation, BaseRecycleAdapterNonFaced.ItemViewHolder> {
 
-    public TranslationEditableAdapter(BaseEditableAppCompatActivity context) {
+    public TranslationEditableAdapter(BaseEditableAppCompatActivityNonFaced context) {
         super(context);
     }
 

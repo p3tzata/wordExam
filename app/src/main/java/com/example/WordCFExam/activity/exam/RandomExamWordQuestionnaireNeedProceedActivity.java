@@ -5,25 +5,29 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseListableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseListableAppCompatActivityNonFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
-import com.example.WordCFExam.adapter.exam.RandomExamQuestionnaireNeedProceedAdapter;
+import com.example.WordCFExam.adapter.exam.RandomExamWordQuestionnaireNeedProceedAdapter;
 import com.example.WordCFExam.entity.Language;
 import com.example.WordCFExam.entity.Word;
+import com.example.WordCFExam.entity.dto.RandomExamCounter;
 import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.exam.RandomExamWordQuestionnaireService;
+import com.example.WordCFExam.utitliy.DbExecutor;
+import com.example.WordCFExam.utitliy.DbExecutorImp;
 import com.example.WordCFExam.utitliy.Session;
 import com.example.WordCFExam.utitliy.SessionNameAttribute;
 
 import java.util.List;
 
-public class RandomExamQuestionnaireNeedProceedActivity
-        extends BaseListableAppCompatActivity<Word, RandomExamWordQuestionnaireService, RandomExamQuestionnaireNeedProceedActivity, RandomExamQuestionnaireNeedProceedAdapter> {
+public class RandomExamWordQuestionnaireNeedProceedActivity
+        extends BaseListableAppCompatActivityNonFaced<Word, RandomExamWordQuestionnaireService, RandomExamWordQuestionnaireNeedProceedActivity, RandomExamWordQuestionnaireNeedProceedAdapter> {
 
     TranslationAndLanguages translationAndLanguages;
     Language fromLanguage;
     Language toLanguage;
+    Long profileID;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -42,14 +46,41 @@ public class RandomExamQuestionnaireNeedProceedActivity
 
         setContentView(R.layout.activity_base_listable);
         super.setItemService(FactoryUtil.createRandomExamWordQuestionnaireService(getApplication()));
-        RandomExamQuestionnaireNeedProceedAdapter adapter = new RandomExamQuestionnaireNeedProceedAdapter(RandomExamQuestionnaireNeedProceedActivity.this);
+        RandomExamWordQuestionnaireNeedProceedAdapter adapter = new RandomExamWordQuestionnaireNeedProceedAdapter(RandomExamWordQuestionnaireNeedProceedActivity.this);
         super.setAdapter(adapter);
-        super.setContext(RandomExamQuestionnaireNeedProceedActivity.this);
+        super.setContext(RandomExamWordQuestionnaireNeedProceedActivity.this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("List of Random questions");
+
         translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
         fromLanguage=(Language) getIntent().getSerializableExtra("fromLanguage");;
         toLanguage=(Language) getIntent().getSerializableExtra("toLanguage");
+        profileID = Session.getLongAttribute(getApplicationContext(), SessionNameAttribute.ProfileID, -1L);
+        DbExecutorImp<RandomExamCounter> dbExecutor = FactoryUtil.<RandomExamCounter>createDbExecutor();
+        dbExecutor.execute_(new DbExecutor<RandomExamCounter>() {
+            @Override
+            public RandomExamCounter doInBackground() {
+                if (translationAndLanguages.getForeignLanguage().getLanguageID().equals(
+                        fromLanguage.getLanguageID())){
+                    return getItemService().findAllForeignRandomCounter(profileID,fromLanguage.getLanguageID(),toLanguage.getLanguageID());
+
+                } else {
+                    return getItemService().findAllNativeRandomCounter(profileID,fromLanguage.getLanguageID(),toLanguage.getLanguageID());
+
+                }
+
+
+
+            }
+
+            @Override
+            public void onPostExecute(RandomExamCounter item) {
+                String format = String.format("Random questions (%d / %d)", item.getPoints(), item.getTotal());
+                getSupportActionBar().setTitle(format);
+            }
+        });
+
+
+
         setGetItemsExecutor(new GetItemsExecutorBlock<Word>() {
             @Override
             public List<Word> execute() {
@@ -76,6 +107,30 @@ public class RandomExamQuestionnaireNeedProceedActivity
     public void onResume(){
         super.onResume();
         getItems();
+        DbExecutorImp<RandomExamCounter> dbExecutor = FactoryUtil.<RandomExamCounter>createDbExecutor();
+        dbExecutor.execute_(new DbExecutor<RandomExamCounter>() {
+            @Override
+            public RandomExamCounter doInBackground() {
+                if (translationAndLanguages.getForeignLanguage().getLanguageID().equals(
+                        fromLanguage.getLanguageID())){
+                    return getItemService().findAllForeignRandomCounter(profileID,fromLanguage.getLanguageID(),toLanguage.getLanguageID());
+
+                } else {
+                    return getItemService().findAllNativeRandomCounter(profileID,fromLanguage.getLanguageID(),toLanguage.getLanguageID());
+
+                }
+
+
+
+            }
+
+            @Override
+            public void onPostExecute(RandomExamCounter item) {
+                String format = String.format("Random questions (%d / %d)", item.getPoints(), item.getTotal());
+                getSupportActionBar().setTitle(format);
+            }
+        });
+
 
     }
 

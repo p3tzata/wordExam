@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseListableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseListableAppCompatActivityNonFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.activity.base.onMenuItemClickHandlerExecutor;
 import com.example.WordCFExam.adapter.exam.CFExamTopicQuestionnaireNeedProceedAdapter;
@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TopicListableActivity
-        extends BaseListableAppCompatActivity<Topic, TopicService, TopicListableActivity, CFExamTopicQuestionnaireNeedProceedAdapter> {
+        extends BaseListableAppCompatActivityNonFaced<Topic, TopicService, TopicListableActivity, CFExamTopicQuestionnaireNeedProceedAdapter> {
     private TopicType topicType;
 
     private Boolean isSetToCFExam;
@@ -138,7 +138,7 @@ public class TopicListableActivity
         mapping.put( R.id.popupView_vew,new onMenuItemClickHandlerExecutor() {
             @Override
             public void execute() {
-                //TODO show popup window view detail
+
                 handlerViewClick(selectedItem);
             }
 

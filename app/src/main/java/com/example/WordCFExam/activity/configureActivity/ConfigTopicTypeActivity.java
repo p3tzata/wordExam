@@ -11,10 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivityNonFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.topic.TopicTypeEditableAdapter;
-import com.example.WordCFExam.entity.Profile;
 import com.example.WordCFExam.entity.exam.TopicType;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.exam.TopicTypeService;
@@ -24,7 +23,7 @@ import com.example.WordCFExam.utitliy.SessionNameAttribute;
 import java.util.List;
 
 public class ConfigTopicTypeActivity extends
-        BaseEditableAppCompatActivity<TopicType, TopicTypeService, ConfigTopicTypeActivity, TopicTypeEditableAdapter> {
+        BaseEditableAppCompatActivityNonFaced<TopicType, TopicTypeService, ConfigTopicTypeActivity, TopicTypeEditableAdapter> {
 
     private Long profileID;
     private String profileName;

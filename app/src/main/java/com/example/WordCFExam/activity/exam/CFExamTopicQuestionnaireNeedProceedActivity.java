@@ -5,7 +5,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseListableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseListableAppCompatActivityNonFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.exam.CFExamTopicQuestionnaireNeedProceedAdapter;
 import com.example.WordCFExam.entity.Profile;
@@ -18,7 +18,7 @@ import com.example.WordCFExam.utitliy.SessionNameAttribute;
 import java.util.List;
 
 public class CFExamTopicQuestionnaireNeedProceedActivity
-        extends BaseListableAppCompatActivity<CFExamTopicQuestionnaireCross, CFExamTopicQuestionnaireService, CFExamTopicQuestionnaireNeedProceedActivity, CFExamTopicQuestionnaireNeedProceedAdapter> {
+        extends BaseListableAppCompatActivityNonFaced<CFExamTopicQuestionnaireCross, CFExamTopicQuestionnaireService, CFExamTopicQuestionnaireNeedProceedActivity, CFExamTopicQuestionnaireNeedProceedAdapter> {
 
 
     @Override

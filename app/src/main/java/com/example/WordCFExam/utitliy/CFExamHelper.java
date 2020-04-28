@@ -2,7 +2,6 @@ package com.example.WordCFExam.utitliy;
 
 import android.app.Application;
 import android.app.Dialog;
-import android.content.Context;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -12,9 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseListableAppCompatActivity;
 import com.example.WordCFExam.activity.base.ListableAppCompatActivity;
-import com.example.WordCFExam.activity.wordActivity.ListWordListableActivity;
 import com.example.WordCFExam.adapter.spinnerAdapter.CFProfileSpinAdapter;
 import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.exam.CFExamProfile;

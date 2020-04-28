@@ -53,6 +53,12 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <Button
+            android:id="@+id/btn_openLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Open URL link" />
+
+        <Button
             android:id="@+id/btn_setUnsetCFExam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -8,7 +8,7 @@ import com.example.WordCFExam.entity.Word;
 
 import java.io.Serializable;
 
-public class RandomExamQuestionnaireCross implements Serializable,TextLabelable {
+public class RandomExamWordQuestionnaireCross implements Serializable,TextLabelable {
 
     @Relation(
             parentColumn = "wordID",

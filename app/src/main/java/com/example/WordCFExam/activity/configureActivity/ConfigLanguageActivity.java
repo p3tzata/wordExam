@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.PopupMenu;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivity;
+import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivityNonFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.activity.base.onMenuItemClickHandlerExecutor;
 import com.example.WordCFExam.adapter.configure.LanguageEditableAdapter;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ConfigLanguageActivity extends BaseEditableAppCompatActivity<Language,LanguageService, ConfigLanguageActivity,LanguageEditableAdapter> {
+public class ConfigLanguageActivity extends BaseEditableAppCompatActivityNonFaced<Language,LanguageService, ConfigLanguageActivity,LanguageEditableAdapter> {
 
     @Override
     public void onCreateCustom() {

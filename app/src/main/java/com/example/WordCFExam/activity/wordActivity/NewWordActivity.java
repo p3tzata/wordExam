@@ -116,6 +116,7 @@ public class NewWordActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), UpdateWordBasicActivity.class);
                     intent.putExtra("translationAndLanguages", translationAndLanguages);
                     intent.putExtra("translationFromLanguageID", translationAndLanguages.getForeignLanguage().getLanguageID());
+                    intent.putExtra("isHaveToStartUpdateWordMenu", true);
                     intent.putExtra("word", word);
                     startActivity(intent);
 
