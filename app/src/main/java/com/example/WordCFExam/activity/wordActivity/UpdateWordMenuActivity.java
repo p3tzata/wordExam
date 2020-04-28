@@ -34,6 +34,7 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
     Word word;
     private TranslationAndLanguages translationAndLanguages;
     private Long fromLanguageID;
+    private Long toLanguageID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
         this.word = (Word) getIntent().getSerializableExtra("word");
         this.translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
         this.fromLanguageID = (Long) getIntent().getSerializableExtra("translationFromLanguageID");
+        this.toLanguageID = (Long) getIntent().getSerializableExtra("translationToLanguageID");
         getSupportActionBar().setTitle(word.getWordString());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         seedOnClickListener();
@@ -83,6 +85,7 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
 
                 activity2Intent.putExtra("translationAndLanguages", UpdateWordMenuActivity.this.translationAndLanguages);
                 activity2Intent.putExtra("translationFromLanguageID", UpdateWordMenuActivity.this.fromLanguageID);
+                activity2Intent.putExtra("translationToLanguageID", UpdateWordMenuActivity.this.toLanguageID);
                 activity2Intent.putExtra("word", UpdateWordMenuActivity.this.word);
                 startActivity(activity2Intent);
             }
@@ -98,6 +101,7 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
 
                 activity2Intent.putExtra("translationAndLanguages", UpdateWordMenuActivity.this.translationAndLanguages);
                 activity2Intent.putExtra("translationFromLanguageID", UpdateWordMenuActivity.this.fromLanguageID);
+                activity2Intent.putExtra("translationToLanguageID", UpdateWordMenuActivity.this.toLanguageID);
                 activity2Intent.putExtra("word", UpdateWordMenuActivity.this.word);
                 startActivity(activity2Intent);
             }
@@ -113,6 +117,7 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
 
                 activity2Intent.putExtra("translationAndLanguages", UpdateWordMenuActivity.this.translationAndLanguages);
                 activity2Intent.putExtra("translationFromLanguageID", UpdateWordMenuActivity.this.fromLanguageID);
+                activity2Intent.putExtra("translationToLanguageID", UpdateWordMenuActivity.this.toLanguageID);
                 activity2Intent.putExtra("word", UpdateWordMenuActivity.this.word);
                 startActivity(activity2Intent);
             }

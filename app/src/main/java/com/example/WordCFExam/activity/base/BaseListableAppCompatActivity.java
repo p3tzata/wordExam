@@ -133,7 +133,8 @@ public abstract class BaseListableAppCompatActivity<
         return adapter;
     }
 
-    protected void getItems() {
+    @Override
+    public void getItems() {
 
         DbExecutorImp<List<T>> dbExecutor = FactoryUtil.<List<T>>createDbExecutor();
         dbExecutor.execute_(new DbExecutor<List<T>>() {

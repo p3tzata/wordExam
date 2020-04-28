@@ -33,6 +33,7 @@ import com.example.WordCFExam.service.WordService;
 import com.example.WordCFExam.service.exam.CFExamProfilePointService;
 import com.example.WordCFExam.service.exam.CFExamProfileService;
 import com.example.WordCFExam.service.exam.CFExamWordQuestionnaireService;
+import com.example.WordCFExam.utitliy.CFExamHelper;
 import com.example.WordCFExam.utitliy.DbExecutor;
 import com.example.WordCFExam.utitliy.DbExecutorImp;
 import com.example.WordCFExam.utitliy.MenuUtility;
@@ -55,18 +56,14 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivityFaced
     CFExamProfileService cfExamProfileService;
     CFExamProfilePointService cfExamProfilePointService;
 
-
+    CFExamHelper cfExamHelper;
     Long fromLanguageID;
     Long toLanguageID;
-    private Dialog myDialog;
-    private Boolean isSetToCFExam;
-    private CFExamWordQuestionnaireCross cfExamWordQuestionnaireCross;
-    private CFExamProfilePointCross cfExamProfilePointCross;
-    private CFProfileSpinAdapter cfProfileSpinAdapter;
+
 
     @Override
     public void onCreateCustom() {
-        this.isSetToCFExam=false;
+
         ListWordEditableActivity updateWordTranslationActivity = this;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_base_crudable);
@@ -81,7 +78,8 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivityFaced
         this.translationAndLanguages = (TranslationAndLanguages) i.getSerializableExtra("translationAndLanguages");
         this.fromLanguageID = (Long) i.getSerializableExtra("translationFromLanguageID");
         this.toLanguageID = (Long) i.getSerializableExtra("translationToLanguageID");
-
+        this.cfExamHelper = new CFExamHelper<ListWordEditableActivity>
+                (ListWordEditableActivity.this.getApplication(),ListWordEditableActivity.this, new Dialog(this) ,toLanguageID);
 
         String formatTitle="Search %s word";
 
@@ -154,6 +152,7 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivityFaced
         Intent intent = new Intent(getApplicationContext(), UpdateWordMenuActivity.class);
         intent.putExtra("translationAndLanguages", translationAndLanguages);
         intent.putExtra("translationFromLanguageID", fromLanguageID);
+        intent.putExtra("translationToLanguageID", toLanguageID);
         intent.putExtra("word", item);
         startActivity(intent);
 
@@ -167,7 +166,7 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivityFaced
                 Intent intent = new Intent(getApplicationContext(), NewWordActivity.class);
                 intent.putExtra("translationAndLanguages",translationAndLanguages);
                 intent.putExtra("translationFromLanguageID",translationAndLanguages.getForeignLanguage().getLanguageID());
-
+                intent.putExtra("translationToLanguageID",translationAndLanguages.getNativeLanguage().getLanguageID());
                 startActivityForResult(intent, 1);
             }
         });
@@ -235,6 +234,7 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivityFaced
                     activity2Intent = new Intent(getApplicationContext(), UpdateWordMenuActivity.class);
                     activity2Intent.putExtra("translationAndLanguages", translationAndLanguages);
                     activity2Intent.putExtra("translationFromLanguageID", fromLanguageID);
+                    activity2Intent.putExtra("translationToLanguageID", toLanguageID);
                     activity2Intent.putExtra("word", selectedItem);
                     startActivity(activity2Intent);
                 } else {
@@ -276,170 +276,10 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivityFaced
     }
 
     private void handlerSetCFExamClick(Word selectedItem) {
-
-        this.myDialog = new Dialog(this);
-        myDialog.setContentView(R.layout.dialog_set_cfexam);
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        int width = metrics.widthPixels;
-        int height = metrics.heightPixels;
-        myDialog.getWindow().setLayout((6 * width)/7, (4 * height)/10);
-
-        Button btn_Submit = (Button) myDialog.findViewById(R.id.btn_dialog_newItem);
-        Button btn_Cancel = (Button) myDialog.findViewById(R.id.btn_dialog_cancel);
-        TextView tv_msg = (TextView) myDialog.findViewById(R.id.tv_setCFExamProfile_msg);
-        Spinner spn_cfExamProfile = (Spinner) myDialog.findViewById(R.id.spn_cfExamProfile);
-
-
-
-        DbExecutorImp<Boolean> dbExecutor = FactoryUtil.<Boolean>createDbExecutor();
-        dbExecutor.execute_(new DbExecutor<Boolean>() {
-            @Override
-            public Boolean doInBackground() {
-                cfExamWordQuestionnaireCross = cfExamWordQuestionnaireService.findByWordID(selectedItem.getWordID(), toLanguageID);
-                if(cfExamWordQuestionnaireCross!=null) {
-                    cfExamProfilePointCross = cfExamProfilePointService.findCrossByID(cfExamWordQuestionnaireCross.getCfExamQuestionnaire().getCurrentCFExamProfilePointID());
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-
-            @Override
-            public void onPostExecute(Boolean item) {
-                setSetToCFExam(item);
-
-                if (getSetToCFExam()) {
-                    DateFormat dateFormat = new SimpleDateFormat("dd.M.yyyy HH:mm:ss");
-                    String formattedEntryPointDate = dateFormat.format(cfExamWordQuestionnaireCross.getCfExamQuestionnaire().getEntryPointDateTime());
-                    String sourceString="This word is set to CF Exam. " +
-                            "<br>To Language: <i><u>" + cfExamWordQuestionnaireCross.getLanguage().getLanguageName()+ "</u></i>" +
-                            "<br>Profile Name: <i><u>" + cfExamProfilePointCross.getCfExamProfile().getName()+ "</u></i>" +
-                            "<br>Point Name: <i><u>" + cfExamProfilePointCross.getCfExamProfilePoint().getLabelText()  + "</u></i>" +
-                            "<br>Current Entry Date Point: <i><u>" + formattedEntryPointDate + "</u></i>" +
-                            "<br><b>Do you want to UnSet?</b>";
-                    tv_msg.setText(Html.fromHtml(sourceString));
-                    spn_cfExamProfile.setVisibility(View.INVISIBLE);
-                    btn_Submit.setText("UnSet");
-                } else {
-                    tv_msg.setText("Please choose CF Exam Profile.");
-                    spn_cfExamProfile.setVisibility(View.VISIBLE);
-                    btn_Submit.setText("Set");
-
-                    DbExecutorImp<List<CFExamProfile>> dbExecutorCFExamProfile = FactoryUtil.<List<CFExamProfile>>createDbExecutor();
-                    dbExecutorCFExamProfile.execute_(new DbExecutor<List<CFExamProfile>>() {
-                        @Override
-                        public List<CFExamProfile> doInBackground() {
-                            return cfExamProfileService.findAllOrderAlphabetic(Session.getLongAttribute(getContext(), SessionNameAttribute.ProfileID,-1L),"");
-                        }
-
-                        @Override
-                        public void onPostExecute(List<CFExamProfile> item) {
-                            CFExamProfile cfExamProfileSelect = new CFExamProfile();
-                            cfExamProfileSelect.setProfileID(-1L);
-                            cfExamProfileSelect.setCFExamProfileID(-1L);
-                            cfExamProfileSelect.setName("Select");
-
-                            item.add(0,cfExamProfileSelect);
-
-                            cfProfileSpinAdapter = new CFProfileSpinAdapter(ListWordEditableActivity.this,
-                                    //android.R.layout.simple_spinner_item,
-                                    R.layout.spinner_item,
-                                    item);
-
-                            spn_cfExamProfile.setAdapter(cfProfileSpinAdapter);
-
-
-                        }
-                    });
-
-
-
-
-                }
-
-            }
-        });
-
-
-
-
-
-
-
-
-        btn_Cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
-
-        btn_Submit.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                DbExecutorImp<Boolean> dbExecutorCFExamProfile = FactoryUtil.<Boolean>createDbExecutor();
-                dbExecutorCFExamProfile.execute_(new DbExecutor<Boolean>() {
-                    @Override
-                    public Boolean doInBackground() {
-                        if (getSetToCFExam()) {
-
-                            Integer delete = cfExamWordQuestionnaireService.delete(cfExamWordQuestionnaireCross.getCfExamQuestionnaire());
-                            if (delete>0) {
-                                return true;
-                            } else {
-                                return false;
-                            }
-
-                        } else {
-                            int selectedItemPosition = spn_cfExamProfile.getSelectedItemPosition();
-                            CFExamProfile selectedCFExamProfile = cfProfileSpinAdapter.getItem(selectedItemPosition);
-
-
-                            boolean isCreated = cfExamWordQuestionnaireService.create(selectedItem.getWordID(), toLanguageID, selectedCFExamProfile);
-                            if (isCreated){
-                                return true;
-                            } else {
-                                return false;
-                            }
-                        }
-
-                    }
-
-                    @Override
-                    public void onPostExecute(Boolean item) {
-                        myDialog.dismiss();
-
-                        if (item) {
-                            Toast.makeText(getContext(), "Operation is Successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-
-
-
-
-            }
-        });
-
-
-        myDialog.show();
-
-
+        cfExamHelper.handlerSetCFExamClick(selectedItem);
     }
 
 
-    public Boolean getSetToCFExam() {
-        return isSetToCFExam;
-    }
-
-    public void setSetToCFExam(Boolean setToCFExam) {
-        isSetToCFExam = setToCFExam;
-    }
 
     @Override
     public void onSearchBarGetItemsExecutorHandler(String contains) {

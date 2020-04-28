@@ -62,6 +62,10 @@
             android:name=".activity.configureActivity.ConfigCFExamProfilePointActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".activity.wordActivity.UpdateWordTranslationActivity"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
             android:name=".activity.wordActivity.ListWordEditableActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity

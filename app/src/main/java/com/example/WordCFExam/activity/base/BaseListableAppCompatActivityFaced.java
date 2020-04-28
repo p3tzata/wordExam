@@ -139,7 +139,7 @@ public abstract class BaseListableAppCompatActivityFaced<
         return adapter;
     }
 
-    protected void getItems() {
+    public void getItems() {
 
         DbExecutorImp<List<V>> dbExecutor = FactoryUtil.<List<V>>createDbExecutor();
         dbExecutor.execute_(new DbExecutor<List<V>>() {

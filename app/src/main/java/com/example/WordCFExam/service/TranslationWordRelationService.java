@@ -83,14 +83,18 @@ public class TranslationWordRelationService extends BaseCrudService<TranslationW
 
 
 
-    public void deleteNativeTranslation(Word foreignWord,Word nativeWord) {
+    public Boolean deleteNativeTranslation(Word foreignWord,Word nativeWord) {
 
         TranslationWordRelation byForeignWordIDAndNativeWordID = this.findByForeignWordIDAndNativeWordID(foreignWord.getWordID(), nativeWord.getWordID());
         super.getRepository().delete(byForeignWordIDAndNativeWordID);
         List<TranslationWordRelation> byNativeWordID = this.findByNativeWordID(nativeWord.getWordID());
         if (byNativeWordID.size()==0) {
-            wordService.delete(nativeWord);
+            Integer deleteResult = wordService.delete(nativeWord);
+            return deleteResult>0;
         }
+        return false;
+
+
 
     }
 
