@@ -25,10 +25,16 @@
 
 
         <Button
-            android:id="@+id/btn_textToSpeech"
+        android:id="@+id/btn_textToSpeechStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Speech" />
+
+        <Button
+            android:id="@+id/btn_textToSpeechStop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Speech" />
+            android:text="Stop" />
 
         <EditText
             android:id="@+id/et_textToSpeak"
@@ -36,6 +42,7 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:hint="Paste text here" />
+
 
 
 

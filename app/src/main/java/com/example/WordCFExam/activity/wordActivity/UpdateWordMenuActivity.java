@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,7 +24,7 @@ import com.example.WordCFExam.utitliy.TextToSpeechUtil;
 
 import java.util.Locale;
 
-public class UpdateWordMenuActivity extends AppCompatActivity {
+public class UpdateWordMenuActivity extends AppCompatActivity  {
     private WordService wordService;
     ListView mainListMenu;
 
@@ -41,6 +42,9 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
     private Long fromLanguageID;
     private Long toLanguageID;
 
+    TextToSpeechUtil textToSpeechUtil;
+    Locale locale;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,16 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(word.getWordString());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         seedOnClickListener();
+
+        try {
+            locale = Locale.forLanguageTag(translationAndLanguages.getForeignLanguage().getLocaleLanguageTag());
+            textToSpeechUtil =new TextToSpeechUtil(locale,UpdateWordMenuActivity.this);
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(), "Warning: Can not identify Language Locate Tag",Toast.LENGTH_LONG).show();
+        }
+
+
+
 
         mainListMenu = (ListView) findViewById(R.id.updateWordListMenu);
 
@@ -157,16 +171,10 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                TextToSpeechUtil textToSpeechUtil;
-                Locale locale=null;
-                try {
-                    locale = Locale.forLanguageTag(translationAndLanguages.getForeignLanguage().getLocaleLanguageTag());
-                    textToSpeechUtil =new TextToSpeechUtil(locale,UpdateWordMenuActivity.this);
+
                     String toSpeak = word.getWordString();
                     textToSpeechUtil.speak(toSpeak,toSpeak);
-                } catch (Exception ex) {
-                    Toast.makeText(getApplicationContext(), "Warning: Can not identify Language Locate Tag",Toast.LENGTH_LONG).show();
-                }
+
 
             }
         };
@@ -218,7 +226,5 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
         GetTasks gt = new GetTasks();
         gt.execute();
     }
-
-
 
 }

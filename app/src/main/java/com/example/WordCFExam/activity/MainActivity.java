@@ -57,7 +57,7 @@ Testing.
             "Words",
             "Topics",
             "Exams",
-            "Text to speech"
+            "Text to Speech"
 };
 
     AdapterView.OnItemClickListener[]  OnItemClickListenerArray= new AdapterView.OnItemClickListener[mainListMenuOptions.length];

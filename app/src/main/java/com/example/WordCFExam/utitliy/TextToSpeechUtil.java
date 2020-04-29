@@ -45,6 +45,19 @@ public class TextToSpeechUtil {
     }
 
 
+    public void shutdown() {
+        textToSpeech.stop();
+        textToSpeech.shutdown();
+
+    }
+
+    public void stop() {
+        textToSpeech.stop();
+
+
+    }
+
+
 
 
 
