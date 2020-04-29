@@ -18,7 +18,18 @@ public class Language implements Serializable,TextLabelable {
 
     private String definitionUrl;
 
+    private String localeLanguageTag;
+
+
     public Language() {
+    }
+
+    public String getLocaleLanguageTag() {
+        return localeLanguageTag;
+    }
+
+    public void setLocaleLanguageTag(String localeLanguageTag) {
+        this.localeLanguageTag = localeLanguageTag;
     }
 
     public Long getLanguageID() {

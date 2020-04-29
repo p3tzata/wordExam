@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.WordCFExam.R;
 import com.example.WordCFExam.entity.HelpSentence;
@@ -21,6 +23,7 @@ import com.example.WordCFExam.entity.PartOfSpeech;
 import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.WordForm;
 import com.example.WordCFExam.entity.dto.ForeignWordWithDefPartOfSpeech;
+import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
 import com.example.WordCFExam.entity.dto.WordCFExamCross;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.HelpSentenceService;
@@ -31,18 +34,20 @@ import com.example.WordCFExam.service.WordFormService;
 import com.example.WordCFExam.service.WordPartOfSpeechService;
 import com.example.WordCFExam.utitliy.DbExecutor;
 import com.example.WordCFExam.utitliy.DbExecutorImp;
+import com.example.WordCFExam.utitliy.TextToSpeechUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 public class ShowForeignWordActivity extends AppCompatActivity {
 
-
+    private TranslationAndLanguages translationAndLanguages;
     private Word word;
     private Long translationFromLanguageID;
     private Long translationToLanguageID;
-
+    private TextToSpeechUtil textToSpeechUtil;
 
     private TranslationWordRelationService translationWordRelationService;
     private PartOfSpeechService partOfSpeechService;
@@ -74,11 +79,38 @@ public class ShowForeignWordActivity extends AppCompatActivity {
         this.wordPartOfSpeechService=FactoryUtil.createWordPartOfSpeechService(getApplication());
         this.languageService=FactoryUtil.createLanguageService(getApplication());
         this.helpSentenceService=FactoryUtil.createHelpSentenceService(getApplication());
-      //  this.translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
+        this.translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
         this.translationFromLanguageID = (Long) getIntent().getSerializableExtra("translationFromLanguageID");
         this.translationToLanguageID = (Long) getIntent().getSerializableExtra("translationToLanguageID");
         this.word= (Word) getIntent().getSerializableExtra("word");
         getSupportActionBar().setTitle(word.getWordString());
+        Locale locale=null;
+        try {
+            locale = Locale.forLanguageTag(translationAndLanguages.getForeignLanguage().getLocaleLanguageTag());
+            textToSpeechUtil =new TextToSpeechUtil(locale,getApplicationContext());
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(), "Warning: Can not identify Language Locate Tag",Toast.LENGTH_LONG).show();
+        }
+
+
+
+
+        findViewById(R.id.btn_pronunciation).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (textToSpeechUtil!=null) {
+                    String toSpeak = word.getWordString();
+                    textToSpeechUtil.speak(toSpeak,toSpeak);
+                }
+
+
+            }
+        });
+
+
+
+
 
         getNativeWords(word);
         getPartOfSpeech(word);

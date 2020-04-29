@@ -13,11 +13,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.WordCFExam.R;
 import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
 import com.example.WordCFExam.service.WordService;
+import com.example.WordCFExam.utitliy.TextToSpeechUtil;
+
+import java.util.Locale;
 
 public class UpdateWordMenuActivity extends AppCompatActivity {
     private WordService wordService;
@@ -26,7 +30,8 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
     String[] mainListMenuOptions = new String[]{"Basic",
             "Translation",
             "Help sentence",
-            "Open URL link"};
+            "Open URL link",
+            "Pronunciation"};
 
     AdapterView.OnItemClickListener[]  OnItemClickListenerArray= new AdapterView.OnItemClickListener[mainListMenuOptions.length];
 
@@ -146,6 +151,26 @@ public class UpdateWordMenuActivity extends AppCompatActivity {
                 }
             }
         };
+
+
+        OnItemClickListenerArray[4] = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+                TextToSpeechUtil textToSpeechUtil;
+                Locale locale=null;
+                try {
+                    locale = Locale.forLanguageTag(translationAndLanguages.getForeignLanguage().getLocaleLanguageTag());
+                    textToSpeechUtil =new TextToSpeechUtil(locale,UpdateWordMenuActivity.this);
+                    String toSpeak = word.getWordString();
+                    textToSpeechUtil.speak(toSpeak,toSpeak);
+                } catch (Exception ex) {
+                    Toast.makeText(getApplicationContext(), "Warning: Can not identify Language Locate Tag",Toast.LENGTH_LONG).show();
+                }
+
+            }
+        };
+
 
 
 

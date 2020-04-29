@@ -92,13 +92,14 @@ public class ConfigLanguageActivity extends BaseEditableAppCompatActivityNonFace
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
-        myDialog.getWindow().setLayout((6 * width)/7, (4 * height)/7);
+        myDialog.getWindow().setLayout((6 * width)/7, (4 * height)/5);
 
         Button btn_Submit = (Button) myDialog.findViewById(R.id.btn_dialog_newItem);
 
 
         EditText et_newItem = (EditText) myDialog.findViewById(R.id.et_dialog_newItem);
         EditText et_url = (EditText) myDialog.findViewById(R.id.et_dialog_lang_url);
+        EditText et_locale = (EditText) myDialog.findViewById(R.id.et_dialog_lang_locale);
 
         et_newItem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -113,6 +114,7 @@ public class ConfigLanguageActivity extends BaseEditableAppCompatActivityNonFace
         if (isEditMode && selectedItem!=null) {
             et_newItem.setText(selectedItem.getLabelText());
             et_url.setText(selectedItem.getDefinitionUrl());
+            et_locale.setText(selectedItem.getLocaleLanguageTag());
         }
 
         btn_Submit.setOnClickListener(new View.OnClickListener()
@@ -124,13 +126,14 @@ public class ConfigLanguageActivity extends BaseEditableAppCompatActivityNonFace
                 if (isEditMode) {
                     selectedItem.setLanguageName(et_newItem.getText().toString());
                     selectedItem.setDefinitionUrl(et_url.getText().toString());
+                    selectedItem.setLocaleLanguageTag(et_locale.getText().toString());
                     updateItem(selectedItem);
                     myDialog.dismiss();
                 } else {
                     Language newItem = new Language();
                     newItem.setLanguageName(et_newItem.getText().toString());
-
                     newItem.setDefinitionUrl(et_url.getText().toString());
+                    newItem.setLocaleLanguageTag(et_locale.getText().toString());
                     createItem(newItem);
                     myDialog.dismiss();
                 }

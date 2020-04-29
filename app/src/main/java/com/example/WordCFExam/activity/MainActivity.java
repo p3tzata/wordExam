@@ -56,7 +56,8 @@ Testing.
     String[] mainListMenuOptions = new String[]{
             "Words",
             "Topics",
-            "Exams"
+            "Exams",
+            "Text to speech"
 };
 
     AdapterView.OnItemClickListener[]  OnItemClickListenerArray= new AdapterView.OnItemClickListener[mainListMenuOptions.length];
@@ -242,6 +243,18 @@ Testing.
 
 
         };
+
+        OnItemClickListenerArray[3] = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent activity2Intent = new Intent(getApplicationContext(), TextToSpeechActivity.class);
+                startActivity(activity2Intent);
+
+            }
+
+
+        };
+
 
 
 

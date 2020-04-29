@@ -24,14 +24,21 @@
                 android:id="@+id/btn_openLink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:text="Open URL link" />
+
+            <Button
+                android:id="@+id/btn_pronunciation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_openLink"
+                android:text="Pronunciation" />
+
 
             <ListView
                 android:id="@+id/show_foreign_helpSentence"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/btn_openLink"></ListView>
+                android:layout_below="@+id/btn_pronunciation"></ListView>
 
             <ListView
                 android:id="@+id/show_foreign_partOfSpeech"

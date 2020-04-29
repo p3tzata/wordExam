@@ -101,6 +101,7 @@ public class DBUtil extends Application {
         Language englishLanguage = new Language();
         englishLanguage.setLanguageName("English");
         englishLanguage.setDefinitionUrl("https://dictionary.cambridge.org/dictionary/english/%s");
+        englishLanguage.setLocaleLanguageTag("en-US");
 
         Language franceLanguage = new Language();
         franceLanguage.setLanguageName("French");
