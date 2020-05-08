@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,8 +17,11 @@ import android.widget.Toast;
 import com.example.WordCFExam.R;
 import com.example.WordCFExam.activity.wordActivity.ShowForeignWordActivity;
 import com.example.WordCFExam.activity.wordActivity.ShowNativeWordActivity;
+import com.example.WordCFExam.entity.Language;
+import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaireCross;
 import com.example.WordCFExam.factory.FactoryUtil;
+import com.example.WordCFExam.service.LanguageService;
 import com.example.WordCFExam.service.TranslationService;
 import com.example.WordCFExam.service.exam.CFExamWordQuestionnaireService;
 import com.example.WordCFExam.utitliy.DbExecutor;
@@ -30,9 +34,13 @@ import java.util.List;
 public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
     private CFExamWordQuestionnaireCross cfExamQuestionnaireCross;
     private TranslationService translationService;
+    private LanguageService languageService;
     private boolean isTranslateToForeign;
     private CFExamWordQuestionnaireService cfExamQuestionnaireService;
     private Dialog myDialog;
+    TranslationAndLanguages translationAndLanguages;
+    Language fromLanguage;
+    Language toLanguage;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -51,7 +59,9 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exam_proceed_question);
         cfExamQuestionnaireCross = (CFExamWordQuestionnaireCross) getIntent().getSerializableExtra("CFExamQuestionnaireCross");
         translationService=FactoryUtil.createTranslationService(getApplication());
+        languageService=FactoryUtil.createLanguageService(getApplication());
         cfExamQuestionnaireService=FactoryUtil.createCFExamQuestionnaireService(getApplication());
+
         TextView tx_examWord = (TextView) findViewById(R.id.tx_examWord);
         TextView tx_examTask = (TextView) findViewById(R.id.tx_examTask);
         tx_examTask.setText(String.format("Translate to %s",cfExamQuestionnaireCross.getLanguage().getLanguageName()));
@@ -59,7 +69,54 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Translate");
         checkIsTranslateToForeign();
+        findTranslationAndLanguage();
         attachButtonOnClick();
+        TextView et_checkAnswer = (TextView) findViewById(R.id.et_checkAnswer);
+        et_checkAnswer.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+
+
+    }
+
+    private void findTranslationAndLanguage() {
+        DbExecutorImp<TranslationAndLanguages> dbExecutor = FactoryUtil.<TranslationAndLanguages>createDbExecutor();
+        dbExecutor.execute_(new DbExecutor<TranslationAndLanguages>() {
+            @Override
+            public TranslationAndLanguages doInBackground() {
+                 fromLanguage=languageService.findByID(cfExamQuestionnaireCross.word.getLanguageID());
+                 toLanguage=cfExamQuestionnaireCross.getLanguage();
+                if (isTranslateToForeign) {
+                    TranslationAndLanguages translationAndLanguages = new TranslationAndLanguages();
+                    translationAndLanguages.setForeignLanguage(toLanguage);
+                    translationAndLanguages.setNativeLanguage(fromLanguage);
+                    translationAndLanguages.setTranslation(null);
+                    return translationAndLanguages;
+                } else {
+                    TranslationAndLanguages translationAndLanguages = new TranslationAndLanguages();
+                    translationAndLanguages.setForeignLanguage(fromLanguage);
+                    translationAndLanguages.setNativeLanguage(toLanguage);
+                    translationAndLanguages.setTranslation(null);
+                    return translationAndLanguages;
+                }
+
+
+
+
+            }
+
+            @Override
+            public void onPostExecute(TranslationAndLanguages item) {
+
+                    translationAndLanguages = item;
+
+            }
+        });
 
 
     }
@@ -126,6 +183,10 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
                 } else {
                     intent = new Intent(getApplicationContext(), ShowForeignWordActivity.class);
                 }
+
+                intent.putExtra("toLanguage",translationAndLanguages.getNativeLanguage());
+                intent.putExtra("fromLanguage",translationAndLanguages.getForeignLanguage());
+                intent.putExtra("translationAndLanguages",translationAndLanguages);
 
                 intent.putExtra("translationToLanguageID", cfExamQuestionnaireCross.getCfExamQuestionnaire().getTargetTranslationLanguageID());
                 intent.putExtra("translationFromLanguageID", cfExamQuestionnaireCross.getWord().getLanguageID());
@@ -213,6 +274,9 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
 
                 if (item!=null) {
                     isTranslateToForeign=item;
+                    findTranslationAndLanguage();
+
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Can not find Translation", Toast.LENGTH_SHORT).show();
                 }

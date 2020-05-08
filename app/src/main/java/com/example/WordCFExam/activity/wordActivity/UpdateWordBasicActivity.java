@@ -260,6 +260,7 @@ public class UpdateWordBasicActivity extends AppCompatActivity {
 
                 if (result>0) {
                     if (isHaveToStartUpdateWordMenu) {
+                        finish();
                         Intent intent = new Intent(getApplicationContext(), UpdateWordMenuActivity.class);
                         intent.putExtra("translationAndLanguages", translationAndLanguages);
                         intent.putExtra("translationFromLanguageID", fromLanguageID);

@@ -18,6 +18,7 @@ import com.example.WordCFExam.activity.wordActivity.ShowForeignWordActivity;
 import com.example.WordCFExam.activity.wordActivity.ShowNativeWordActivity;
 import com.example.WordCFExam.entity.Language;
 import com.example.WordCFExam.entity.Word;
+import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
 import com.example.WordCFExam.entity.exam.RandomExamWordPassedQuestionnaire;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.TranslationService;
@@ -38,6 +39,7 @@ public class RandomExamWordProceedQuestionActivity extends AppCompatActivity {
     private boolean isTranslateToForeign;
     private RandomExamWordQuestionnaireService randomExamWordQuestionnaireService;
     private Dialog myDialog;
+    TranslationAndLanguages translationAndLanguages;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -54,7 +56,7 @@ public class RandomExamWordProceedQuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_proceed_question);
-
+        translationAndLanguages = (TranslationAndLanguages) getIntent().getSerializableExtra("translationAndLanguages");
         toLanguage = (Language) getIntent().getSerializableExtra("toLanguage");
         word = (Word) getIntent().getSerializableExtra("word");
         translationService=FactoryUtil.createTranslationService(getApplication());
@@ -136,6 +138,7 @@ public class RandomExamWordProceedQuestionActivity extends AppCompatActivity {
 
                 intent.putExtra("translationToLanguageID", toLanguage.getLanguageID());
                 intent.putExtra("translationFromLanguageID", word.getLanguageID());
+                intent.putExtra("translationAndLanguages",translationAndLanguages);
                 intent.putExtra("word", word);
                 startActivity(intent);
             }

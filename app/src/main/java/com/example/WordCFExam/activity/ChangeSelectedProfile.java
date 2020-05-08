@@ -3,6 +3,7 @@ package com.example.WordCFExam.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -24,6 +25,17 @@ public class ChangeSelectedProfile extends AppCompatActivity {
     private Long currentProfileID;
     private ProfileService profileService;
     private ProfileSpinAdapter profileSpinAdapter;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

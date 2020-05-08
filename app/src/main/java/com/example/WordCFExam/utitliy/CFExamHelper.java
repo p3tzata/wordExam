@@ -106,6 +106,8 @@ public class CFExamHelper<C extends ListableAppCompatActivity> {
                 } else {
                     tv_msg.setText("Please choose CF Exam Profile.");
                     spn_cfExamProfile.setVisibility(View.VISIBLE);
+
+
                     btn_Submit.setText("Set");
 
                     DbExecutorImp<List<CFExamProfile>> dbExecutorCFExamProfile = FactoryUtil.<List<CFExamProfile>>createDbExecutor();
@@ -130,6 +132,11 @@ public class CFExamHelper<C extends ListableAppCompatActivity> {
                                     item);
 
                             spn_cfExamProfile.setAdapter(cfProfileSpinAdapter);
+
+                            if (item.size()==2) {
+                                spn_cfExamProfile.setSelection(1);
+                            }
+
 
 
                         }

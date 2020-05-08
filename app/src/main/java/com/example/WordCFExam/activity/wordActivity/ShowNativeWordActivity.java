@@ -10,6 +10,7 @@ import com.example.WordCFExam.activity.base.BaseListableAppCompatActivityFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.NativeWordListableAdapter;
 import com.example.WordCFExam.entity.Word;
+import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
 import com.example.WordCFExam.entity.dto.WordCFExamCross;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.TranslationWordRelationService;
@@ -23,6 +24,7 @@ public class ShowNativeWordActivity extends BaseListableAppCompatActivityFaced<W
         private Word word;
     private Long translationFromLanguageID;
     private Long translationToLanguageID;
+    TranslationAndLanguages translationAndLanguages;
     private TranslationWordRelationService translationWordRelationService;
 
     @Override
@@ -48,7 +50,7 @@ public class ShowNativeWordActivity extends BaseListableAppCompatActivityFaced<W
         super.setContext(ShowNativeWordActivity.this);
 
         translationWordRelationService=FactoryUtil.createTranslationWordRelationService(getApplication());
-    //    this.translationAndLanguages = (TranslationAndLanguages) i.getSerializableExtra("translationAndLanguages");
+        this.translationAndLanguages = (TranslationAndLanguages) i.getSerializableExtra("translationAndLanguages");
         this.translationFromLanguageID = (Long) i.getSerializableExtra("translationFromLanguageID");
         this.translationToLanguageID = (Long) i.getSerializableExtra("translationToLanguageID");
         this.word= (Word) i.getSerializableExtra("word");
@@ -72,7 +74,18 @@ public class ShowNativeWordActivity extends BaseListableAppCompatActivityFaced<W
 
     @Override
     public void recyclerViewOnClickHandler(View v, Word selectedItem) {
-        Toast.makeText(getApplicationContext(), selectedItem.getLabelText(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), selectedItem.getLabelText(), Toast.LENGTH_LONG).show();
+        Intent intent;
+        intent = new Intent(getApplicationContext(), ShowForeignWordActivity.class);
+
+
+        intent.putExtra("translationToLanguageID", translationToLanguageID);
+        intent.putExtra("translationFromLanguageID", selectedItem.getLanguageID());
+        intent.putExtra("translationAndLanguages",translationAndLanguages);
+        intent.putExtra("word", selectedItem);
+        startActivity(intent);
+
+
     }
 
     @Override

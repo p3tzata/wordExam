@@ -8,7 +8,9 @@ import com.example.WordCFExam.R;
 import com.example.WordCFExam.activity.base.BaseListableAppCompatActivityNonFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.exam.CFExamWordQuestionnaireNeedProceedAdapter;
+import com.example.WordCFExam.entity.Language;
 import com.example.WordCFExam.entity.Profile;
+import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaireCross;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.exam.CFExamWordQuestionnaireService;
@@ -19,7 +21,9 @@ import java.util.List;
 
 public class CFExamWordQuestionnaireNeedProceedActivity
         extends BaseListableAppCompatActivityNonFaced<CFExamWordQuestionnaireCross, CFExamWordQuestionnaireService, CFExamWordQuestionnaireNeedProceedActivity, CFExamWordQuestionnaireNeedProceedAdapter> {
-
+    TranslationAndLanguages translationAndLanguages;
+    Language fromLanguage;
+    Language toLanguage;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -41,6 +45,7 @@ public class CFExamWordQuestionnaireNeedProceedActivity
         CFExamWordQuestionnaireNeedProceedAdapter adapter = new CFExamWordQuestionnaireNeedProceedAdapter(CFExamWordQuestionnaireNeedProceedActivity.this);
         super.setAdapter(adapter);
         super.setContext(CFExamWordQuestionnaireNeedProceedActivity.this);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("List of CF questions");
         Profile targetProfile = (Profile) getIntent().getSerializableExtra("targetProfile");
@@ -72,6 +77,8 @@ public class CFExamWordQuestionnaireNeedProceedActivity
     public void recyclerViewOnClickHandler(View v, CFExamWordQuestionnaireCross selectedItem) {
         Intent intent = new Intent(getContext(), CFExamWordProceedQuestionActivity.class);
         intent.putExtra("CFExamQuestionnaireCross", selectedItem);
+        intent.putExtra("fromLanguage",selectedItem.word.getLanguageID());
+        intent.putExtra("toLanguage",selectedItem.language.getLanguageID());
         startActivity(intent);
 
     }

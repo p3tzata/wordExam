@@ -114,7 +114,7 @@ public class UpdateWordHelpSentenceActivity extends BaseEditableAppCompatActivit
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
-        myDialog.getWindow().setLayout((6 * width)/7, (4 * height)/7);
+        myDialog.getWindow().setLayout((6 * width)/7, (4 * height)/5);
 
         Button btn_Submit = (Button) myDialog.findViewById(R.id.btn_dialog_newItem);
 

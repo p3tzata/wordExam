@@ -139,6 +139,7 @@ public class RandomExamWordQuestionnaireNeedProceedActivity
     public void recyclerViewOnClickHandler(View v, Word selectedItem) {
         Intent intent = new Intent(getContext(), RandomExamWordProceedQuestionActivity.class);
         intent.putExtra("word", selectedItem);
+        intent.putExtra("translationAndLanguages",translationAndLanguages);
         intent.putExtra("fromLanguage",fromLanguage);
         intent.putExtra("toLanguage",toLanguage);
 
