@@ -49,6 +49,7 @@ public class CFExamWordQuestionnaireNeedProceedActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("List of CF questions");
         Profile targetProfile = (Profile) getIntent().getSerializableExtra("targetProfile");
+
         if (targetProfile!=null) {
             Session.setLongAttribute(getContext(), SessionNameAttribute.ProfileID,targetProfile.getProfileID());
             Session.setStringAttribute(getContext(), SessionNameAttribute.ProfileName,targetProfile.getProfileName());

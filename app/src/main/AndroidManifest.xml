@@ -34,7 +34,8 @@
         <receiver
             android:name=".background.CFExamAlarm"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+            android:process=":remote"/>
 
         <activity android:name=".background.NotificationActivity" />
         <activity android:name=".activity.configureActivity.ConfigDBImportExport" />

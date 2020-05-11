@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -260,6 +262,22 @@ public class ShowForeignWordActivity extends AppCompatActivity {
                 viewList.addHeaderView(header1);
                 viewList.setAdapter(translationAdapter);
                 viewList.setFocusable(false);
+                viewList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+                        String selectedItem = (String) parent.getItemAtPosition(position);
+                        if (textToSpeechUtil!=null) {
+
+                            textToSpeechUtil.speak(selectedItem,"speaking");
+                        }
+
+                    }
+
+                });
+
+
                 Utility utility = new Utility();
                 utility.setListViewHeightBasedOnChildren(viewList);
 
