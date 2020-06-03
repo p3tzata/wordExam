@@ -3,6 +3,7 @@ package com.example.WordCFExam.service.exam;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.WordCFExam.entity.HelpSentence;
 import com.example.WordCFExam.entity.Profile;
 import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.exam.CFExamProfile;
@@ -164,6 +165,11 @@ implements CrudService<CFExamWordQuestionnaire>,ExamQuestionnaireService<CFExamW
 
 
 
+    }
+
+
+    public List<HelpSentence> findHelpSentenceByNativeQuestionWord(Long nativeWordID, Long toLanguageID, Long fromLanguageID){
+        return getRepository().findHelpSentenceByNativeQuestionWord(nativeWordID, toLanguageID,fromLanguageID);
     }
 
 

@@ -17,8 +17,10 @@ import android.widget.Toast;
 import com.example.WordCFExam.R;
 import com.example.WordCFExam.activity.wordActivity.ShowForeignWordActivity;
 import com.example.WordCFExam.activity.wordActivity.ShowNativeWordActivity;
+import com.example.WordCFExam.entity.HelpSentence;
 import com.example.WordCFExam.entity.Language;
 import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
+import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaireCross;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.LanguageService;
@@ -28,13 +30,17 @@ import com.example.WordCFExam.utitliy.DbExecutor;
 import com.example.WordCFExam.utitliy.DbExecutorImp;
 import com.example.WordCFExam.utitliy.Session;
 import com.example.WordCFExam.utitliy.SessionNameAttribute;
+import com.example.WordCFExam.utitliy.TextToSpeechUtil;
 
 import java.util.List;
+import java.util.Locale;
 
 public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
     private CFExamWordQuestionnaireCross cfExamQuestionnaireCross;
     private TranslationService translationService;
     private LanguageService languageService;
+    private CFExamWordQuestionnaireService cfExamWordQuestionnaireService;
+    private TextToSpeechUtil textToSpeechUtil;
     private boolean isTranslateToForeign;
     private CFExamWordQuestionnaireService cfExamQuestionnaireService;
     private Dialog myDialog;
@@ -59,6 +65,7 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exam_proceed_question);
         cfExamQuestionnaireCross = (CFExamWordQuestionnaireCross) getIntent().getSerializableExtra("CFExamQuestionnaireCross");
         translationService=FactoryUtil.createTranslationService(getApplication());
+        cfExamWordQuestionnaireService=FactoryUtil.createCFExamQuestionnaireService(getApplication());
         languageService=FactoryUtil.createLanguageService(getApplication());
         cfExamQuestionnaireService=FactoryUtil.createCFExamQuestionnaireService(getApplication());
 
@@ -72,6 +79,8 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
         findTranslationAndLanguage();
         attachButtonOnClick();
         TextView et_checkAnswer = (TextView) findViewById(R.id.et_checkAnswer);
+
+
         et_checkAnswer.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -85,6 +94,10 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
     }
 
     private void findTranslationAndLanguage() {
+
+
+
+
         DbExecutorImp<TranslationAndLanguages> dbExecutor = FactoryUtil.<TranslationAndLanguages>createDbExecutor();
         dbExecutor.execute_(new DbExecutor<TranslationAndLanguages>() {
             @Override
@@ -114,6 +127,18 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
             public void onPostExecute(TranslationAndLanguages item) {
 
                     translationAndLanguages = item;
+
+                Locale locale = null;
+                try {
+                    locale = Locale.forLanguageTag(translationAndLanguages.getNativeLanguage().getLocaleLanguageTag());
+                    textToSpeechUtil = new TextToSpeechUtil(locale, getApplicationContext());
+                } catch (Exception ex) {
+                  ; // Toast.makeText(getApplicationContext(), "Warning: Can not identify Language Locate Tag", Toast.LENGTH_LONG).show();
+                }
+
+
+
+
 
             }
         });
@@ -173,6 +198,67 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
 
             }
         });
+
+        findViewById(R.id.btn_examHelpSound).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+
+                if (isTranslateToForeign) {
+
+
+
+
+
+                   // textToSpeechUtil.speak("test","test");
+
+                    Long nativeWordId = cfExamQuestionnaireCross.getWord().getWordID();
+                    Long toLanguageId = cfExamQuestionnaireCross.getLanguage().getLanguageID();
+                    Long fromLanguageId = cfExamQuestionnaireCross.getWord().getLanguageID();
+                    DbExecutorImp<List<HelpSentence>> dbExecutor = FactoryUtil.<List<HelpSentence>>createDbExecutor();
+                    dbExecutor.execute_(new DbExecutor<List<HelpSentence>>() {
+                        @Override
+                        public List<HelpSentence> doInBackground() {
+                            return cfExamQuestionnaireService.findHelpSentenceByNativeQuestionWord(nativeWordId,toLanguageId,fromLanguageId);
+                        }
+
+                        @Override
+                        public void onPostExecute(List<HelpSentence> item) {
+                            if (item.size()>0) {
+
+                                if (textToSpeechUtil!=null) {
+                                    StringBuilder stringBuilder = new StringBuilder();
+                                    for (int i=0; i<item.size();i++) {
+                                        stringBuilder.append(item.get(i).getSentenceString());
+                                        stringBuilder.append(" ");
+
+                                    }
+                                    textToSpeechUtil.speak(stringBuilder.toString(),stringBuilder.toString());
+
+                                }
+                            } else {
+                                Toast.makeText(getApplicationContext(), "No sound", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });
+
+                }
+
+
+
+
+
+
+
+
+            }
+
+        });
+
+
 
         findViewById(R.id.btn_examHelp).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -275,6 +361,7 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
                 if (item!=null) {
                     isTranslateToForeign=item;
                     findTranslationAndLanguage();
+
 
 
                 } else {

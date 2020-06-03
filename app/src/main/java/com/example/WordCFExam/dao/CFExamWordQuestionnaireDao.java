@@ -9,6 +9,7 @@ import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.example.WordCFExam.dao.base.CrudDao;
+import com.example.WordCFExam.entity.HelpSentence;
 import com.example.WordCFExam.entity.Profile;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaireCross;
@@ -69,7 +70,12 @@ public abstract class CFExamWordQuestionnaireDao implements CrudDao<CFExamWordQu
     @Query("SELECT q.* FROM CFExamWordQuestionnaire q WHere q.wordID=:wordID and q.targetTranslationLanguageID=:toLanguageID" )
     abstract public CFExamWordQuestionnaireCross findByWordID(Long wordID, Long toLanguageID);
 
-
+    @Query("SELECT hs.* FROM word l " +
+            "INNER JOIN translationwordrelation rwr on rwr.nativeWordID=l.wordID " +
+            "INNER JOIN word wf on rwr.foreignWordID=wf.wordID " +
+            "INNER JOIN helpSentence hs on hs.wordID=wf.wordID and hs.toLanguageID=:fromLanguageID" +
+            " where l.wordID=:nativeWordID and wf.languageID=:toLanguageID")
+    abstract public List<HelpSentence> findHelpSentenceByNativeQuestionWord(Long nativeWordID, Long toLanguageID, Long fromLanguageID);
 
 
 }

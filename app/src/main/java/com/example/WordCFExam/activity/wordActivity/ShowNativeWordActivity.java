@@ -79,7 +79,7 @@ public class ShowNativeWordActivity extends BaseListableAppCompatActivityFaced<W
         intent = new Intent(getApplicationContext(), ShowForeignWordActivity.class);
 
 
-        intent.putExtra("translationToLanguageID", translationToLanguageID);
+        intent.putExtra("translationToLanguageID", translationAndLanguages.getNativeLanguage().getLanguageID());
         intent.putExtra("translationFromLanguageID", selectedItem.getLanguageID());
         intent.putExtra("translationAndLanguages",translationAndLanguages);
         intent.putExtra("word", selectedItem);

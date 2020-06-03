@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.WordCFExam.R;
 import com.example.WordCFExam.activity.wordActivity.ShowForeignWordActivity;
 import com.example.WordCFExam.activity.wordActivity.ShowNativeWordActivity;
+import com.example.WordCFExam.entity.HelpSentence;
 import com.example.WordCFExam.entity.Language;
 import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
@@ -143,6 +144,9 @@ public class RandomExamWordProceedQuestionActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        findViewById(R.id.btn_examHelpSound).setEnabled(false);
+
 
         findViewById(R.id.btn_examPassedFail).setOnClickListener(new View.OnClickListener() {
             @Override

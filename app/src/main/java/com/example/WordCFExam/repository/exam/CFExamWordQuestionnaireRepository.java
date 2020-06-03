@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.example.WordCFExam.dao.CFExamWordQuestionnaireDao;
+import com.example.WordCFExam.entity.HelpSentence;
 import com.example.WordCFExam.entity.Profile;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaireCross;
@@ -30,6 +31,10 @@ public class CFExamWordQuestionnaireRepository extends BaseCrudRepository<CFExam
 
     public CFExamWordQuestionnaireCross findByWordID(Long wordID, Long toLanguageID){
        return getDao().findByWordID(wordID, toLanguageID);
+    }
+
+    public List<HelpSentence> findHelpSentenceByNativeQuestionWord(Long nativeWordID, Long toLanguageID, Long fromLanguageID){
+        return getDao().findHelpSentenceByNativeQuestionWord(nativeWordID, toLanguageID, fromLanguageID);
     }
 
 

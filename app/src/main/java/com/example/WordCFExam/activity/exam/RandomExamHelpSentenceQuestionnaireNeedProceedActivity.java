@@ -76,7 +76,7 @@ public class RandomExamHelpSentenceQuestionnaireNeedProceedActivity
 
             @Override
             public void onPostExecute(RandomExamCounter item) {
-                String format = String.format("Random questions (%d / %d)", item.getPoints(), item.getTotal());
+                String format = String.format("(%d / %d)", item.getPoints(), item.getTotal());
                 getSupportActionBar().setTitle(format);
             }
         });
@@ -131,7 +131,7 @@ public class RandomExamHelpSentenceQuestionnaireNeedProceedActivity
 
             @Override
             public void onPostExecute(RandomExamCounter item) {
-                String format = String.format("Random questions (%d / %d)", item.getPoints(), item.getTotal());
+                String format = String.format("(%d / %d)", item.getPoints(), item.getTotal());
                 getSupportActionBar().setTitle(format);
             }
         });
