@@ -4,6 +4,8 @@ import android.content.Context;
 import android.widget.Toast;
 import android.speech.tts.TextToSpeech;
 
+import com.example.WordCFExam.activity.configureActivity.ConfigPreferenceActivity;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -27,6 +29,12 @@ public class TextToSpeechUtil {
                 }
             }
         });
+        String ttsRateString = Session.getStringAttribute(
+                context, SessionNameAttribute.TextToSpeechRate,"1");
+
+
+        textToSpeech.setSpeechRate(Float.valueOf(ttsRateString));
+
     }
 
 

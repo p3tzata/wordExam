@@ -7,7 +7,9 @@ public enum SessionNameAttribute {
     IsEditMode("IsEditMode"),
     CfExamEnabledFromHour("CfExamEnabledFromHour"),
     CfExamEnabledToHour("CfExamEnabledToHour"),
-    CfExamSearchRateMinute("CfExamSearchRateMinute");
+    CfExamSearchRateMinute("CfExamSearchRateMinute"),
+    TextToSpeechRate("TextToSpeechRate");
+
 
     private String value;
 

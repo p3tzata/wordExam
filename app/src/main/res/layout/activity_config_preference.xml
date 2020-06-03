@@ -31,6 +31,25 @@
             android:inputType="number" />
 
         <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Text to Speech Rate (0.1 - 1.9)" />
+
+        <EditText
+            android:id="@+id/et_pref_tts_Rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal" />
+
+        <View
             android:id="@+id/view3"
             android:layout_width="match_parent"
             android:layout_height="1dp"

@@ -16,6 +16,7 @@ import com.example.WordCFExam.utitliy.SessionNameAttribute;
 public class ConfigPreferenceActivity extends AppCompatActivity {
 
     EditText pref_cf_searchRate;
+    EditText et_pref_tts_Rate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +26,13 @@ public class ConfigPreferenceActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Preferences");
 
         pref_cf_searchRate = (EditText) findViewById(R.id.et_pref_cf_searchRate);
-
+        et_pref_tts_Rate =  (EditText) findViewById(R.id.et_pref_tts_Rate);
 
         pref_cf_searchRate.setText(String.valueOf(Session.getIntAttribute(
                 ConfigPreferenceActivity.this, SessionNameAttribute.CfExamSearchRateMinute,0)));
+
+        et_pref_tts_Rate.setText(String.valueOf(Session.getStringAttribute(
+                ConfigPreferenceActivity.this, SessionNameAttribute.TextToSpeechRate,"1")));
 
         findViewById(R.id.btn_preferenceSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +48,9 @@ public class ConfigPreferenceActivity extends AppCompatActivity {
 
         Session.setIntAttribute(getApplicationContext(),SessionNameAttribute.CfExamSearchRateMinute,
                 Integer.valueOf(pref_cf_searchRate.getText().toString()) );
+
+        Session.setStringAttribute(getApplicationContext(),SessionNameAttribute.TextToSpeechRate,
+                String.valueOf(et_pref_tts_Rate.getText().toString()) );
 
         Toast.makeText(getApplicationContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
 
