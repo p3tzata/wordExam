@@ -1,5 +1,7 @@
 package com.example.WordCFExam.dao;
 
+import android.database.Cursor;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -31,6 +33,11 @@ public abstract class TopicDao implements NameableCrudDao<Topic> {
     @Query("SELECT * FROM Topic l where l.topicTypeID=:parentID and l.topicQuestion like '%'||:contains||'%' order by l.topicQuestion")
     abstract public List<Topic> findAllOrderAlphabetic(Long parentID, String contains);
 
+    @Query("SELECT l.topicTypeID,l.*,cfPP.isLoopRepeat,cfPP.CFExamProfileID,cfPP.CFExamProfilePointID,cfPP.lastOfPeriodInMinute,cfPP.name FROM Topic l " +
+            "LEFT JOIN cfexamtopicquestionnaire cf on l.topicID=cf.topicID " +
+            "LEFT JOIN CFExamProfilePoint cfPP on cf.currentCFExamProfilePointID=cfPP.CFExamProfilePointID " +
+            " where l.topicTypeID=:parentID and l.topicQuestion like '%'||:topicStringContain||'%'")
+    abstract public Cursor findByTopicStringContainsAndParentIDCFExamCross(Long parentID, String topicStringContain);
 
 
 

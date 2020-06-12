@@ -3,7 +3,6 @@ package com.example.WordCFExam.factory;
 import android.app.Application;
 
 
-import com.example.WordCFExam.entity.exam.CFExamSchedule;
 import com.example.WordCFExam.service.HelpSentenceService;
 import com.example.WordCFExam.service.LanguageService;
 import com.example.WordCFExam.service.PartOfSpeechService;
@@ -21,8 +20,8 @@ import com.example.WordCFExam.service.exam.CFExamTopicQuestionnaireService;
 import com.example.WordCFExam.service.exam.CFExamWordQuestionnaireService;
 import com.example.WordCFExam.service.exam.RandomExamHelpSentenceQuestionnaireService;
 import com.example.WordCFExam.service.exam.RandomExamWordQuestionnaireService;
-import com.example.WordCFExam.service.exam.TopicService;
-import com.example.WordCFExam.service.exam.TopicTypeService;
+import com.example.WordCFExam.service.TopicService;
+import com.example.WordCFExam.service.TopicTypeService;
 import com.example.WordCFExam.utitliy.DbExecutorImp;
 
 import org.modelmapper.ModelMapper;

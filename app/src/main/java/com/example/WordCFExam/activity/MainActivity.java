@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.WordCFExam.R;
 import com.example.WordCFExam.activity.exam.ExamMenuActivity;
+import com.example.WordCFExam.activity.topic.TopicFacedEditableActivity;
 import com.example.WordCFExam.activity.topic.TopicTypeActivity;
 import com.example.WordCFExam.activity.wordActivity.ListAllDictionary;
 import com.example.WordCFExam.activity.wordActivity.ListWordEditableActivity;
@@ -34,6 +35,7 @@ import com.example.WordCFExam.adapter.TranslationListAdapterOnClickExecutor;
 import com.example.WordCFExam.adapter.translationListOnClick.ClickFromMainActivity;
 import com.example.WordCFExam.background.NotificationActivity;
 import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
+import com.example.WordCFExam.entity.exam.TopicType;
 import com.example.WordCFExam.utitliy.DBUtil;
 import com.example.WordCFExam.utitliy.MenuUtility;
 import com.example.WordCFExam.utitliy.Session;

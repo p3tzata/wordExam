@@ -16,7 +16,7 @@ import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.topic.TopicTypeEditableAdapter;
 import com.example.WordCFExam.entity.exam.TopicType;
 import com.example.WordCFExam.factory.FactoryUtil;
-import com.example.WordCFExam.service.exam.TopicTypeService;
+import com.example.WordCFExam.service.TopicTypeService;
 import com.example.WordCFExam.utitliy.Session;
 import com.example.WordCFExam.utitliy.SessionNameAttribute;
 

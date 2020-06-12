@@ -10,7 +10,7 @@ import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.adapter.exam.CFExamTopicQuestionnaireNeedProceedAdapter;
 import com.example.WordCFExam.entity.exam.TopicType;
 import com.example.WordCFExam.factory.FactoryUtil;
-import com.example.WordCFExam.service.exam.TopicTypeService;
+import com.example.WordCFExam.service.TopicTypeService;
 import com.example.WordCFExam.utitliy.MenuUtility;
 import com.example.WordCFExam.utitliy.Session;
 import com.example.WordCFExam.utitliy.SessionNameAttribute;
@@ -70,11 +70,11 @@ public class TopicTypeActivity
 
         if (
                 MenuUtility.isEditMode(getApplicationContext())) {
-            intent = new Intent(getContext(), TopicEditableActivity.class);
+            intent = new Intent(getContext(), TopicFacedEditableActivity.class);
 
         } else {
 
-            intent = new Intent(getContext(), TopicListableActivity.class);
+            intent = new Intent(getContext(), TopicFacedListableActivity.class);
 
         }
         intent.putExtra("topicType", selectedItem);

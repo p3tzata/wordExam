@@ -1,4 +1,4 @@
-package com.example.WordCFExam.repository.exam;
+package com.example.WordCFExam.repository;
 
 import android.app.Application;
 

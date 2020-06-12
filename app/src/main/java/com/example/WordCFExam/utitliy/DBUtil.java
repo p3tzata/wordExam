@@ -35,13 +35,12 @@ import com.example.WordCFExam.service.exam.CFExamProfileService;
 import com.example.WordCFExam.service.exam.CFExamScheduleService;
 import com.example.WordCFExam.service.exam.CFExamTopicQuestionnaireService;
 import com.example.WordCFExam.service.exam.CFExamWordQuestionnaireService;
-import com.example.WordCFExam.service.exam.TopicService;
-import com.example.WordCFExam.service.exam.TopicTypeService;
+import com.example.WordCFExam.service.TopicService;
+import com.example.WordCFExam.service.TopicTypeService;
 
 import org.modelmapper.ModelMapper;
 
 import java.util.Calendar;
-import java.util.List;
 
 public class DBUtil extends Application {
     private Context context;

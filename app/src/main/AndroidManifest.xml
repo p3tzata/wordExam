@@ -126,8 +126,15 @@
             android:name=".activity.topic.TopicListableActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activity.topic.TopicEditableActivity"
+            android:name=".activity.topic.TopicFacedListableActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+        android:name=".activity.topic.TopicEditableActivity"
+        android:windowSoftInputMode="adjustPan" /> <!--  -->
+        <activity
+            android:name=".activity.topic.TopicFacedEditableActivity"
             android:windowSoftInputMode="adjustPan" /> <!--  -->
+
         <activity
             android:name=".activity.topic.TopicTypeActivity"
             android:windowSoftInputMode="adjustPan" />

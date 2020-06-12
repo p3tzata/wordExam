@@ -31,7 +31,7 @@ import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.exam.CFExamProfilePointService;
 import com.example.WordCFExam.service.exam.CFExamProfileService;
 import com.example.WordCFExam.service.exam.CFExamTopicQuestionnaireService;
-import com.example.WordCFExam.service.exam.TopicService;
+import com.example.WordCFExam.service.TopicService;
 import com.example.WordCFExam.utitliy.DbExecutor;
 import com.example.WordCFExam.utitliy.DbExecutorImp;
 import com.example.WordCFExam.utitliy.Session;
@@ -77,13 +77,12 @@ public class TopicEditableActivity extends BaseEditableAppCompatActivityNonFaced
         this.topicType = (TopicType) getIntent().getSerializableExtra("topicType");
         getSupportActionBar().setTitle(topicType.getLabelText());
         setGetItemsExecutor(new GetItemsExecutorBlock<Topic>() {
+
             @Override
             public List<Topic> execute() {
-                /*
+
                 List<Topic> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(topicType.getTopicTypeID(), "");
                 return allOrderAlphabetic;
-                */
-                 return new ArrayList<Topic>();
             }
         });
         getItems();

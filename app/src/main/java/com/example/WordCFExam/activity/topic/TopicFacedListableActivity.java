@@ -14,21 +14,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.WordCFExam.R;
+import com.example.WordCFExam.activity.base.BaseListableAppCompatActivityFaced;
 import com.example.WordCFExam.activity.base.BaseListableAppCompatActivityNonFaced;
 import com.example.WordCFExam.activity.base.GetItemsExecutorBlock;
 import com.example.WordCFExam.activity.base.onMenuItemClickHandlerExecutor;
 import com.example.WordCFExam.adapter.exam.CFExamTopicQuestionnaireNeedProceedAdapter;
 import com.example.WordCFExam.adapter.spinnerAdapter.CFProfileSpinAdapter;
+import com.example.WordCFExam.adapter.topic.TopicFacedListableAdapter;
+import com.example.WordCFExam.entity.dto.TopicCFExamCross;
 import com.example.WordCFExam.entity.exam.CFExamProfile;
 import com.example.WordCFExam.entity.exam.CFExamProfilePointCross;
 import com.example.WordCFExam.entity.exam.CFExamTopicQuestionnaire;
 import com.example.WordCFExam.entity.exam.Topic;
 import com.example.WordCFExam.entity.exam.TopicType;
 import com.example.WordCFExam.factory.FactoryUtil;
+import com.example.WordCFExam.service.TopicService;
 import com.example.WordCFExam.service.exam.CFExamProfilePointService;
 import com.example.WordCFExam.service.exam.CFExamProfileService;
 import com.example.WordCFExam.service.exam.CFExamTopicQuestionnaireService;
-import com.example.WordCFExam.service.TopicService;
 import com.example.WordCFExam.utitliy.DbExecutor;
 import com.example.WordCFExam.utitliy.DbExecutorImp;
 import com.example.WordCFExam.utitliy.Session;
@@ -40,8 +43,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class TopicListableActivity
-        extends BaseListableAppCompatActivityNonFaced<Topic, TopicService, TopicListableActivity, CFExamTopicQuestionnaireNeedProceedAdapter> {
+public class TopicFacedListableActivity
+        extends BaseListableAppCompatActivityFaced<TopicCFExamCross,Topic, TopicService, TopicFacedListableActivity, TopicFacedListableAdapter> {
     private TopicType topicType;
 
     private Boolean isSetToCFExam;
@@ -71,9 +74,9 @@ public class TopicListableActivity
 
         setContentView(R.layout.activity_base_listable);
         super.setItemService(FactoryUtil.createTopicService(getApplication()));
-        CFExamTopicQuestionnaireNeedProceedAdapter adapter = new CFExamTopicQuestionnaireNeedProceedAdapter(TopicListableActivity.this);
+        TopicFacedListableAdapter adapter = new TopicFacedListableAdapter(TopicFacedListableActivity.this);
         super.setAdapter(adapter);
-        super.setContext(TopicListableActivity.this);
+        super.setContext(TopicFacedListableActivity.this);
         this.topicType = (TopicType) getIntent().getSerializableExtra("topicType");
         this.cfExamTopicQuestionnaireService=FactoryUtil.createCFExamTopicQuestionnaireService(getApplication());
         this.cfExamProfilePointService = FactoryUtil.createCFExamProfilePointService(getApplication());
@@ -81,11 +84,11 @@ public class TopicListableActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("List of CF questions");
-        setGetItemsExecutor(new GetItemsExecutorBlock<Topic>() {
+        setGetItemsExecutor(new GetItemsExecutorBlock<TopicCFExamCross>() {
             @Override
-            public List<Topic> execute() {
+            public List<TopicCFExamCross> execute() {
 
-                List<Topic> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(topicType.getTopicTypeID(), "");
+                List<TopicCFExamCross> allOrderAlphabetic = getItemService().findByTopicStringContainsAndParentIDCFExamCross(topicType.getTopicTypeID(), "");
                 return allOrderAlphabetic;
             }
         });
@@ -192,13 +195,13 @@ public class TopicListableActivity
 
     @Override
     public void onSearchBarGetItemsExecutorHandler(String contains) {
-        setGetItemsExecutor(new GetItemsExecutorBlock<Topic>() {
+        setGetItemsExecutor(new GetItemsExecutorBlock<TopicCFExamCross>() {
             @Override
-            public List<Topic> execute() {
+            public List<TopicCFExamCross> execute() {
                 if (contains.length()<2) {
-                    return new ArrayList<Topic>();
+                    return new ArrayList<TopicCFExamCross>();
                 }
-                List<Topic> allOrderAlphabetic = getItemService().findAllOrderAlphabetic(topicType.getTopicTypeID(), contains);
+                List<TopicCFExamCross> allOrderAlphabetic = getItemService().findByTopicStringContainsAndParentIDCFExamCross(topicType.getTopicTypeID(), contains);
                 return allOrderAlphabetic;
             }
         });
@@ -269,7 +272,7 @@ public class TopicListableActivity
 
                             item.add(0,cfExamProfileSelect);
 
-                            cfProfileSpinAdapter = new CFProfileSpinAdapter(TopicListableActivity.this,
+                            cfProfileSpinAdapter = new CFProfileSpinAdapter(TopicFacedListableActivity.this,
                                     //android.R.layout.simple_spinner_item,
                                     R.layout.spinner_item,
                                     item);
