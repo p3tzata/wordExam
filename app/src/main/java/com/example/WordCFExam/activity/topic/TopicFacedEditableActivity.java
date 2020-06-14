@@ -373,6 +373,9 @@ public class TopicFacedEditableActivity extends BaseEditableAppCompatActivityFac
 
                             spn_cfExamProfile.setAdapter(cfProfileSpinAdapter);
 
+                            if (item.size()==2) {
+                                spn_cfExamProfile.setSelection(1);
+                            }
 
                         }
                     });
@@ -441,6 +444,7 @@ public class TopicFacedEditableActivity extends BaseEditableAppCompatActivityFac
                         } else {
                             Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
                         }
+                        getItems();
 
                     }
                 });

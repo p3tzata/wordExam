@@ -20,6 +20,7 @@ public class TopicFacedListableAdapter extends
 
 
         Topic topic = new Topic();
+        topic.setTopicID(selectedItem.getTopic().getTopicID());
         topic.setTopicQuestion(selectedItem.getTopic().getTopicQuestion());
         topic.setTopicTypeID(selectedItem.getTopic().getTopicTypeID());
         topic.setTopicAnswer(selectedItem.getTopic().getTopicAnswer());
