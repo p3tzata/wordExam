@@ -4,12 +4,9 @@ import android.app.Application;
 import android.database.Cursor;
 
 import com.example.WordCFExam.dao.TopicDao;
-import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.dto.TopicCFExamCross;
-import com.example.WordCFExam.entity.dto.WordCFExamCross;
 import com.example.WordCFExam.entity.exam.CFExamProfilePoint;
-import com.example.WordCFExam.entity.exam.Topic;
-import com.example.WordCFExam.repository.BaseNameCrudRepository;
+import com.example.WordCFExam.entity.Topic;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -79,6 +79,10 @@ public abstract class BaseRecycleAdapterFaced<C extends BaseListableAppCompatAct
 
 
         }
+
+
+
+
     }
 
     abstract public T castViewTypeToEntityType(V selectedItem);

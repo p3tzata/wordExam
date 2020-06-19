@@ -1,4 +1,4 @@
-package com.example.WordCFExam.entity.exam;
+package com.example.WordCFExam.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -13,10 +13,12 @@ import java.io.Serializable;
 
 @Entity(indices = {
                 @Index(value = "profileID"),
+                @Index(value = "parentTopicTypeID"),
                 @Index(unique = true,value = {"profileID","topicTypeName"}) },
 
         foreignKeys = {
-               @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = Profile.class, parentColumns = "profileID", childColumns = "profileID")
+                @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = Profile.class, parentColumns = "profileID", childColumns = "profileID"),
+                @ForeignKey(onDelete = ForeignKey.CASCADE,entity = TopicType.class, parentColumns = "topicTypeID", childColumns = "parentTopicTypeID")
         }
 )
 
@@ -29,10 +31,24 @@ public class TopicType implements Serializable,TextLabelable {
     @NonNull
     private Long profileID;
 
+
+    private Long parentTopicTypeID;
+
+
     @NonNull
     private String topicTypeName;
 
     public TopicType() {
+
+    }
+
+    @NonNull
+    public Long getParentTopicTypeID() {
+        return parentTopicTypeID;
+    }
+
+    public void setParentTopicTypeID( Long parentTopicTypeID) {
+        this.parentTopicTypeID = parentTopicTypeID;
     }
 
     public Long getTopicTypeID() {

@@ -19,8 +19,8 @@ import com.example.WordCFExam.entity.exam.CFExamProfilePoint;
 import com.example.WordCFExam.entity.exam.CFExamSchedule;
 import com.example.WordCFExam.entity.exam.CFExamTopicQuestionnaire;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
-import com.example.WordCFExam.entity.exam.Topic;
-import com.example.WordCFExam.entity.exam.TopicType;
+import com.example.WordCFExam.entity.Topic;
+import com.example.WordCFExam.entity.TopicType;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.LanguageService;
 import com.example.WordCFExam.service.PartOfSpeechService;
@@ -261,7 +261,7 @@ public class DBUtil extends Application {
 
 
                 topicTypeService.insert(new TopicType(){{setProfileID(1L);
-                setTopicTypeName("Default topic type");}});
+                setTopicTypeName("Default topic type99");}});
 
                 topicService.insert(new Topic(){{setTopicTypeID(1L);
                 setTopicQuestion("What is my name.");

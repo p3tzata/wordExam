@@ -4,6 +4,7 @@ import androidx.room.Embedded;
 import androidx.room.Relation;
 
 import com.example.WordCFExam.entity.TextLabelable;
+import com.example.WordCFExam.entity.Topic;
 
 import java.io.Serializable;
 

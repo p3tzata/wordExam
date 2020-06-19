@@ -8,7 +8,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.WordCFExam.dao.base.NameableCrudDao;
-import com.example.WordCFExam.entity.exam.TopicType;
+import com.example.WordCFExam.entity.TopicType;
 
 import java.util.List;
 
@@ -30,6 +30,15 @@ public abstract class TopicTypeDao implements NameableCrudDao<TopicType> {
     @Override
     @Query("SELECT * FROM TopicType l where l.profileID=:parentID and l.topicTypeName like '%'||:contains||'%' order by l.topicTypeName")
     abstract public List<TopicType> findAllOrderAlphabetic(Long parentID, String contains);
+
+
+
+    @Query("SELECT * FROM TopicType l where l.profileID=:parentID and l.topicTypeName like '%'||:contains||'%' " +
+            "and ((:parentTopicTypeID=0 and parentTopicTypeID is null)  or (l.parentTopicTypeID=:parentTopicTypeID)  )" +
+            "order by l.topicTypeName")
+    abstract public List<TopicType> findAllOrderAlphabeticByParent(Long parentID, Long parentTopicTypeID, String contains);
+
+
 
 
 

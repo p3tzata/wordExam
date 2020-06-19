@@ -1,9 +1,8 @@
 package com.example.WordCFExam.entity.dto;
 
 import com.example.WordCFExam.entity.TextLabelable;
-import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.exam.CFExamProfilePoint;
-import com.example.WordCFExam.entity.exam.Topic;
+import com.example.WordCFExam.entity.Topic;
 
 import java.io.Serializable;
 

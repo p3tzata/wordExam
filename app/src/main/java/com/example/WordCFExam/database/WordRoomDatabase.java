@@ -37,11 +37,11 @@ import com.example.WordCFExam.entity.exam.CFExamTopicQuestionnaire;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
 import com.example.WordCFExam.entity.exam.RandomExamHelpSentencePassedQuestionnaire;
 import com.example.WordCFExam.entity.exam.RandomExamWordPassedQuestionnaire;
-import com.example.WordCFExam.entity.exam.Topic;
-import com.example.WordCFExam.entity.exam.TopicType;
+import com.example.WordCFExam.entity.Topic;
+import com.example.WordCFExam.entity.TopicType;
 
 @Database(entities = {CFExamSchedule.class, Topic.class, TopicType.class, CFExamTopicQuestionnaire.class, RandomExamHelpSentencePassedQuestionnaire.class, RandomExamWordPassedQuestionnaire.class,CFExamProfile.class, CFExamProfilePoint.class, CFExamWordQuestionnaire.class, WordForm.class,HelpSentence.class,WordPartOfSpeech.class,PartOfSpeech.class, Profile.class, Language.class, Translation.class, Word.class, TranslationWordRelation.class},
-        version =9, exportSchema = false)
+        version =12, exportSchema = false)
 public abstract class WordRoomDatabase extends RoomDatabase {
 
     public abstract CFExamScheduleDao cfExamScheduleDao();

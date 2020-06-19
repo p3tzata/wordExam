@@ -10,7 +10,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.WordCFExam.dao.base.NameableCrudDao;
-import com.example.WordCFExam.entity.exam.Topic;
+import com.example.WordCFExam.entity.Topic;
 
 import java.util.List;
 

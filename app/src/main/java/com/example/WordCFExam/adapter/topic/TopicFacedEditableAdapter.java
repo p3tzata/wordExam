@@ -2,10 +2,8 @@ package com.example.WordCFExam.adapter.topic;
 
 import com.example.WordCFExam.activity.base.BaseEditableAppCompatActivityFaced;
 import com.example.WordCFExam.adapter.BaseRecycleAdapterFaced;
-import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.dto.TopicCFExamCross;
-import com.example.WordCFExam.entity.dto.WordCFExamCross;
-import com.example.WordCFExam.entity.exam.Topic;
+import com.example.WordCFExam.entity.Topic;
 
 public class TopicFacedEditableAdapter extends
         BaseRecycleAdapterFaced<BaseEditableAppCompatActivityFaced, TopicCFExamCross, Topic, BaseRecycleAdapterFaced.ItemViewHolder> {

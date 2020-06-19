@@ -1,12 +1,10 @@
-package com.example.WordCFExam.entity.exam;
+package com.example.WordCFExam.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
-
-import com.example.WordCFExam.entity.TextLabelable;
 
 import java.io.Serializable;
 
@@ -15,7 +13,7 @@ import java.io.Serializable;
                 @Index(value = "topicTypeID"),
                 @Index(unique = true,value = {"topicTypeID","topicQuestion","topicQuestion"})},
         foreignKeys = {
-                @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = TopicType.class, parentColumns = "topicTypeID", childColumns = "topicTypeID")
+                @ForeignKey(onDelete = ForeignKey.CASCADE,entity = TopicType.class, parentColumns = "topicTypeID", childColumns = "topicTypeID")
 }
 )
 public class Topic implements Serializable, TextLabelable {

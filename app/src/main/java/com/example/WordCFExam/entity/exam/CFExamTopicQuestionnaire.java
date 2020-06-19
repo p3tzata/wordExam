@@ -9,6 +9,7 @@ import androidx.room.TypeConverters;
 
 import com.example.WordCFExam.database.DateConverter;
 import com.example.WordCFExam.entity.TextLabelable;
+import com.example.WordCFExam.entity.Topic;
 
 import java.io.Serializable;
 import java.util.Date;
