@@ -261,7 +261,7 @@ public class DBUtil extends Application {
 
 
                 topicTypeService.insert(new TopicType(){{setProfileID(1L);
-                setTopicTypeName("Default topic type99");}});
+                setTopicTypeName("Default topic type");}});
 
                 topicService.insert(new Topic(){{setTopicTypeID(1L);
                 setTopicQuestion("What is my name.");
