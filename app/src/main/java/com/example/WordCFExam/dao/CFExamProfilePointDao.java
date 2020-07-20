@@ -42,6 +42,14 @@ public abstract class CFExamProfilePointDao implements NameableCrudDao<CFExamPro
     @Query("SELECT * from CFExamProfilePoint pp where pp.CFExamProfileID=:cfExamProfileID order by pp.lastOfPeriodInMinute asc")
     public abstract List<CFExamProfilePoint> findAllByOrderByLastOfPeriod(Long cfExamProfileID);
 
+    @Query("SELECT * FROM CFExamProfilePoint pp where pp.lastOfPeriodInMinute<=:lastOfPeriodInMinute " +
+            "and pp.CFExamProfileID=:currentProfileID and pp.CFExamProfilePointID!=:currentProfilePointID " +
+            "order by pp.lastOfPeriodInMinute desc")
+    abstract public List<CFExamProfilePoint>
+    findPreviousLastOfPeriod(Long currentProfileID,Long currentProfilePointID,Long lastOfPeriodInMinute);
+
+
+
     @Transaction
     @Query("SELECT * FROM CFExamProfilePoint p where p.CFExamProfilePointID=:ID")
     abstract public CFExamProfilePointCross findCrossByID(Long ID);

@@ -70,6 +70,23 @@ public class CFExamTopicQuestionnaireService extends
 
     }
 
+    @Override
+    public boolean examProcessedFailTotal(CFExamTopicQuestionnaire item) {
+
+        CFExamProfilePoint currentPoint = cfExamProfilePointService.findByID(item.getCurrentCFExamProfilePointID());
+        CFExamProfilePoint firstProfilePoint = cfExamProfilePointService.findFirstProfilePoint(currentPoint);
+        if (firstProfilePoint!=null) {
+            item.setCurrentCFExamProfilePointID(firstProfilePoint.getCFExamProfilePointID());
+            item.setPostponeInMinute(null);
+            item.setEntryPointDateTime(Calendar.getInstance().getTime());
+            super.update(item);
+            return true;
+        }
+        return false;
+
+
+    }
+
 
     public CFExamTopicQuestionnaire findByTopicID(Long topicID){
         return getRepository().findByTopicID(topicID);

@@ -36,6 +36,14 @@ public class RandomExamWordQuestionnaireService extends BaseExamQuestionnaireSer
     }
 
 
+    @Override
+    public boolean examProcessedFailTotal(RandomExamWordPassedQuestionnaire item) {
+
+        return true;
+
+
+    }
+
 
     public List<Word>  findAllNativeRandom(Long profileID, Long fromLanguageID, Long toLanguageID,Integer countNumber){
 

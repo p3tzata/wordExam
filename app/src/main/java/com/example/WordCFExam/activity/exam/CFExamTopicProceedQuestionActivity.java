@@ -117,7 +117,7 @@ public class CFExamTopicProceedQuestionActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.btn_examPassedFail).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_examPassedFailTotal).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DbExecutorImp<Boolean> dbExecutor = FactoryUtil.<Boolean>createDbExecutor();

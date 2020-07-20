@@ -20,16 +20,16 @@ public class DatabaseClient {
         //creating the app database with Room database builder
         //MyToDos is the name of the database
         appDatabase = Room.databaseBuilder(mCtx, WordRoomDatabase.class, "WordCFExamDB")
-                //.addMigrations(MIGRATION_1_2)
-                .fallbackToDestructiveMigration()
+                .addMigrations(MIGRATION_12_13)
+                //.fallbackToDestructiveMigration()
                 .build();
     }
 
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) { // From version 1 to version 2
+    static final Migration MIGRATION_12_13 = new Migration(12, 13) { // From version 1 to version 2
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // Remove the table
-            database.execSQL("DROP TABLE word_table"); // Use the right table name
+            database.execSQL("DROP INDEX main.index_TopicType_profileID_topicTypeName"); // Use the right table name
 
             // OR: We could update it, by using an ALTER query
 

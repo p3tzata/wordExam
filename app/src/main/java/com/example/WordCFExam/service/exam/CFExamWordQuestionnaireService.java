@@ -77,6 +77,23 @@ implements CrudService<CFExamWordQuestionnaire>,ExamQuestionnaireService<CFExamW
     @Override
     public boolean examProcessedFail(CFExamWordQuestionnaire item) {
         CFExamProfilePoint currentPoint = cfExamProfilePointService.findByID(item.getCurrentCFExamProfilePointID());
+        CFExamProfilePoint firstProfilePoint = cfExamProfilePointService.
+                findPreviousLastOfPeriod(currentPoint.getCFExamProfileID(),currentPoint.getCFExamProfilePointID(),currentPoint.getLastOfPeriodInMinute());
+        if (firstProfilePoint!=null) {
+            item.setCurrentCFExamProfilePointID(firstProfilePoint.getCFExamProfilePointID());
+            item.setPostponeInMinute(null);
+            item.setEntryPointDateTime(Calendar.getInstance().getTime());
+            super.update(item);
+            return true;
+        }
+        return false;
+
+
+    }
+
+    @Override
+    public boolean examProcessedFailTotal(CFExamWordQuestionnaire item) {
+        CFExamProfilePoint currentPoint = cfExamProfilePointService.findByID(item.getCurrentCFExamProfilePointID());
         CFExamProfilePoint firstProfilePoint = cfExamProfilePointService.findFirstProfilePoint(currentPoint);
         if (firstProfilePoint!=null) {
             item.setCurrentCFExamProfilePointID(firstProfilePoint.getCFExamProfilePointID());
@@ -89,6 +106,7 @@ implements CrudService<CFExamWordQuestionnaire>,ExamQuestionnaireService<CFExamW
 
 
     }
+
 
 
     public List<String> examCheckAnswer(Boolean isTranslateToForeign, Word word, Long toLanguageID, String answer){

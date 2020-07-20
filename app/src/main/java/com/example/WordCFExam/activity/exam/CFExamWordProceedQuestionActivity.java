@@ -20,7 +20,6 @@ import com.example.WordCFExam.activity.wordActivity.ShowNativeWordActivity;
 import com.example.WordCFExam.entity.HelpSentence;
 import com.example.WordCFExam.entity.Language;
 import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
-import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
 import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaireCross;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.LanguageService;
@@ -281,6 +280,29 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btn_examPassedFailTotal).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DbExecutorImp<Boolean> dbExecutor = FactoryUtil.<Boolean>createDbExecutor();
+                dbExecutor.execute_(new DbExecutor<Boolean>() {
+                    @Override
+                    public Boolean doInBackground() {
+                        return cfExamQuestionnaireService.examProcessedFailTotal(cfExamQuestionnaireCross.getCfExamQuestionnaire());
+                    }
+
+                    @Override
+                    public void onPostExecute(Boolean item) {
+                        if (!item) {
+                            Toast.makeText(getApplicationContext(), "Something gone wrong", Toast.LENGTH_SHORT).show();
+                        } {
+                            finish();
+                        }
+
+                    }
+                });
+            }
+        });
+
         findViewById(R.id.btn_examPassedFail).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -303,6 +325,8 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
                 });
             }
         });
+
+
 
         findViewById(R.id.btn_examPassedOK).setOnClickListener(new View.OnClickListener() {
             @Override

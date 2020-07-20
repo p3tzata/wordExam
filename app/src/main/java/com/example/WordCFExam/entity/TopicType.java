@@ -13,8 +13,8 @@ import java.io.Serializable;
 
 @Entity(indices = {
                 @Index(value = "profileID"),
-                @Index(value = "parentTopicTypeID"),
-                @Index(unique = true,value = {"profileID","topicTypeName"}) },
+                @Index(value = "parentTopicTypeID")
+                /*,@Index(unique = true,value = {"profileID","topicTypeName"})*/ },
 
         foreignKeys = {
                 @ForeignKey(onDelete = ForeignKey.SET_NULL,entity = Profile.class, parentColumns = "profileID", childColumns = "profileID"),

@@ -1,7 +1,6 @@
 package com.example.WordCFExam.activity.exam;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
@@ -14,21 +13,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.WordCFExam.R;
-import com.example.WordCFExam.activity.wordActivity.ShowForeignWordActivity;
-import com.example.WordCFExam.activity.wordActivity.ShowNativeWordActivity;
 import com.example.WordCFExam.entity.HelpSentence;
 import com.example.WordCFExam.entity.Language;
-import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.exam.RandomExamHelpSentencePassedQuestionnaire;
-import com.example.WordCFExam.entity.exam.RandomExamWordPassedQuestionnaire;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.service.TranslationService;
 import com.example.WordCFExam.service.exam.RandomExamHelpSentenceQuestionnaireService;
-import com.example.WordCFExam.service.exam.RandomExamWordQuestionnaireService;
 import com.example.WordCFExam.utitliy.DbExecutor;
 import com.example.WordCFExam.utitliy.DbExecutorImp;
-import com.example.WordCFExam.utitliy.Session;
-import com.example.WordCFExam.utitliy.SessionNameAttribute;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -184,7 +176,7 @@ public class RandomExamHelpSentenceProceedQuestionActivity extends AppCompatActi
             }
         });
 
-        findViewById(R.id.btn_examPassedFail).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_examPassedFailTotal).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DbExecutorImp<Boolean> dbExecutor = FactoryUtil.<Boolean>createDbExecutor();

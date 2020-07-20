@@ -30,6 +30,11 @@ public class CFExamProfilePointRepository extends BaseNameCrudRepository<CFExamP
         return getDao().findAllByOrderByLastOfPeriod(profilePointID);
     }
 
+
+    public List<CFExamProfilePoint> findPreviousLastOfPeriod(Long currentProfileID,Long currentProfilePointID,Long lastOfPeriodInMinute){
+        return getDao().findPreviousLastOfPeriod(currentProfileID,currentProfilePointID,lastOfPeriodInMinute);
+    }
+
     public CFExamProfilePointCross findCrossByID(Long ID){
         return getDao().findCrossByID(ID);
     }
