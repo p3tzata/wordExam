@@ -327,6 +327,32 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
         });
 
 
+        findViewById(R.id.btn_examPassedPostpone).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DbExecutorImp<Boolean> dbExecutor = FactoryUtil.<Boolean>createDbExecutor();
+                dbExecutor.execute_(new DbExecutor<Boolean>() {
+                    @Override
+                    public Boolean doInBackground() {
+                        return cfExamQuestionnaireService.examProcessedPostpone(cfExamQuestionnaireCross.getCfExamQuestionnaire());
+                    }
+
+                    @Override
+                    public void onPostExecute(Boolean item) {
+                        if (!item) {
+                            Toast.makeText(getApplicationContext(), "Something gone wrong", Toast.LENGTH_SHORT).show();
+                        } {
+                            finish();
+                        }
+
+                    }
+                });
+            }
+        });
+
+
+
+
 
         findViewById(R.id.btn_examPassedOK).setOnClickListener(new View.OnClickListener() {
             @Override

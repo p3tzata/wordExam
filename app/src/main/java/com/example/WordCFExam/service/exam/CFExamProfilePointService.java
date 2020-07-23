@@ -46,7 +46,7 @@ implements NameableCrudService<CFExamProfilePoint> {
 
     public CFExamProfilePoint findPreviousLastOfPeriod(Long currentProfileID,Long currentProfilePointID,Long lastOfPeriodInMinute) {
         List<CFExamProfilePoint> allByOrderByLastOfPeriod = getRepository().findPreviousLastOfPeriod(currentProfileID,currentProfilePointID,lastOfPeriodInMinute);
-        if (allByOrderByLastOfPeriod!=null) {
+        if (allByOrderByLastOfPeriod.size()>0) {
             return allByOrderByLastOfPeriod.get(0);
         } else {
             return null;

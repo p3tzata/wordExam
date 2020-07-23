@@ -124,6 +124,31 @@ public class CFExamTopicProceedQuestionActivity extends AppCompatActivity {
                 dbExecutor.execute_(new DbExecutor<Boolean>() {
                     @Override
                     public Boolean doInBackground() {
+                        return cfExamTopicQuestionnaireService.examProcessedFailTotal(cfExamTopicQuestionnaireCross.getCfExamQuestionnaire());
+                    }
+
+                    @Override
+                    public void onPostExecute(Boolean item) {
+                        if (!item) {
+                            Toast.makeText(getApplicationContext(), "Something gone wrong", Toast.LENGTH_SHORT).show();
+                        } {
+                            finish();
+                        }
+
+                    }
+                });
+            }
+        });
+
+
+
+        findViewById(R.id.btn_examPassedFail).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DbExecutorImp<Boolean> dbExecutor = FactoryUtil.<Boolean>createDbExecutor();
+                dbExecutor.execute_(new DbExecutor<Boolean>() {
+                    @Override
+                    public Boolean doInBackground() {
                         return cfExamTopicQuestionnaireService.examProcessedFail(cfExamTopicQuestionnaireCross.getCfExamQuestionnaire());
                     }
 

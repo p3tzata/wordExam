@@ -79,17 +79,36 @@ implements CrudService<CFExamWordQuestionnaire>,ExamQuestionnaireService<CFExamW
         CFExamProfilePoint currentPoint = cfExamProfilePointService.findByID(item.getCurrentCFExamProfilePointID());
         CFExamProfilePoint firstProfilePoint = cfExamProfilePointService.
                 findPreviousLastOfPeriod(currentPoint.getCFExamProfileID(),currentPoint.getCFExamProfilePointID(),currentPoint.getLastOfPeriodInMinute());
+
         if (firstProfilePoint!=null) {
             item.setCurrentCFExamProfilePointID(firstProfilePoint.getCFExamProfilePointID());
-            item.setPostponeInMinute(null);
-            item.setEntryPointDateTime(Calendar.getInstance().getTime());
-            super.update(item);
-            return true;
-        }
-        return false;
 
+
+        } else {
+            item.setCurrentCFExamProfilePointID(currentPoint.getCFExamProfilePointID());
+        }
+
+
+
+        item.setPostponeInMinute(null);
+        item.setEntryPointDateTime(Calendar.getInstance().getTime());
+        super.update(item);
+        return true;
 
     }
+
+
+    public boolean examProcessedPostpone(CFExamWordQuestionnaire item) {
+        int postponeMinute=1440;
+        item.setPostponeInMinute(postponeMinute);
+        item.setEntryPointDateTime(Calendar.getInstance().getTime());
+        super.update(item);
+        return true;
+
+    }
+
+
+
 
     @Override
     public boolean examProcessedFailTotal(CFExamWordQuestionnaire item) {

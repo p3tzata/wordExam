@@ -57,15 +57,22 @@ public class CFExamTopicQuestionnaireService extends
     public boolean examProcessedFail(CFExamTopicQuestionnaire item) {
 
         CFExamProfilePoint currentPoint = cfExamProfilePointService.findByID(item.getCurrentCFExamProfilePointID());
-        CFExamProfilePoint firstProfilePoint = cfExamProfilePointService.findFirstProfilePoint(currentPoint);
+        CFExamProfilePoint firstProfilePoint = cfExamProfilePointService.
+                findPreviousLastOfPeriod(currentPoint.getCFExamProfileID(),currentPoint.getCFExamProfilePointID(),currentPoint.getLastOfPeriodInMinute());
+
         if (firstProfilePoint!=null) {
             item.setCurrentCFExamProfilePointID(firstProfilePoint.getCFExamProfilePointID());
+
+
+        } else {
+            item.setCurrentCFExamProfilePointID(currentPoint.getCFExamProfilePointID());
+        }
             item.setPostponeInMinute(null);
             item.setEntryPointDateTime(Calendar.getInstance().getTime());
             super.update(item);
             return true;
-        }
-        return false;
+
+
 
 
     }

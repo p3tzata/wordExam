@@ -25,6 +25,13 @@
                 android:text="Fail" />
 
             <Button
+                android:id="@+id/btn_examPassedPostpone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Postpone" />
+
+
+            <Button
                 android:id="@+id/btn_examPassedFailTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,6 +73,12 @@
             android:layout_gravity="center">
 
             <Button
+                android:id="@+id/btn_examHelp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Help" />
+
+            <Button
                 android:id="@+id/btn_examHelpSound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,12 +89,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Check" />
-
-            <Button
-                android:id="@+id/btn_examHelp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Help" />
 
             <Button
                 android:id="@+id/btn_examPassedOK"
