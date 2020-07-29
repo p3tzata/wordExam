@@ -86,7 +86,7 @@ public class RandomExamWordQuestionnaireNeedProceedActivity
             public List<Word> execute() {
 
 
-                int countNumber=10;
+                int countNumber=20;
                 long profileID = Session.getLongAttribute(getApplicationContext(), SessionNameAttribute.ProfileID, -1L);
                 List<Word> allOrderAlphabetic=null;
                 if (translationAndLanguages.getForeignLanguage().getLanguageID().equals(
