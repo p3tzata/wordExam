@@ -7,6 +7,7 @@ import com.example.WordCFExam.entity.exam.CFExamProfile;
 import com.example.WordCFExam.entity.exam.CFExamProfilePoint;
 import com.example.WordCFExam.entity.exam.CFExamTopicQuestionnaire;
 import com.example.WordCFExam.entity.exam.CFExamTopicQuestionnaireCross;
+import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
 import com.example.WordCFExam.factory.FactoryUtil;
 import com.example.WordCFExam.repository.exam.CFExamTopicQuestionnaireRepository;
 
@@ -50,6 +51,16 @@ public class CFExamTopicQuestionnaireService extends
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean examProcessedPostpone(CFExamTopicQuestionnaire item,int minute) {
+        int postponeMinute=minute;
+        item.setPostponeInMinute(postponeMinute);
+        item.setEntryPointDateTime(Calendar.getInstance().getTime());
+        super.update(item);
+        return true;
+
     }
 
 

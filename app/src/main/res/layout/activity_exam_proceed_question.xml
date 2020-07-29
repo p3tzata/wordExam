@@ -18,24 +18,33 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
-            <Button
-                android:id="@+id/btn_examPassedFail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fail" />
-
-            <Button
-                android:id="@+id/btn_examPassedPostpone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Postpone" />
-
 
             <Button
                 android:id="@+id/btn_examPassedFailTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Fail T" />
+
+            <Button
+                android:id="@+id/btn_examPassedFail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fail" />
+
+
+            <Button
+                android:id="@+id/btn_examPassedPostpone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pass 24h" />
+
+            <Button
+                android:id="@+id/btn_examPassedPostpone168"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pass 168h" />
+
+
 
 
         </TableRow>
