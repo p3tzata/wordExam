@@ -48,11 +48,15 @@ public class TextToSpeechUtil {
 
     public void speak(String toSpeakText, String toastMsg) {
 
-       this.speak(toSpeakText,toastMsg,TextToSpeech.QUEUE_FLUSH, null);
+       this.speak(toSpeakText,toastMsg,1, null);
 
     }
 
 
+    public void playSilentUtterance(long seconds) {
+
+        textToSpeech.playSilentUtterance(seconds*1000,1, null);
+    }
     public void shutdown() {
         textToSpeech.stop();
         textToSpeech.shutdown();

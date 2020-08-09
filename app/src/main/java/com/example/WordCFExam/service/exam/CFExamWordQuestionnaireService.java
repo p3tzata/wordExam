@@ -97,7 +97,7 @@ implements CrudService<CFExamWordQuestionnaire>,ExamQuestionnaireService<CFExamW
 
     }
 
-    
+
     public boolean examProcessedPostpone(CFExamWordQuestionnaire item, int minute) {
         int postponeMinute=minute;
         item.setPostponeInMinute(postponeMinute);
