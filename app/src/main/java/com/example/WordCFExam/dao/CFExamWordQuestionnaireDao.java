@@ -59,7 +59,7 @@ public abstract class CFExamWordQuestionnaireDao implements CrudDao<CFExamWordQu
             "q.entryPointDateTime + " +
             "(IFNULL((q.postponeInMinute*60*1000),0)) " +
             "+ (p.lastOfPeriodInMinute*60*1000) < :currentTime " +
-            "ORDER BY RANDOM()"
+            "ORDER BY w.wordString"
     )
     abstract public List<CFExamWordQuestionnaireCross> findAllNeedProceed(Long profileID,Long currentTime);
 

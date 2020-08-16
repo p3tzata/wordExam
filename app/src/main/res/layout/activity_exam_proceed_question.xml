@@ -91,7 +91,7 @@
                 android:id="@+id/btn_examHelpSound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Help Sound" />
+                android:text="Sound" />
 
             <Button
                 android:id="@+id/btn_examCheckAnswer"

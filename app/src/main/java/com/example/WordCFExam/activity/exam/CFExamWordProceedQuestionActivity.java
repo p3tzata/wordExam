@@ -49,7 +49,8 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
     Language fromLanguage;
     Language toLanguage;
     private List<HelpSentence> helpSentenceList;
-
+    private int curHelpSentence=-1;
+    private String defaultHelpButtonText=null;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -210,6 +211,7 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
                     if (textToSpeechUtil!=null) {
                         StringBuilder stringBuilder = new StringBuilder();
                         StringBuilder stringBuilderToast = new StringBuilder();
+                        /*
                         for (int i=0; i<helpSentenceList.size();i++) {
 
                             textToSpeechUtil.speak(helpSentenceList.get(i).getSentenceString(),"("+(i+1) + "/"+ (helpSentenceList.size()) + ") " +helpSentenceList.get(i).getSentenceString());
@@ -217,6 +219,21 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
                                 textToSpeechUtil.playSilentUtterance(5);
                             }
                         }
+
+                         */
+
+                        textToSpeechUtil.stop();
+                        textToSpeechUtil.playSilentUtterance(1);
+                        curHelpSentence++;
+                        if (curHelpSentence==helpSentenceList.size()) {
+                            curHelpSentence=0;
+                        }
+                        final Button button = findViewById(R.id.btn_examHelpSound);
+                        button.setText("("+ (curHelpSentence+1) +"/" + helpSentenceList.size()+") " +defaultHelpButtonText);
+
+                        textToSpeechUtil.speak(helpSentenceList.get(curHelpSentence).getSentenceString(),"("+(curHelpSentence+1) + "/"+ (helpSentenceList.size()) + ") " +helpSentenceList.get(curHelpSentence).getSentenceString());
+
+
 
 
                     }
@@ -402,7 +419,8 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
 
                             helpSentenceList = item;
                             final Button button = findViewById(R.id.btn_examHelpSound);
-                            button.setText("("+ item.size()+") " +button.getText());
+                            defaultHelpButtonText=button.getText().toString();
+                            button.setText("("+ item.size()+") " +defaultHelpButtonText);
                         }
                     }
 
