@@ -28,7 +28,7 @@ public class ClickFromMainActivity implements Serializable,TranslationListAdapte
                 activity2Intent = new Intent(context, ListWordListableActivity.class);
             }
 
-
+            activity2Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activity2Intent.putExtra("translationAndLanguages",translationAndLanguages);
             activity2Intent.putExtra("translationFromLanguageID",fromLanguageID);
             activity2Intent.putExtra("translationToLanguageID",toLanguageID);
