@@ -12,11 +12,11 @@ public class AutoStartCFExamBroadcastReceiver extends BroadcastReceiver
     @Override
     public void onReceive(Context context, Intent intent)
     {
-        if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED))
-        {
+        //if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) 15.06.2021
+        //{
 
            cfExamAlarm.setAlarm(context);
-            cfExamAlarm.sendNotification(context,101, MainActivity.class,null,"Schedule CFExam started automatic","Started");
-        }
+           cfExamAlarm.sendNotification(context,101, MainActivity.class,null,"Schedule CFExam started automatic","Started");
+       // }
     }
 }

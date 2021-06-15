@@ -1,6 +1,7 @@
 package com.example.WordCFExam.background;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
@@ -19,7 +20,9 @@ public class ManualStartCFExamService extends Service
         {
 
             alarm.setAlarm(this);
+            //alarm.sendNotification_works(this);
             alarm.sendNotification(this,100, MainActivity.class,null,"Schedule CFExam started manual","Started");
+            String debug="";
             return START_STICKY;
         }
 
@@ -30,6 +33,7 @@ public class ManualStartCFExamService extends Service
 
             alarm.setAlarm(this);
             alarm.sendNotification(this,100, MainActivity.class,null,"Schedule CFExam started manual","Started");
+
         }
 
         @Override
