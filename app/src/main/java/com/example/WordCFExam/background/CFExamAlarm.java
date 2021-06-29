@@ -146,8 +146,10 @@ public class CFExamAlarm extends BroadcastReceiver {
 
     public void setAlarm(Context context)
     {
-     //   android.os.Debug.waitForDebugger();
+        android.os.Debug.waitForDebugger();
         int searchRateMinute = Session.getIntAttribute(context, SessionNameAttribute.CfExamSearchRateMinute, 1);
+
+
         int intervalMilliSecs = 1000 * 60 * searchRateMinute;
         AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, CFExamAlarm.class);
