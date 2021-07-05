@@ -146,7 +146,8 @@ public class CFExamAlarm extends BroadcastReceiver {
 
     public void setAlarm(Context context)
     {
-        android.os.Debug.waitForDebugger();
+       // android.os.Debug.waitForDebugger();
+
         int searchRateMinute = Session.getIntAttribute(context, SessionNameAttribute.CfExamSearchRateMinute, 1);
 
 

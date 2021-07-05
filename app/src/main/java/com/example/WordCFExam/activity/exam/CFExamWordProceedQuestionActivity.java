@@ -93,6 +93,8 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
             }
         });
 
+        et_checkAnswer.requestFocus();
+
 
     }
 
