@@ -101,6 +101,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
                 }
 
             }
+            activity2Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activity2Intent.putExtra("translationAndLanguages", WordListAdapter.this.translationAndLanguages);
             activity2Intent.putExtra("translationFromLanguageID", WordListAdapter.this.fromLanguageID);
             activity2Intent.putExtra("word", word);

@@ -166,6 +166,7 @@ public class ListWordListableActivity
                     activity2Intent = new Intent(getContext(), ShowNativeWordActivity.class);
                     activity2Intent.putExtra("translationToLanguageID", translationAndLanguages.getForeignLanguage().getLanguageID());
                 }
+                activity2Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activity2Intent.putExtra("translationAndLanguages", translationAndLanguages);
                 activity2Intent.putExtra("translationFromLanguageID", fromLanguageID);
                 activity2Intent.putExtra("word", selectedItem);

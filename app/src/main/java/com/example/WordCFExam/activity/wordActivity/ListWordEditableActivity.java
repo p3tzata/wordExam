@@ -232,6 +232,7 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivityFaced
 
                 if (MenuUtility.isEditMode(getApplicationContext()) && fromLanguageID.equals(translationAndLanguages.getForeignLanguage().getLanguageID())) {
                     activity2Intent = new Intent(getApplicationContext(), UpdateWordMenuActivity.class);
+                    activity2Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     activity2Intent.putExtra("translationAndLanguages", translationAndLanguages);
                     activity2Intent.putExtra("translationFromLanguageID", fromLanguageID);
                     activity2Intent.putExtra("translationToLanguageID", toLanguageID);
@@ -264,9 +265,11 @@ public class ListWordEditableActivity extends BaseEditableAppCompatActivityFaced
         Intent activity2Intent=null;
         if (translationAndLanguages.getForeignLanguage().getLanguageID().equals(fromLanguageID)) {
             activity2Intent = new Intent(getContext(), ShowForeignWordActivity.class);
+            activity2Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activity2Intent.putExtra("translationToLanguageID", translationAndLanguages.getNativeLanguage().getLanguageID());
         } else {
             activity2Intent = new Intent(getContext(), ShowNativeWordActivity.class);
+            activity2Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activity2Intent.putExtra("translationToLanguageID", translationAndLanguages.getForeignLanguage().getLanguageID());
         }
         activity2Intent.putExtra("translationAndLanguages", translationAndLanguages);

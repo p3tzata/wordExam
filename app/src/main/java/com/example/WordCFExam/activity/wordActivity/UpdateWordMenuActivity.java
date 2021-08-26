@@ -101,7 +101,7 @@ public class UpdateWordMenuActivity extends AppCompatActivity  {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 Intent activity2Intent = new Intent(getApplicationContext(), UpdateWordBasicActivity.class);
-
+                activity2Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activity2Intent.putExtra("translationAndLanguages", UpdateWordMenuActivity.this.translationAndLanguages);
                 activity2Intent.putExtra("translationFromLanguageID", UpdateWordMenuActivity.this.fromLanguageID);
                 activity2Intent.putExtra("translationToLanguageID", UpdateWordMenuActivity.this.toLanguageID);
@@ -117,7 +117,7 @@ public class UpdateWordMenuActivity extends AppCompatActivity  {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 Intent activity2Intent = new Intent(getApplicationContext(), UpdateWordTranslationActivity.class);
-
+                activity2Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activity2Intent.putExtra("translationAndLanguages", UpdateWordMenuActivity.this.translationAndLanguages);
                 activity2Intent.putExtra("translationFromLanguageID", UpdateWordMenuActivity.this.fromLanguageID);
                 activity2Intent.putExtra("translationToLanguageID", UpdateWordMenuActivity.this.toLanguageID);
@@ -133,7 +133,7 @@ public class UpdateWordMenuActivity extends AppCompatActivity  {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 Intent activity2Intent = new Intent(getApplicationContext(), UpdateWordHelpSentenceActivity.class);
-
+                activity2Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activity2Intent.putExtra("translationAndLanguages", UpdateWordMenuActivity.this.translationAndLanguages);
                 activity2Intent.putExtra("translationFromLanguageID", UpdateWordMenuActivity.this.fromLanguageID);
                 activity2Intent.putExtra("translationToLanguageID", UpdateWordMenuActivity.this.toLanguageID);

@@ -144,7 +144,7 @@ public class ExamMenuActivity extends AppCompatActivity {
 
                 //RandomExamListAllDictionaryActivity
                 TranslationListAdapterOnClickExecutor translationListAdapterOnClickExecutor = new ClickFromExamMenuActivity_word();
-
+                activity2Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activity2Intent.putExtra("translationListAdapterOnClickExecutor",translationListAdapterOnClickExecutor);
 
                 startActivity(activity2Intent);
@@ -160,7 +160,7 @@ public class ExamMenuActivity extends AppCompatActivity {
                 Intent activity2Intent = new Intent(getApplicationContext(), ListAllDictionary.class);
 
                 TranslationListAdapterOnClickExecutor translationListAdapterOnClickExecutor = new ClickFromExamMenuActivity_helpSentence();
-
+                activity2Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activity2Intent.putExtra("translationListAdapterOnClickExecutor",translationListAdapterOnClickExecutor);
 
                 startActivity(activity2Intent);

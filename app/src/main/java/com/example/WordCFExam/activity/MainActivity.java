@@ -208,7 +208,7 @@ Testing.
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent activity2Intent = new Intent(getApplicationContext(), ListAllDictionary.class);
                 TranslationListAdapterOnClickExecutor translationListAdapterOnClickExecutor = new ClickFromMainActivity();
-
+                activity2Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activity2Intent.putExtra("translationListAdapterOnClickExecutor",translationListAdapterOnClickExecutor);
 
                 startActivity(activity2Intent);

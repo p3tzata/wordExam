@@ -16,6 +16,7 @@ public class ClickFromExamMenuActivity_helpSentence implements Serializable,Tran
         public void executeFromForeignItemClick(Context context, TranslationAndLanguages translationAndLanguages) {
 
             Intent activity2Intent = new Intent(context, RandomExamHelpSentenceQuestionnaireNeedProceedActivity.class);
+            activity2Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activity2Intent.putExtra("toLanguage",translationAndLanguages.getNativeLanguage());
             activity2Intent.putExtra("fromLanguage",translationAndLanguages.getForeignLanguage());
             activity2Intent.putExtra("translationAndLanguages",translationAndLanguages);
@@ -27,6 +28,7 @@ public class ClickFromExamMenuActivity_helpSentence implements Serializable,Tran
         public void executeToForeignItemClick(Context context, TranslationAndLanguages translationAndLanguages) {
 
             Intent activity2Intent = new Intent(context, RandomExamHelpSentenceQuestionnaireNeedProceedActivity.class);
+            activity2Intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activity2Intent.putExtra("translationAndLanguages",translationAndLanguages);
             activity2Intent.putExtra("fromLanguage",translationAndLanguages.getNativeLanguage());
             activity2Intent.putExtra("toLanguage",translationAndLanguages.getForeignLanguage());
