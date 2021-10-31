@@ -33,18 +33,16 @@
 
 
             <Button
-                android:id="@+id/btn_examPassedPostpone"
+                android:id="@+id/btn_examPassedPostpone1w"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pass 24h" />
+                android:text="Pass 1W" />
 
             <Button
-                android:id="@+id/btn_examPassedPostpone168"
+                android:id="@+id/btn_examPassedPostpone4w"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pass 168h" />
-
-
+                android:text="Pass 4W" />
 
 
         </TableRow>

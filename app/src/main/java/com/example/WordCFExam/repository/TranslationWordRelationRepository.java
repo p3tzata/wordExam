@@ -9,6 +9,8 @@ import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.dto.ForeignWithNativeWords;
 import com.example.WordCFExam.entity.dto.WordCFExamCross;
 import com.example.WordCFExam.entity.exam.CFExamProfilePoint;
+import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
+import java.util.Date;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +56,9 @@ public class TranslationWordRelationRepository extends BaseCrudRepository<Transl
 
 
     public List<WordCFExamCross> translateFromNativeCFExamCross(Long nativeWordID,Long toLanguageID){
+
         Cursor cursor = super.getDao().translateFromNativeCFExamCross(nativeWordID, toLanguageID);
+
         List<WordCFExamCross> listWord = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()){ //make sure you got results, and move to first row
             do{
@@ -69,6 +73,9 @@ public class TranslationWordRelationRepository extends BaseCrudRepository<Transl
                 Long CFExamProfilePointID =  cursor.getLong(cursor.getColumnIndexOrThrow("CFExamProfilePointID"));
                 Long lastOfPeriodInMinute =  cursor.getLong(cursor.getColumnIndexOrThrow("lastOfPeriodInMinute"));
                 String name =  cursor.getString(cursor.getColumnIndexOrThrow("name"));
+
+
+
 
                 Word word = (Word) new Word() {{
                     setWordID(wordID);
@@ -87,6 +94,8 @@ public class TranslationWordRelationRepository extends BaseCrudRepository<Transl
                         setName(name);
                     }};
                 }
+
+
 
 
                 listWord.add(new WordCFExamCross(word, cfExamProfilePoint ));
@@ -105,6 +114,7 @@ public class TranslationWordRelationRepository extends BaseCrudRepository<Transl
 
     public List<WordCFExamCross> translateFromForeignCFExamCross(Long foreignWordID,Long toLanguageID){
         Cursor cursor = super.getDao().translateFromForeignCFExamCross(foreignWordID, toLanguageID);
+
         List<WordCFExamCross> listWord = new ArrayList<>();
         if (cursor != null && cursor.moveToFirst()){ //make sure you got results, and move to first row
             do{
@@ -119,6 +129,13 @@ public class TranslationWordRelationRepository extends BaseCrudRepository<Transl
                 Long CFExamProfilePointID =  cursor.getLong(cursor.getColumnIndexOrThrow("CFExamProfilePointID"));
                 Long lastOfPeriodInMinute =  cursor.getLong(cursor.getColumnIndexOrThrow("lastOfPeriodInMinute"));
                 String name =  cursor.getString(cursor.getColumnIndexOrThrow("name"));
+
+
+                Long CFExamQuestionnaireID = cursor.getLong(cursor.getColumnIndexOrThrow("CFExamQuestionnaireID"));
+                Long currentCFExamProfilePointID = cursor.getLong(cursor.getColumnIndexOrThrow("currentCFExamProfilePointID"));
+                Long entryPointDateTime= cursor.getLong(cursor.getColumnIndexOrThrow("entryPointDateTime"));
+                Integer postponeInMinute= cursor.getInt(cursor.getColumnIndexOrThrow("postponeInMinute"));
+                Long targetTranslationLanguageID= cursor.getLong(cursor.getColumnIndexOrThrow("targetTranslationLanguageID"));
 
                 Word word = (Word) new Word() {{
                     setWordID(wordID);
@@ -138,8 +155,18 @@ public class TranslationWordRelationRepository extends BaseCrudRepository<Transl
                     }};
                 }
 
+                CFExamWordQuestionnaire cfExamWordQuestionnaire =new CFExamWordQuestionnaire();
+                if (CFExamQuestionnaireID!=null) {
+                    cfExamWordQuestionnaire.setCFExamQuestionnaireID(CFExamQuestionnaireID);
+                    cfExamWordQuestionnaire.setCurrentCFExamProfilePointID(currentCFExamProfilePointID);
+                    cfExamWordQuestionnaire.setEntryPointDateTime(new Date(entryPointDateTime));
+                    cfExamWordQuestionnaire.setPostponeInMinute(postponeInMinute);
+                    cfExamWordQuestionnaire.setTargetTranslationLanguageID(targetTranslationLanguageID);
+                    cfExamWordQuestionnaire.setWordID(wordID);
 
-                listWord.add(new WordCFExamCross(word, cfExamProfilePoint ));
+                }
+               // String debugStop3=null;
+                listWord.add(new WordCFExamCross(word, cfExamProfilePoint,cfExamWordQuestionnaire  ));
 
 
 

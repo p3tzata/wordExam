@@ -320,14 +320,14 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
         });
 
 
-        findViewById(R.id.btn_examPassedPostpone).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_examPassedPostpone1w).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DbExecutorImp<Boolean> dbExecutor = FactoryUtil.<Boolean>createDbExecutor();
                 dbExecutor.execute_(new DbExecutor<Boolean>() {
                     @Override
                     public Boolean doInBackground() {
-                        return cfExamQuestionnaireService.examProcessedPostpone(cfExamQuestionnaireCross.getCfExamQuestionnaire(),1440);
+                        return cfExamQuestionnaireService.examProcessedPostpone(cfExamQuestionnaireCross.getCfExamQuestionnaire(),10080);
                     }
 
                     @Override
@@ -343,14 +343,14 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.btn_examPassedPostpone168).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_examPassedPostpone4w).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DbExecutorImp<Boolean> dbExecutor = FactoryUtil.<Boolean>createDbExecutor();
                 dbExecutor.execute_(new DbExecutor<Boolean>() {
                     @Override
                     public Boolean doInBackground() {
-                        return cfExamQuestionnaireService.examProcessedPostpone(cfExamQuestionnaireCross.getCfExamQuestionnaire(),10080);
+                        return cfExamQuestionnaireService.examProcessedPostpone(cfExamQuestionnaireCross.getCfExamQuestionnaire(),10080*4);
                     }
 
                     @Override

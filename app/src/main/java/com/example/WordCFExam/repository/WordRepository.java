@@ -36,6 +36,7 @@ public class WordRepository extends BaseCrudRepository<WordDao, Word> {
         List<WordCFExamCross> listWord = new ArrayList<>();
 
         Cursor cursor = super.getDao().findByWordStringContainsAndProfileIDAndLanguageIDCFExamCross(wordStringContain, profileId, langID,targetTranslateLangID);
+
         if (cursor != null && cursor.moveToFirst()){ //make sure you got results, and move to first row
             do{
                 Long wordID  = (Long) cursor.getLong(cursor.getColumnIndexOrThrow("wordID"));
