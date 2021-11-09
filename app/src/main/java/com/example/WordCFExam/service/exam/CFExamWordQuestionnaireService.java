@@ -2,6 +2,7 @@ package com.example.WordCFExam.service.exam;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.example.WordCFExam.entity.HelpSentence;
 import com.example.WordCFExam.entity.Profile;
@@ -191,8 +192,9 @@ implements CrudService<CFExamWordQuestionnaire>,ExamQuestionnaireService<CFExamW
         cfExamWordQuestionnaire.setCurrentCFExamProfilePointID(firstProfilePoint.getCFExamProfilePointID());
         cfExamWordQuestionnaire.setWordID(wordID);
         cfExamWordQuestionnaire.setTargetTranslationLanguageID(languageID);
-
+        Log.i("wordID",wordID.toString());
         cfExamWordQuestionnaire.setEntryPointDateTime(Calendar.getInstance().getTime());
+        //String debug;
         Long insert = this.insert(cfExamWordQuestionnaire);
         if (insert>0L) {
             return true;

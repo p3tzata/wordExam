@@ -303,6 +303,7 @@ public class UpdateWordTranslationActivity extends BaseEditableAppCompatActivity
     }
 
     private void handlerSetCFExamClick(Word selectedItem) {
+        String debug="";
       cfExamHelper.handlerSetCFExamClick(selectedItem);
     }
 

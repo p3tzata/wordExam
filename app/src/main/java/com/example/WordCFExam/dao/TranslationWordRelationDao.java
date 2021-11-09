@@ -70,7 +70,8 @@ public abstract class TranslationWordRelationDao implements CrudDao<TranslationW
 
 
     @Transaction
-    @Query("SELECT wf.*,cfPP.isLoopRepeat,cfPP.CFExamProfileID,cfPP.CFExamProfilePointID,cfPP.lastOfPeriodInMinute,cfPP.name  FROM word l " +
+    @Query("SELECT wf.*,cfPP.isLoopRepeat,cfPP.CFExamProfileID,cfPP.CFExamProfilePointID,cfPP.lastOfPeriodInMinute,cfPP.name," +
+            "cf.CFExamQuestionnaireID,cf.targetTranslationLanguageID,cf.postponeInMinute,cf.entryPointDateTime,cf.currentCFExamProfilePointID FROM word l " +
             "INNER JOIN translationwordrelation rwr on rwr.nativeWordID=l.wordID " +
             "INNER JOIN word wf on rwr.foreignWordID=wf.wordID " +
             "LEFT JOIN cfexamwordquestionnaire cf on wf.wordID=cf.wordID and cf.targetTranslationLanguageID=l.languageID " +
@@ -79,7 +80,8 @@ public abstract class TranslationWordRelationDao implements CrudDao<TranslationW
     abstract public Cursor translateFromNativeCFExamCross(Long nativeWordID,Long toLanguageID);
 
     @Transaction
-    @Query("SELECT wf.*,cfPP.isLoopRepeat,cfPP.CFExamProfileID,cfPP.CFExamProfilePointID,cfPP.lastOfPeriodInMinute,cfPP.name,cf.* FROM word l " +
+    @Query("SELECT wf.*,cfPP.isLoopRepeat,cfPP.CFExamProfileID,cfPP.CFExamProfilePointID,cfPP.lastOfPeriodInMinute,cfPP.name," +
+            "cf.CFExamQuestionnaireID,cf.targetTranslationLanguageID,cf.postponeInMinute,cf.entryPointDateTime,cf.currentCFExamProfilePointID FROM word l " +
             "INNER JOIN translationwordrelation rwr on rwr.foreignWordID=l.wordID " +
             "INNER JOIN word wf on rwr.nativeWordID=wf.wordID " +
             "LEFT JOIN cfexamwordquestionnaire cf on wf.wordID=cf.wordID and cf.targetTranslationLanguageID=l.languageID " +

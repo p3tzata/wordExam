@@ -8,9 +8,11 @@ import com.example.WordCFExam.entity.Language;
 import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.dto.WordCFExamCross;
 import com.example.WordCFExam.entity.exam.CFExamProfilePoint;
+import com.example.WordCFExam.entity.exam.CFExamWordQuestionnaire;
 
 import java.nio.channels.InterruptedByTimeoutException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class WordRepository extends BaseCrudRepository<WordDao, Word> {
@@ -51,6 +53,13 @@ public class WordRepository extends BaseCrudRepository<WordDao, Word> {
                 Long lastOfPeriodInMinute =  cursor.getLong(cursor.getColumnIndexOrThrow("lastOfPeriodInMinute"));
                 String name =  cursor.getString(cursor.getColumnIndexOrThrow("name"));
 
+                Long CFExamQuestionnaireID = cursor.getLong(cursor.getColumnIndexOrThrow("CFExamQuestionnaireID"));
+                Long currentCFExamProfilePointID = cursor.getLong(cursor.getColumnIndexOrThrow("currentCFExamProfilePointID"));
+                Long entryPointDateTime= cursor.getLong(cursor.getColumnIndexOrThrow("entryPointDateTime"));
+                Integer postponeInMinute= cursor.getInt(cursor.getColumnIndexOrThrow("postponeInMinute"));
+                Long targetTranslationLanguageID= cursor.getLong(cursor.getColumnIndexOrThrow("targetTranslationLanguageID"));
+
+
                 Word word = (Word) new Word() {{
                     setWordID(wordID);
                     setProfileID(profileID);
@@ -69,8 +78,19 @@ public class WordRepository extends BaseCrudRepository<WordDao, Word> {
                     }};
                 }
 
+                CFExamWordQuestionnaire cfExamWordQuestionnaire =new CFExamWordQuestionnaire();
+                if (CFExamQuestionnaireID!=null) {
+                    cfExamWordQuestionnaire.setCFExamQuestionnaireID(CFExamQuestionnaireID);
+                    cfExamWordQuestionnaire.setCurrentCFExamProfilePointID(currentCFExamProfilePointID);
+                    cfExamWordQuestionnaire.setEntryPointDateTime(new Date(entryPointDateTime));
+                    cfExamWordQuestionnaire.setPostponeInMinute(postponeInMinute);
+                    cfExamWordQuestionnaire.setTargetTranslationLanguageID(targetTranslationLanguageID);
+                    cfExamWordQuestionnaire.setWordID(wordID);
 
-                listWord.add(new WordCFExamCross(word, cfExamProfilePoint ));
+                }
+
+
+                listWord.add(new WordCFExamCross(word, cfExamProfilePoint,cfExamWordQuestionnaire ));
 
 
 
