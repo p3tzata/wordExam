@@ -24,7 +24,10 @@ public class TextToSpeechUtil {
             public void onInit(int status) {
                 if(status != TextToSpeech.ERROR) {
                     if (locale!=null) {
-                        textToSpeech.setLanguage(locale);
+
+                        if (textToSpeech.isLanguageAvailable(locale)==1) {
+                            textToSpeech.setLanguage(locale);
+                        }
                     }
                 }
             }
