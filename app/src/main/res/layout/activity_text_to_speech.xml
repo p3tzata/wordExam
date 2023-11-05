@@ -24,28 +24,79 @@
             android:layout_height="wrap_content" />
 
 
-        <Button
-        android:id="@+id/btn_textToSpeechStart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Speech" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_textToSpeechStop"
+            <Button
+                android:id="@+id/btn_textToSpeechPrevious"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Prev" />
+
+            <Button
+                android:id="@+id/btn_textToSpeechPlay"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Play" />
+
+            <Button
+                android:id="@+id/btn_textToSpeechNext"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Next" />
+
+            <Button
+                android:id="@+id/btn_textToSpeechStop"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Stop" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Stop" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/et_textToSpeak"
+            <Button
+                android:id="@+id/btn_textToSpeechPause"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="Pause" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:hint="Paste text here" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_textToSpeak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Paste text here"
+                android:inputType="textMultiLine" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_textToSpeechClear"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="Clear" />
 
 
-
-
+        </LinearLayout>
     </LinearLayout>
 
 

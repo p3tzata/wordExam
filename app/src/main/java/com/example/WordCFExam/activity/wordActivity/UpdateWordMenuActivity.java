@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.WordCFExam.R;
+import com.example.WordCFExam.entity.Language;
 import com.example.WordCFExam.entity.Word;
 import com.example.WordCFExam.entity.dto.TranslationAndLanguages;
 import com.example.WordCFExam.service.WordService;
@@ -43,7 +44,6 @@ public class UpdateWordMenuActivity extends AppCompatActivity  {
     private Long toLanguageID;
 
     TextToSpeechUtil textToSpeechUtil;
-    Locale locale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +59,8 @@ public class UpdateWordMenuActivity extends AppCompatActivity  {
         seedOnClickListener();
 
         try {
-            locale = Locale.forLanguageTag(translationAndLanguages.getForeignLanguage().getLocaleLanguageTag());
-            textToSpeechUtil =new TextToSpeechUtil(locale,UpdateWordMenuActivity.this);
+            Language language = translationAndLanguages.getForeignLanguage();
+            textToSpeechUtil =new TextToSpeechUtil(language,UpdateWordMenuActivity.this);
         } catch (Exception ex) {
             Toast.makeText(getApplicationContext(), "Warning: Can not identify Language Locate Tag",Toast.LENGTH_LONG).show();
         }

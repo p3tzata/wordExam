@@ -1,5 +1,7 @@
 package com.example.WordCFExam.activity.configureActivity;
 
+import static android.content.Intent.ACTION_CREATE_DOCUMENT;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -47,12 +49,16 @@ public class ConfigDBImportExport extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+ //       if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+ //       }
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+ //           ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+//        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.MANAGE_EXTERNAL_STORAGE}, 1);
         }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-        }
+
 
 
 
@@ -236,11 +242,12 @@ public class ConfigDBImportExport extends AppCompatActivity {
 
 
         try {
-            File sd = Environment.getExternalStorageDirectory();
+            
+            File sd = new File("//storage//emulated//0");
             File data = Environment.getDataDirectory();
 
             Date time = Calendar.getInstance().getTime();
-            DateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy_HH:mm:ss");
+            DateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy_HH_mm_ss");
             String formattedCurrentTime = dateFormat.format(time);
 
 
@@ -248,6 +255,7 @@ public class ConfigDBImportExport extends AppCompatActivity {
                 String  currentDBPath= "//data//" + packageName
                         + "//databases//" + databaseName;
                 File backupDirDB = new File(sd, backupDir);
+
 
                 if(!backupDirDB.exists())
                 {
@@ -259,6 +267,7 @@ public class ConfigDBImportExport extends AppCompatActivity {
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().close();
                 File currentDB = new File(data, currentDBPath);
                 File backupDB = new File(sd, backupDBPath);
+                backupDB.createNewFile();
 
                 FileChannel src = new FileInputStream(currentDB).getChannel();
                 FileChannel dst = new FileOutputStream(backupDB).getChannel();
@@ -268,6 +277,9 @@ public class ConfigDBImportExport extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), "Successfully Exported: " + backupDB.toString(),
                         Toast.LENGTH_LONG).show();
 
+            } else {
+                Toast.makeText(getBaseContext(), "Can't write into this destination", Toast.LENGTH_LONG)
+                        .show();
             }
         } catch (Exception e) {
 

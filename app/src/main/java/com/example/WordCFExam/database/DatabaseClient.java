@@ -20,16 +20,46 @@ public class DatabaseClient {
         //creating the app database with Room database builder
         //MyToDos is the name of the database
         appDatabase = Room.databaseBuilder(mCtx, WordRoomDatabase.class, "WordCFExamDB")
-                .addMigrations(MIGRATION_12_13)
+                .addMigrations(MIGRATION_15_16)
                 //.fallbackToDestructiveMigration()
                 .build();
     }
 
-    static final Migration MIGRATION_12_13 = new Migration(12, 13) { // From version 1 to version 2
+    static final Migration MIGRATION_15_16 = new Migration(15, 16) { // From version 1 to version 2
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             // Remove the table
-            database.execSQL("DROP INDEX main.index_TopicType_profileID_topicTypeName"); // Use the right table name
+            //database.execSQL("DROP INDEX main.index_TopicType_profileID_topicTypeName"); // Use the right table name
+
+            database.execSQL("ALTER TABLE 'language' ADD COLUMN 'tts_speechRate' REAL");
+
+            // OR: We could update it, by using an ALTER query
+
+            // OR: If needed, we can create the table again with the required settings
+            // database.execSQL("CREATE TABLE IF NOT EXISTS my_table (id INTEGER, PRIMARY KEY(id), ...)")
+        }
+    };
+    static final Migration MIGRATION_14_15 = new Migration(14, 15) { // From version 1 to version 2
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            // Remove the table
+            //database.execSQL("DROP INDEX main.index_TopicType_profileID_topicTypeName"); // Use the right table name
+
+              database.execSQL("ALTER TABLE 'language' ADD COLUMN 'tts_pitch' REAL");
+
+            // OR: We could update it, by using an ALTER query
+
+            // OR: If needed, we can create the table again with the required settings
+            // database.execSQL("CREATE TABLE IF NOT EXISTS my_table (id INTEGER, PRIMARY KEY(id), ...)")
+        }
+    };
+    static final Migration MIGRATION_13_14 = new Migration(13, 14) { // From version 1 to version 2
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            // Remove the table
+            //database.execSQL("DROP INDEX main.index_TopicType_profileID_topicTypeName"); // Use the right table name
+            database.execSQL("ALTER TABLE 'language' ADD COLUMN 'tts_voice' TEXT");
+          //  database.execSQL("ALTER TABLE 'language' ADD COLUMN 'tts_pitch' NUMBER");
 
             // OR: We could update it, by using an ALTER query
 

@@ -100,6 +100,9 @@ public class ConfigLanguageActivity extends BaseEditableAppCompatActivityNonFace
         EditText et_newItem = (EditText) myDialog.findViewById(R.id.et_dialog_newItem);
         EditText et_url = (EditText) myDialog.findViewById(R.id.et_dialog_lang_url);
         EditText et_locale = (EditText) myDialog.findViewById(R.id.et_dialog_lang_locale);
+        EditText et_tts_pitch = (EditText) myDialog.findViewById(R.id.et_dialog_lang_pitch);
+        EditText et_tts_voice = (EditText) myDialog.findViewById(R.id.et_dialog_lang_voice);
+        EditText et_tts_rate = (EditText) myDialog.findViewById(R.id.et_dialog_lang_rate);
 
         et_newItem.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -115,6 +118,9 @@ public class ConfigLanguageActivity extends BaseEditableAppCompatActivityNonFace
             et_newItem.setText(selectedItem.getLabelText());
             et_url.setText(selectedItem.getDefinitionUrl());
             et_locale.setText(selectedItem.getLocaleLanguageTag());
+            et_tts_pitch.setText(selectedItem.getTts_pitch().toString());
+            et_tts_rate.setText(selectedItem.getTts_speechRate()!=null ? selectedItem.getTts_speechRate().toString() : "1");
+            et_tts_voice.setText(selectedItem.getTts_voice());
         }
 
         btn_Submit.setOnClickListener(new View.OnClickListener()
@@ -127,6 +133,9 @@ public class ConfigLanguageActivity extends BaseEditableAppCompatActivityNonFace
                     selectedItem.setLanguageName(et_newItem.getText().toString());
                     selectedItem.setDefinitionUrl(et_url.getText().toString());
                     selectedItem.setLocaleLanguageTag(et_locale.getText().toString());
+                    selectedItem.setTts_pitch(Float.valueOf(et_tts_pitch.getText().toString()));
+                    selectedItem.setTts_speechRate(Float.valueOf(et_tts_rate.getText().toString()));
+                    selectedItem.setTts_voice(et_tts_voice.getText().toString());
                     updateItem(selectedItem);
                     myDialog.dismiss();
                 } else {
@@ -134,6 +143,9 @@ public class ConfigLanguageActivity extends BaseEditableAppCompatActivityNonFace
                     newItem.setLanguageName(et_newItem.getText().toString());
                     newItem.setDefinitionUrl(et_url.getText().toString());
                     newItem.setLocaleLanguageTag(et_locale.getText().toString());
+                    newItem.setTts_pitch(Float.valueOf(et_tts_pitch.getText().toString()));
+                    newItem.setTts_speechRate(Float.valueOf(et_tts_rate.getText().toString()));
+                    newItem.setTts_voice(et_tts_voice.getText().toString());
                     createItem(newItem);
                     myDialog.dismiss();
                 }

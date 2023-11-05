@@ -79,29 +79,21 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Translate");
         checkIsTranslateToForeign();
-        findTranslationAndLanguage();
         attachButtonOnClick();
         TextView et_checkAnswer = (TextView) findViewById(R.id.et_checkAnswer);
 
 
-        et_checkAnswer.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                }
+        et_checkAnswer.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             }
         });
 
         et_checkAnswer.requestFocus();
 
-
     }
 
     private void findTranslationAndLanguage() {
-
-
-
 
         DbExecutorImp<TranslationAndLanguages> dbExecutor = FactoryUtil.<TranslationAndLanguages>createDbExecutor();
         dbExecutor.execute_(new DbExecutor<TranslationAndLanguages>() {
@@ -109,22 +101,16 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
             public TranslationAndLanguages doInBackground() {
                  fromLanguage=languageService.findByID(cfExamQuestionnaireCross.word.getLanguageID());
                  toLanguage=cfExamQuestionnaireCross.getLanguage();
+                TranslationAndLanguages translationAndLanguages = new TranslationAndLanguages();
                 if (isTranslateToForeign) {
-                    TranslationAndLanguages translationAndLanguages = new TranslationAndLanguages();
                     translationAndLanguages.setForeignLanguage(toLanguage);
                     translationAndLanguages.setNativeLanguage(fromLanguage);
-                    translationAndLanguages.setTranslation(null);
-                    return translationAndLanguages;
                 } else {
-                    TranslationAndLanguages translationAndLanguages = new TranslationAndLanguages();
                     translationAndLanguages.setForeignLanguage(fromLanguage);
                     translationAndLanguages.setNativeLanguage(toLanguage);
-                    translationAndLanguages.setTranslation(null);
-                    return translationAndLanguages;
                 }
-
-
-
+                translationAndLanguages.setTranslation(null);
+                return translationAndLanguages;
 
             }
 
@@ -133,10 +119,15 @@ public class CFExamWordProceedQuestionActivity extends AppCompatActivity {
 
                     translationAndLanguages = item;
 
-                Locale locale = null;
+                Language language;
                 try {
-                    locale = Locale.forLanguageTag(translationAndLanguages.getNativeLanguage().getLocaleLanguageTag());
-                    textToSpeechUtil = new TextToSpeechUtil(locale, getApplicationContext());
+                    if (isTranslateToForeign) {
+                        language =translationAndLanguages.getForeignLanguage();
+                    } else {
+                        language = translationAndLanguages.getNativeLanguage();
+                    }
+                    textToSpeechUtil = new TextToSpeechUtil(language, getApplicationContext());
+
                 } catch (Exception ex) {
                   ; // Toast.makeText(getApplicationContext(), "Warning: Can not identify Language Locate Tag", Toast.LENGTH_LONG).show();
                 }

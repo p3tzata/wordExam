@@ -86,10 +86,10 @@ public class ShowForeignWordActivity extends AppCompatActivity {
         this.translationToLanguageID = (Long) getIntent().getSerializableExtra("translationToLanguageID");
         this.word= (Word) getIntent().getSerializableExtra("word");
         getSupportActionBar().setTitle(word.getWordString());
-        Locale locale=null;
+        Language language;
         try {
-            locale = Locale.forLanguageTag(translationAndLanguages.getForeignLanguage().getLocaleLanguageTag());
-            textToSpeechUtil =new TextToSpeechUtil(locale,getApplicationContext());
+            language = translationAndLanguages.getForeignLanguage();
+            textToSpeechUtil =new TextToSpeechUtil(language,getApplicationContext());
         } catch (Exception ex) {
             Toast.makeText(getApplicationContext(), "Warning: Can not identify Language Locate Tag",Toast.LENGTH_LONG).show();
         }

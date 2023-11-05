@@ -5,7 +5,9 @@ import android.widget.Toast;
 import android.speech.tts.TextToSpeech;
 
 import com.example.WordCFExam.activity.configureActivity.ConfigPreferenceActivity;
+import com.example.WordCFExam.entity.Language;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -16,27 +18,25 @@ public class TextToSpeechUtil {
     private Context context;
     private TextToSpeech textToSpeech;
 
-    public TextToSpeechUtil(Locale locale, Context context) {
-        this.locale = locale;
+    public TextToSpeechUtil(Language language, Context context) {
+        this.locale = Locale.forLanguageTag(language.getLocaleLanguageTag());
         this.context = context;
-        textToSpeech = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status != TextToSpeech.ERROR) {
-                    if (locale!=null) {
+        textToSpeech = new TextToSpeech(context, status -> {
+            if(status != TextToSpeech.ERROR) {
+                if (locale!=null) {
 
-                        if (textToSpeech.isLanguageAvailable(locale)==1) {
-                            textToSpeech.setLanguage(locale);
+                    if (textToSpeech.isLanguageAvailable(locale)==1) {
+                        textToSpeech.setLanguage(locale);
+                        if (language.getTts_pitch()!=null) {
+                            textToSpeech.setPitch(language.getTts_pitch());
+                        }
+                        if (language.getTts_speechRate()!=null) {
+                            textToSpeech.setSpeechRate(language.getTts_speechRate());
                         }
                     }
                 }
             }
         });
-        String ttsRateString = Session.getStringAttribute(
-                context, SessionNameAttribute.TextToSpeechRate,"1");
-
-
-        textToSpeech.setSpeechRate(Float.valueOf(ttsRateString));
 
     }
 
@@ -63,19 +63,30 @@ public class TextToSpeechUtil {
     public void shutdown() {
         textToSpeech.stop();
         textToSpeech.shutdown();
-
     }
 
     public void stop() {
         textToSpeech.stop();
-
-
     }
 
+    public String[] splitTextToSentences(String text) {
+        String[] splitSentences = text.split("[.?!]");
+        ArrayList<String> sentenceList = new ArrayList<>();
+        for (String sentence : splitSentences) {
+            sentenceList.add(sentence.trim());
+        }
+        String[] sentenceArray = new String[sentenceList.size()];
+        return sentenceList.toArray(sentenceArray);
+    }
 
+    public void speakSentence(String[] sentences, int index) {
+        String sentence = sentences[index];
+        textToSpeech.speak(sentence, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
 
-
-
+    public boolean isSpeaking(){
+        return textToSpeech.isSpeaking();
+    }
 
 
 

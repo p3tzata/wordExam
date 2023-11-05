@@ -7,19 +7,18 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "language",indices = {@Index(unique = true, value = {"languageName"})})
-public class Language implements Serializable,TextLabelable {
+@Entity(tableName = "language", indices = {@Index(unique = true, value = {"languageName"})})
+public class Language implements Serializable, TextLabelable {
 
     @PrimaryKey
     private Long languageID;
-
     @NonNull
     private String languageName;
-
     private String definitionUrl;
-
     private String localeLanguageTag;
-
+    private String tts_voice;
+    private Float tts_pitch;
+    private Float tts_speechRate;
 
     public Language() {
     }
@@ -56,6 +55,28 @@ public class Language implements Serializable,TextLabelable {
         this.definitionUrl = definitionUrl;
     }
 
+    public String getTts_voice() {
+        return tts_voice;
+    }
+
+    public void setTts_voice(String tts_voice) {
+        this.tts_voice = tts_voice;
+    }
+    public Float getTts_pitch() {
+        return tts_pitch;
+    }
+
+    public Float getTts_speechRate() {
+        return tts_speechRate;
+    }
+
+    public void setTts_speechRate(Float tts_speechRate) {
+        this.tts_speechRate = tts_speechRate;
+    }
+
+    public void setTts_pitch(Float tts_pitch) {
+        this.tts_pitch = tts_pitch;
+    }
     @Override
     public String getLabelText() {
         return getLanguageName();
