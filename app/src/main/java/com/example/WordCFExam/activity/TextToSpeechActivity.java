@@ -246,9 +246,20 @@ public class TextToSpeechActivity extends AppCompatActivity {
         while (currentSentenceIndex.get() < sentences.length) {
 
             textToSpeechUtil.speakSentence(sentences, currentSentenceIndex.get());
-            Thread.sleep(minPauseMs);
+
             while (textToSpeechUtil.isSpeaking()) {
                 Thread.sleep(100L);
+            }
+
+            long elapsedPauseMs = 0L;
+            while (elapsedPauseMs < minPauseMs
+                    && !isStopButtonPushed
+                    && !isNextButtonPushed
+                    && !isPreviousButtonPushed
+                    && !isPauseButtonPushed
+            ) {
+                Thread.sleep(100L);
+                elapsedPauseMs = elapsedPauseMs + 100L;
             }
 
             if (isStopButtonPushed) {
