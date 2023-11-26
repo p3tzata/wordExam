@@ -2,7 +2,6 @@ package com.example.WordCFExam.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -138,7 +137,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
                 textToSpeechUtil.stop();
                 isStopButtonPushed = true;
                 currentSentenceIndex.set(0);
-                sentences=null;
+                sentences = null;
                 EditText et_textToSpeak = (EditText) findViewById(R.id.et_textToSpeak);
                 et_textToSpeak.setText("");
             }
@@ -198,6 +197,11 @@ public class TextToSpeechActivity extends AppCompatActivity {
 
             if (textToSpeechUtil != null) {
                 EditText et_textToSpeak = (EditText) findViewById(R.id.et_textToSpeak);
+                EditText et_miniPause = (EditText) findViewById(R.id.et_TextToSpeechMiniPause);
+                String miniPauseString = et_miniPause.getText().toString().equals("") ? "0" : et_miniPause.getText().toString();
+                Float miniPauseSec = Float.valueOf(miniPauseString);
+                long miniPauseMs = (long) (miniPauseSec * 1000);
+
                 String textToSpeak = et_textToSpeak.getText().toString();
                 sentences = textToSpeechUtil.splitTextToSentences(textToSpeak);
 
@@ -207,7 +211,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
                         currentSentenceIndex.set(0);
                     }
                     try {
-                        this.playHandler(sentences);
+                        this.playHandler(sentences, miniPauseMs);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -238,11 +242,11 @@ public class TextToSpeechActivity extends AppCompatActivity {
         return true;
     }
 
-    public void playHandler(String[] sentences) throws InterruptedException {
+    public void playHandler(String[] sentences, long minPauseMs) throws InterruptedException {
         while (currentSentenceIndex.get() < sentences.length) {
 
             textToSpeechUtil.speakSentence(sentences, currentSentenceIndex.get());
-
+            Thread.sleep(minPauseMs);
             while (textToSpeechUtil.isSpeaking()) {
                 Thread.sleep(100L);
             }
