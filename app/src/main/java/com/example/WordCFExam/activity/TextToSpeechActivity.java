@@ -1,10 +1,15 @@
 package com.example.WordCFExam.activity;
 
+import static java.security.AccessController.getContext;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -45,12 +50,14 @@ public class TextToSpeechActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_to_speech);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         this.languageService = FactoryUtil.createLanguageService(getApplication());
 
         getSupportActionBar().setTitle("Text to Speech");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        EditText et_textToSpeak = (EditText) findViewById(R.id.et_textToSpeak);
+        et_textToSpeak.setMaxLines(15);
         DbExecutorImp<List<Language>> dbExecutor = FactoryUtil.<List<Language>>createDbExecutor();
         dbExecutor.execute_(new DbExecutor<List<Language>>() {
             @Override
@@ -111,8 +118,16 @@ public class TextToSpeechActivity extends AppCompatActivity {
             }
         });
 
-
         attachButtonListeners();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (textToSpeechUtil != null) {
+            textToSpeechUtil.stop();
+        }
+        setBrightness(0.5F);
     }
 
     private void attachButtonListeners() {
@@ -129,6 +144,8 @@ public class TextToSpeechActivity extends AppCompatActivity {
                 textToSpeechUtil.stop();
                 isStopButtonPushed = true;
                 currentSentenceIndex.set(0);
+
+                setBrightness(0.5F);
             }
         });
 
@@ -140,6 +157,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
                 sentences = null;
                 EditText et_textToSpeak = (EditText) findViewById(R.id.et_textToSpeak);
                 et_textToSpeak.setText("");
+                setBrightness(0.5F);
             }
         });
 
@@ -199,8 +217,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
                 EditText et_textToSpeak = (EditText) findViewById(R.id.et_textToSpeak);
                 EditText et_miniPause = (EditText) findViewById(R.id.et_TextToSpeechMiniPause);
                 String miniPauseString = et_miniPause.getText().toString().equals("") ? "0" : et_miniPause.getText().toString();
-                Float miniPauseSec = Float.valueOf(miniPauseString);
-                long miniPauseMs = (long) (miniPauseSec * 1000);
+                Double miniPauseSec = Double.valueOf(miniPauseString);
 
                 String textToSpeak = et_textToSpeak.getText().toString();
                 sentences = textToSpeechUtil.splitTextToSentences(textToSpeak);
@@ -211,7 +228,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
                         currentSentenceIndex.set(0);
                     }
                     try {
-                        this.playHandler(sentences, miniPauseMs);
+                        this.playHandler(sentences, miniPauseSec);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -219,7 +236,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
                         // OnPostExecute stuff here
                     });
                 }).start();
-
+                setBrightness(0F);
 
                 // textToSpeechUtil.speak(textToSpeak, "speaking");
             } else {
@@ -242,24 +259,13 @@ public class TextToSpeechActivity extends AppCompatActivity {
         return true;
     }
 
-    public void playHandler(String[] sentences, long minPauseMs) throws InterruptedException {
+    public void playHandler(String[] sentences, double miniPauseSec) throws InterruptedException {
         while (currentSentenceIndex.get() < sentences.length) {
 
-            textToSpeechUtil.speakSentence(sentences, currentSentenceIndex.get());
+            textToSpeechUtil.speakSentence(sentences, currentSentenceIndex.get(), miniPauseSec, 0.6);
 
             while (textToSpeechUtil.isSpeaking()) {
                 Thread.sleep(100L);
-            }
-
-            long elapsedPauseMs = 0L;
-            while (elapsedPauseMs < minPauseMs
-                    && !isStopButtonPushed
-                    && !isNextButtonPushed
-                    && !isPreviousButtonPushed
-                    && !isPauseButtonPushed
-            ) {
-                Thread.sleep(100L);
-                elapsedPauseMs = elapsedPauseMs + 100L;
             }
 
             if (isStopButtonPushed) {
@@ -285,6 +291,12 @@ public class TextToSpeechActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+   private void setBrightness(Float target) {
+        WindowManager.LayoutParams layout = getWindow().getAttributes();
+        layout.screenBrightness = target;
+        getWindow().setAttributes(layout);
     }
 
 }
