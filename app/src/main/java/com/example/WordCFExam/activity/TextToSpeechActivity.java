@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -229,6 +230,12 @@ public class TextToSpeechActivity extends AppCompatActivity {
                     }
                     try {
                         this.playHandler(sentences, miniPauseSec);
+
+                        CheckBox chkb_isFinish = (CheckBox) findViewById(R.id.chkb_textToSpeechFinish);
+                        if (chkb_isFinish.isChecked()){
+                            finish();
+                        }
+
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -262,7 +269,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
     public void playHandler(String[] sentences, double miniPauseSec) throws InterruptedException {
         while (currentSentenceIndex.get() < sentences.length) {
 
-            textToSpeechUtil.speakSentence(sentences, currentSentenceIndex.get(), miniPauseSec, 0.6);
+            textToSpeechUtil.speakSentence(sentences, currentSentenceIndex.get(), miniPauseSec, 0.3);
 
             while (textToSpeechUtil.isSpeaking()) {
                 Thread.sleep(100L);
