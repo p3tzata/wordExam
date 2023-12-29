@@ -1,12 +1,12 @@
 package com.example.WordCFExam.activity;
 
-import static java.security.AccessController.getContext;
-
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
-import android.os.PowerManager;
-import android.provider.Settings;
+import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -34,6 +35,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TextToSpeechActivity extends AppCompatActivity {
     Toast m_currentToast;
+
     private TextToSpeechUtil textToSpeechUtil;
     private LanguageSpinAdapter foreignSpinnerAdapter;
     private LanguageService languageService;
@@ -47,9 +49,16 @@ public class TextToSpeechActivity extends AppCompatActivity {
     ZonedDateTime nextButtonPushedTime = ZonedDateTime.now();
     String[] sentences;
 
+    private Handler handler;
+    protected static Dialog myDialog;
+    TextView tx_dialog_speaking;
+    CheckBox chkb_isFinish;
+    CheckBox chkb_isHelp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_text_to_speech);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         this.languageService = FactoryUtil.createLanguageService(getApplication());
@@ -60,6 +69,19 @@ public class TextToSpeechActivity extends AppCompatActivity {
         EditText et_textToSpeak = (EditText) findViewById(R.id.et_textToSpeak);
         et_textToSpeak.setMaxLines(15);
         DbExecutorImp<List<Language>> dbExecutor = FactoryUtil.<List<Language>>createDbExecutor();
+
+        chkb_isFinish = findViewById(R.id.chkb_textToSpeechFinish);
+        chkb_isHelp = findViewById(R.id.chkb_textToSpeechHelpDialog);
+
+        myDialog = new Dialog(TextToSpeechActivity.this);
+        myDialog.setContentView(R.layout.dialog_speach);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        myDialog.getWindow().setLayout((6 * width) / 7, (4 * height) / 10);
+        tx_dialog_speaking = myDialog.findViewById(R.id.tx_dialog_speaking);
+        handler = new Handler();
+
         dbExecutor.execute_(new DbExecutor<List<Language>>() {
             @Override
             public List<Language> doInBackground() {
@@ -223,29 +245,33 @@ public class TextToSpeechActivity extends AppCompatActivity {
                 String textToSpeak = et_textToSpeak.getText().toString();
                 sentences = textToSpeechUtil.splitTextToSentences(textToSpeak);
 
-                new Thread(() -> {
-                    // do background stuff here
-                    if (currentSentenceIndex.get() >= sentences.length) {
-                        currentSentenceIndex.set(0);
-                    }
-                    try {
-                        this.playHandler(sentences, miniPauseSec);
+                new Thread(
+                        () -> {
+                            // do background stuff here
+                            if (currentSentenceIndex.get() >= sentences.length) {
+                                currentSentenceIndex.set(0);
+                            }
+                            try {
+                                this.playHandler(sentences, miniPauseSec, getApplicationContext());
 
-                        CheckBox chkb_isFinish = (CheckBox) findViewById(R.id.chkb_textToSpeechFinish);
-                        if (chkb_isFinish.isChecked()){
-                            finish();
-                        }
 
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    runOnUiThread(() -> {
-                        // OnPostExecute stuff here
-                    });
-                }).start();
-                setBrightness(0F);
+                                if (chkb_isFinish.isChecked()) {
+                                    finish();
+                                }
 
-                // textToSpeechUtil.speak(textToSpeak, "speaking");
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                        }).start();
+
+                if (chkb_isHelp.isChecked()) {
+                    setBrightness(0.3F);
+                } else {
+                    setBrightness(0F);
+                }
+
+
             } else {
                 Toast.makeText(getApplicationContext(), "Select Language", Toast.LENGTH_LONG).show();
             }
@@ -266,10 +292,19 @@ public class TextToSpeechActivity extends AppCompatActivity {
         return true;
     }
 
-    public void playHandler(String[] sentences, double miniPauseSec) throws InterruptedException {
+    public void playHandler(String[] sentences, double miniPauseSec, Context applicationContext) throws InterruptedException {
+
+        if (chkb_isHelp.isChecked()) {
+            runOnMainUITread(() -> myDialog.show());
+        }
+
         while (currentSentenceIndex.get() < sentences.length) {
 
             textToSpeechUtil.speakSentence(sentences, currentSentenceIndex.get(), miniPauseSec, 0.3);
+
+            if (chkb_isHelp.isChecked()) {
+                runOnMainUITread(() -> tx_dialog_speaking.setText(sentences[currentSentenceIndex.get()]));
+            }
 
             while (textToSpeechUtil.isSpeaking()) {
                 Thread.sleep(100L);
@@ -298,12 +333,20 @@ public class TextToSpeechActivity extends AppCompatActivity {
             }
         }
 
+        if (chkb_isHelp.isChecked()) {
+            runOnMainUITread(() -> myDialog.dismiss());
+        }
     }
 
-   private void setBrightness(Float target) {
+    private void setBrightness(Float target) {
         WindowManager.LayoutParams layout = getWindow().getAttributes();
         layout.screenBrightness = target;
         getWindow().setAttributes(layout);
+    }
+
+    private void runOnMainUITread(Runnable runnable){
+        // This thread runs in the UI
+        new Thread(() -> handler.post(runnable)).start();
     }
 
 }
