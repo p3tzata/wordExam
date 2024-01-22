@@ -87,8 +87,15 @@ public class TextToSpeechUtil {
             String sentenceSplitByNewLine = sentenceSplitByNewLines[i];
             String[] chunks = sentenceSplitByNewLine.split(",");
             for (int c = 0; c < chunks.length; c++) {
+                if (c > 0) {
+                    if (chunks[c].length() > 10) {
+                        textToSpeech.playSilentUtterance((long) (miniPauseSec * 10) * 100L, TextToSpeech.QUEUE_ADD, null);
+                    } else {
+                        textToSpeech.playSilentUtterance((long) (commaPauseSec * 10) * 100L, TextToSpeech.QUEUE_ADD, null);
+                    }
+                }
                 textToSpeech.speak(chunks[c], TextToSpeech.QUEUE_ADD, null, null);
-                textToSpeech.playSilentUtterance((long) (commaPauseSec * 10) * 100L, TextToSpeech.QUEUE_ADD, null);
+
             }
             textToSpeech.playSilentUtterance((long) (miniPauseSec * 10) * 100L, TextToSpeech.QUEUE_ADD, null);
         }

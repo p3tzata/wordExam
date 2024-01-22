@@ -239,8 +239,8 @@ public class TextToSpeechActivity extends AppCompatActivity {
             if (textToSpeechUtil != null) {
                 EditText et_textToSpeak = (EditText) findViewById(R.id.et_textToSpeak);
                 EditText et_miniPause = (EditText) findViewById(R.id.et_TextToSpeechMiniPause);
-                String miniPauseString = et_miniPause.getText().toString().equals("") ? "0" : et_miniPause.getText().toString();
-                Double miniPauseSec = Double.valueOf(miniPauseString);
+                String pauseString = et_miniPause.getText().toString().equals("") ? "0" : et_miniPause.getText().toString();
+                Double pauseSec = Double.valueOf(pauseString);
 
                 String textToSpeak = et_textToSpeak.getText().toString();
                 sentences = textToSpeechUtil.splitTextToSentences(textToSpeak);
@@ -252,7 +252,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
                                 currentSentenceIndex.set(0);
                             }
                             try {
-                                this.playHandler(sentences, miniPauseSec, getApplicationContext());
+                                this.playHandler(sentences, pauseSec, getApplicationContext());
 
 
                                 if (chkb_isFinish.isChecked()) {
@@ -292,7 +292,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
         return true;
     }
 
-    public void playHandler(String[] sentences, double miniPauseSec, Context applicationContext) throws InterruptedException {
+    public void playHandler(String[] sentences, double pauseSec, Context applicationContext) throws InterruptedException {
 
         if (chkb_isHelp.isChecked()) {
             runOnMainUITread(() -> myDialog.show());
@@ -300,7 +300,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
 
         while (currentSentenceIndex.get() < sentences.length) {
 
-            textToSpeechUtil.speakSentence(sentences, currentSentenceIndex.get(), miniPauseSec, 0.3);
+            textToSpeechUtil.speakSentence(sentences, currentSentenceIndex.get(), pauseSec, 0.3);
 
             if (chkb_isHelp.isChecked()) {
                 runOnMainUITread(() -> tx_dialog_speaking.setText(sentences[currentSentenceIndex.get()]));
