@@ -88,13 +88,23 @@ public class TextToSpeechUtil {
             String[] chunks = sentenceSplitByNewLine.split(",");
             for (int c = 0; c < chunks.length; c++) {
                 if (c > 0) {
-                    if (chunks[c].length() > 10) {
+                    if (chunks[c].length() > 10 && chunks[c-1].length() > 10) {
                         textToSpeech.playSilentUtterance((long) (miniPauseSec * 10) * 100L, TextToSpeech.QUEUE_ADD, null);
                     } else {
                         textToSpeech.playSilentUtterance((long) (commaPauseSec * 10) * 100L, TextToSpeech.QUEUE_ADD, null);
                     }
                 }
-                textToSpeech.speak(chunks[c], TextToSpeech.QUEUE_ADD, null, null);
+
+                String[] tooManyWords = processToManyWords(chunks[c]);
+                int count=0;
+                while (count<tooManyWords.length) {
+                    textToSpeech.speak(tooManyWords[count], TextToSpeech.QUEUE_ADD, null, null);
+                    if (count < tooManyWords.length-1) {
+                        textToSpeech.playSilentUtterance((long) (miniPauseSec * 10) * 100L, TextToSpeech.QUEUE_ADD, null);
+                    }
+                    count++;
+                }
+
 
             }
             textToSpeech.playSilentUtterance((long) (miniPauseSec * 10) * 100L, TextToSpeech.QUEUE_ADD, null);
@@ -102,6 +112,44 @@ public class TextToSpeechUtil {
 
 
         //textToSpeech.playSilentUtterance((long) (miniPauseSec * 10) * 100L, TextToSpeech.QUEUE_ADD, null);
+    }
+
+    private String[] processToManyWords(String sentence){
+        int maxWords=5;
+        ArrayList<String> result = new ArrayList<>();
+        String[] chunks = sentence.split(" ");
+        StringBuffer temp=new StringBuffer();
+        if(chunks.length>maxWords) {
+            for(int i=0;i<chunks.length;i++){
+                    temp.append(chunks[i]+" ");
+                    if (i%maxWords==0 && i/maxWords>0) {
+                        result.add(temp.toString());
+                        temp=new StringBuffer();
+
+                        //to avoid example:  I am here {pause} now.
+                        if (((chunks.length-1-i) / maxWords)<1) {
+                            i++;
+                            while (i<chunks.length){
+                                temp.append(chunks[i]+" ");
+                                i++;
+                            }
+                            break;
+                        }
+                    }
+            }
+            //result.add(temp.toString());
+            if (temp.length()>0) {
+                int lastIndex = result.size() - 1;
+                String lastChunk = result.get(lastIndex);
+                lastChunk = lastChunk + temp;
+                result.set(lastIndex, lastChunk);
+            }
+
+        } else {
+            result.add(sentence);
+        }
+
+        return result.toArray(new String[result.size()]);
     }
 
     public boolean isSpeaking() {
