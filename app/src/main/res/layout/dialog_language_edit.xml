@@ -23,9 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dip"
                 android:gravity="center"
-                android:text="Item"
-
-                android:textColor="#000000" />
+                android:text="Item" />
 
             <EditText
                 android:id="@+id/et_dialog_newItem"
@@ -41,8 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dip"
                 android:gravity="center"
-                android:text="Url defenition"
-                android:textColor="#000000" />
+                android:text="Url defenition" />
 
             <EditText
                 android:id="@+id/et_dialog_lang_url"
@@ -58,8 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dip"
                 android:gravity="center"
-                android:text="Language Locale Tag"
-                android:textColor="#000000" />
+                android:text="Language Locale Tag" />
 
             <EditText
                 android:id="@+id/et_dialog_lang_locale"
@@ -76,8 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dip"
                 android:gravity="center"
-                android:text="TTS pitch"
-                android:textColor="#000000" />
+                android:text="TTS pitch" />
 
             <EditText
                 android:id="@+id/et_dialog_lang_pitch"
@@ -93,8 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dip"
                 android:gravity="center"
-                android:text="SpeechRate"
-                android:textColor="#000000" />
+                android:text="SpeechRate" />
 
             <EditText
                 android:id="@+id/et_dialog_lang_rate"
@@ -110,8 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dip"
                 android:gravity="center"
-                android:text="Language Locale Tag"
-                android:textColor="#000000" />
+                android:text="Language Locale Tag" />
 
             <EditText
                 android:id="@+id/et_dialog_lang_voice"

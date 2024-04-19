@@ -9,7 +9,6 @@
         android:layout_weight="20"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFFFF"
         android:fontFamily="serif" />
 
     <TextView
@@ -17,12 +16,10 @@
         style="@style/word_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFFFF"
         android:fontFamily="serif" />
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        android:layout_height="1dp" />
 
 
 </LinearLayout>

@@ -33,8 +33,7 @@
         <View
             android:id="@+id/view4"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+            android:layout_height="1dp" />
 
         <TextView
             android:id="@+id/textView8"
@@ -52,8 +51,7 @@
         <View
             android:id="@+id/view3"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+            android:layout_height="1dp" />
 
         <Button
             android:id="@+id/btn_preferenceSubmit"
