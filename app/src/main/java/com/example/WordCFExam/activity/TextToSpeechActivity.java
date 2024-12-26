@@ -6,6 +6,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.sax.TextElementListener;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,6 +57,9 @@ public class TextToSpeechActivity extends AppCompatActivity {
     TextView tx_dialog_speaking;
     EditText et_textToSpeak;
     TextView tv_textToSpeakHelper;
+    TextView tv_totalCountSentences;
+    EditText et_TextToSpeech_startFromIndx;
+    TextView tv_currentSentenceIndx;
     TextView tv_textToSpeakHelperPrev;
     CheckBox chkb_isFinish;
     CheckBox chkb_isHelp;
@@ -72,7 +78,9 @@ public class TextToSpeechActivity extends AppCompatActivity {
         et_textToSpeak = (EditText) findViewById(R.id.et_textToSpeak);
         tv_textToSpeakHelper = (TextView) findViewById(R.id.tv_textToSpeakHelper);
         tv_textToSpeakHelperPrev = (TextView) findViewById(R.id.tv_textToSpeakHelperPrev);
-
+        tv_totalCountSentences = (TextView) findViewById(R.id.tv_textToSpeach_totalCountSentences);
+        tv_currentSentenceIndx = (TextView) findViewById(R.id.tv_textToSpeach_currentSentenceIndx);
+        et_TextToSpeech_startFromIndx = (EditText) findViewById(R.id.et_TextToSpeech_startFromIndx);
         tv_textToSpeakHelper.setText("");
         tv_textToSpeakHelperPrev.setText("");
 
@@ -149,7 +157,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
             }
         });
 
-        attachButtonListeners();
+        attachListeners();
     }
 
     @Override
@@ -161,7 +169,31 @@ public class TextToSpeechActivity extends AppCompatActivity {
         setBrightness(0.5F);
     }
 
-    private void attachButtonListeners() {
+    private void attachListeners() {
+
+        et_textToSpeak.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() != 0) {
+
+                    runOnMainUITread(() ->
+
+                            tv_totalCountSentences.setText(String.valueOf(TextToSpeechUtil.splitTextToSentences(s.toString()).length))
+
+                    );
+                }
+            }
+        });
 
         findViewById(R.id.btn_textToSpeechPause).setOnClickListener(v -> {
             if (textToSpeechUtil != null) {
@@ -265,7 +297,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
 
 
                                 if (chkb_isFinish.isChecked()) {
-                                  //todo remove if fun   finish();
+                                    //todo remove if fun   finish();
                                 }
 
                             } catch (InterruptedException e) {
@@ -304,21 +336,26 @@ public class TextToSpeechActivity extends AppCompatActivity {
     public void playHandler(String[] sentences, double pauseSec, Context applicationContext) throws InterruptedException {
 
         if (chkb_isHelp.isChecked()) {
-          //todo remove if fun with tv_textToSpeakHelper.  runOnMainUITread(() -> myDialog.show());
+            //todo remove if fun with tv_textToSpeakHelper.  runOnMainUITread(() -> myDialog.show());
+        }
+        String et_TextToSpeech_startFromIndxText = et_TextToSpeech_startFromIndx.getText().toString();
+        if (et_TextToSpeech_startFromIndxText!="") {
+            currentSentenceIndex.set(Integer.valueOf(et_TextToSpeech_startFromIndxText)-1);
         }
 
         while (currentSentenceIndex.get() < sentences.length) {
 
+            runOnMainUITread(() -> tv_currentSentenceIndx.setText(String.valueOf(currentSentenceIndex.get()+1)));
+
             textToSpeechUtil.speakSentence(sentences, currentSentenceIndex.get(), pauseSec, 0.3);
 
             if (chkb_isHelp.isChecked()) {
-               // todo remove if fun with tv_textToSpeakHelper. runOnMainUITread(() -> tx_dialog_speaking.setText(sentences[currentSentenceIndex.get()]));
+                // todo remove if fun with tv_textToSpeakHelper. runOnMainUITread(() -> tx_dialog_speaking.setText(sentences[currentSentenceIndex.get()]));
                 runOnMainUITread(() -> tv_textToSpeakHelper.setText(sentences[currentSentenceIndex.get()]));
 
-                if (currentSentenceIndex.get()>=1) {
-                    runOnMainUITread(() -> tv_textToSpeakHelperPrev.setText(sentences[currentSentenceIndex.get()-1]));
+                if (currentSentenceIndex.get() >= 1) {
+                    runOnMainUITread(() -> tv_textToSpeakHelperPrev.setText(sentences[currentSentenceIndex.get() - 1]));
                 }
-
 
 
             }
@@ -351,7 +388,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
         }
 
         if (chkb_isHelp.isChecked()) {
-          //  todo remove if fun with tv_textToSpeakHelper.   runOnMainUITread(() -> myDialog.dismiss());
+            //  todo remove if fun with tv_textToSpeakHelper.   runOnMainUITread(() -> myDialog.dismiss());
         }
     }
 
@@ -361,7 +398,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
         getWindow().setAttributes(layout);
     }
 
-    private void runOnMainUITread(Runnable runnable){
+    private void runOnMainUITread(Runnable runnable) {
         // This thread runs in the UI
         new Thread(() -> handler.post(runnable)).start();
     }

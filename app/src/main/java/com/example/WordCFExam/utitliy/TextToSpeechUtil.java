@@ -68,7 +68,7 @@ public class TextToSpeechUtil {
         textToSpeech.stop();
     }
 
-    public String[] splitTextToSentences(String text) {
+    public static String[] splitTextToSentences(String text) {
         String[] splitSentences = text.split("[.?!]");
         ArrayList<String> sentenceList = new ArrayList<>();
         for (String sentence : splitSentences) {
