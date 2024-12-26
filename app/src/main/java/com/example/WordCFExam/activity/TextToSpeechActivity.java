@@ -52,6 +52,9 @@ public class TextToSpeechActivity extends AppCompatActivity {
     private Handler handler;
     protected static Dialog myDialog;
     TextView tx_dialog_speaking;
+    EditText et_textToSpeak;
+    TextView tv_textToSpeakHelper;
+    TextView tv_textToSpeakHelperPrev;
     CheckBox chkb_isFinish;
     CheckBox chkb_isHelp;
 
@@ -66,8 +69,14 @@ public class TextToSpeechActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Text to Speech");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        EditText et_textToSpeak = (EditText) findViewById(R.id.et_textToSpeak);
-        et_textToSpeak.setMaxLines(15);
+        et_textToSpeak = (EditText) findViewById(R.id.et_textToSpeak);
+        tv_textToSpeakHelper = (TextView) findViewById(R.id.tv_textToSpeakHelper);
+        tv_textToSpeakHelperPrev = (TextView) findViewById(R.id.tv_textToSpeakHelperPrev);
+
+        tv_textToSpeakHelper.setText("");
+        tv_textToSpeakHelperPrev.setText("");
+
+        et_textToSpeak.setMaxLines(3);
         DbExecutorImp<List<Language>> dbExecutor = FactoryUtil.<List<Language>>createDbExecutor();
 
         chkb_isFinish = findViewById(R.id.chkb_textToSpeechFinish);
@@ -81,7 +90,6 @@ public class TextToSpeechActivity extends AppCompatActivity {
         myDialog.getWindow().setLayout((6 * width) / 7, (4 * height) / 10);
         tx_dialog_speaking = myDialog.findViewById(R.id.tx_dialog_speaking);
         handler = new Handler();
-
         dbExecutor.execute_(new DbExecutor<List<Language>>() {
             @Override
             public List<Language> doInBackground() {
@@ -244,7 +252,8 @@ public class TextToSpeechActivity extends AppCompatActivity {
 
                 String textToSpeak = et_textToSpeak.getText().toString();
                 sentences = textToSpeechUtil.splitTextToSentences(textToSpeak);
-
+                tv_textToSpeakHelper.setText("");
+                tv_textToSpeakHelperPrev.setText("");
                 new Thread(
                         () -> {
                             // do background stuff here
@@ -256,7 +265,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
 
 
                                 if (chkb_isFinish.isChecked()) {
-                                    finish();
+                                  //todo remove if fun   finish();
                                 }
 
                             } catch (InterruptedException e) {
@@ -295,7 +304,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
     public void playHandler(String[] sentences, double pauseSec, Context applicationContext) throws InterruptedException {
 
         if (chkb_isHelp.isChecked()) {
-            runOnMainUITread(() -> myDialog.show());
+          //todo remove if fun with tv_textToSpeakHelper.  runOnMainUITread(() -> myDialog.show());
         }
 
         while (currentSentenceIndex.get() < sentences.length) {
@@ -303,7 +312,15 @@ public class TextToSpeechActivity extends AppCompatActivity {
             textToSpeechUtil.speakSentence(sentences, currentSentenceIndex.get(), pauseSec, 0.3);
 
             if (chkb_isHelp.isChecked()) {
-                runOnMainUITread(() -> tx_dialog_speaking.setText(sentences[currentSentenceIndex.get()]));
+               // todo remove if fun with tv_textToSpeakHelper. runOnMainUITread(() -> tx_dialog_speaking.setText(sentences[currentSentenceIndex.get()]));
+                runOnMainUITread(() -> tv_textToSpeakHelper.setText(sentences[currentSentenceIndex.get()]));
+
+                if (currentSentenceIndex.get()>=1) {
+                    runOnMainUITread(() -> tv_textToSpeakHelperPrev.setText(sentences[currentSentenceIndex.get()-1]));
+                }
+
+
+
             }
 
             while (textToSpeechUtil.isSpeaking()) {
@@ -334,7 +351,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
         }
 
         if (chkb_isHelp.isChecked()) {
-            runOnMainUITread(() -> myDialog.dismiss());
+          //  todo remove if fun with tv_textToSpeakHelper.   runOnMainUITread(() -> myDialog.dismiss());
         }
     }
 
