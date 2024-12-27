@@ -295,11 +295,6 @@ public class TextToSpeechActivity extends AppCompatActivity {
                             try {
                                 this.playHandler(sentences, pauseSec, getApplicationContext());
 
-
-                                if (chkb_isFinish.isChecked()) {
-                                    //todo remove if fun   finish();
-                                }
-
                             } catch (InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
@@ -335,22 +330,19 @@ public class TextToSpeechActivity extends AppCompatActivity {
 
     public void playHandler(String[] sentences, double pauseSec, Context applicationContext) throws InterruptedException {
 
-        if (chkb_isHelp.isChecked()) {
-            //todo remove if fun with tv_textToSpeakHelper.  runOnMainUITread(() -> myDialog.show());
-        }
         String et_TextToSpeech_startFromIndxText = et_TextToSpeech_startFromIndx.getText().toString();
-        if (et_TextToSpeech_startFromIndxText!="") {
-            currentSentenceIndex.set(Integer.valueOf(et_TextToSpeech_startFromIndxText)-1);
+        if (et_TextToSpeech_startFromIndxText.length() > 0) {
+            currentSentenceIndex.set(Integer.valueOf(et_TextToSpeech_startFromIndxText) - 1);
         }
 
         while (currentSentenceIndex.get() < sentences.length) {
 
-            runOnMainUITread(() -> tv_currentSentenceIndx.setText(String.valueOf(currentSentenceIndex.get()+1)));
+            runOnMainUITread(() -> tv_currentSentenceIndx.setText(String.valueOf(currentSentenceIndex.get() + 1)));
 
             textToSpeechUtil.speakSentence(sentences, currentSentenceIndex.get(), pauseSec, 0.3);
 
             if (chkb_isHelp.isChecked()) {
-                // todo remove if fun with tv_textToSpeakHelper. runOnMainUITread(() -> tx_dialog_speaking.setText(sentences[currentSentenceIndex.get()]));
+
                 runOnMainUITread(() -> tv_textToSpeakHelper.setText(sentences[currentSentenceIndex.get()]));
 
                 if (currentSentenceIndex.get() >= 1) {
@@ -387,9 +379,6 @@ public class TextToSpeechActivity extends AppCompatActivity {
             }
         }
 
-        if (chkb_isHelp.isChecked()) {
-            //  todo remove if fun with tv_textToSpeakHelper.   runOnMainUITread(() -> myDialog.dismiss());
-        }
     }
 
     private void setBrightness(Float target) {
