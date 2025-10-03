@@ -331,7 +331,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
     public void playHandler(String[] sentences, double pauseSec, Context applicationContext) throws InterruptedException {
 
         String et_TextToSpeech_startFromIndxText = et_TextToSpeech_startFromIndx.getText().toString();
-        if (et_TextToSpeech_startFromIndxText.length() > 0) {
+        if (et_TextToSpeech_startFromIndxText.length() > 0 && currentSentenceIndex.get() == 0) {
             currentSentenceIndex.set(Integer.valueOf(et_TextToSpeech_startFromIndxText) - 1);
         }
 
