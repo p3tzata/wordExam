@@ -57,20 +57,6 @@
                     android:layout_height="wrap_content"
                     android:text="Stop" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_textToSpeechPause"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:text="Pause" />
-
                 <EditText
                     android:id="@+id/et_TextToSpeechMiniPause"
                     android:layout_width="50dp"
@@ -79,6 +65,34 @@
                     android:hint="Sec."
                     android:inputType="numberDecimal" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="80dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_textToSpeechReplay"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Replay" />
+
+                <Button
+                    android:id="@+id/btn_textToSpeechPause"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Pause" />
+
+                <Button
+                    android:id="@+id/btn_textToSpeechRepeat"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Repeat" />
 
             </LinearLayout>
             <LinearLayout

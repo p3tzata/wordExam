@@ -3,10 +3,8 @@ package com.example.WordCFExam.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.sax.TextElementListener;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -38,13 +36,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TextToSpeechActivity extends AppCompatActivity {
     Toast m_currentToast;
-
     private TextToSpeechUtil textToSpeechUtil;
     private LanguageSpinAdapter foreignSpinnerAdapter;
     private LanguageService languageService;
     private Spinner spn_item_foreign;
     AtomicInteger currentSentenceIndex = new AtomicInteger(0);
     boolean isStopButtonPushed = false;
+    boolean isReplayButtonPushed = false;
+    boolean isRepeatButtonPushed = false;
     boolean isPauseButtonPushed = false;
     boolean isPreviousButtonPushed = false;
     boolean isNextButtonPushed = false;
@@ -195,6 +194,20 @@ public class TextToSpeechActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btn_textToSpeechReplay).setOnClickListener(v -> {
+            if (textToSpeechUtil != null) {
+                textToSpeechUtil.stop();
+                isReplayButtonPushed = true;
+            }
+        });
+
+        findViewById(R.id.btn_textToSpeechRepeat).setOnClickListener(v -> {
+            if (textToSpeechUtil != null) {
+                textToSpeechUtil.stop();
+                isRepeatButtonPushed = !isRepeatButtonPushed;
+            }
+        });
+
         findViewById(R.id.btn_textToSpeechPause).setOnClickListener(v -> {
             if (textToSpeechUtil != null) {
                 textToSpeechUtil.stop();
@@ -293,7 +306,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
                                 currentSentenceIndex.set(0);
                             }
                             try {
-                                this.playHandler(sentences, pauseSec, getApplicationContext());
+                                this.playHandler(sentences, pauseSec);
 
                             } catch (InterruptedException e) {
                                 throw new RuntimeException(e);
@@ -328,7 +341,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
         return true;
     }
 
-    public void playHandler(String[] sentences, double pauseSec, Context applicationContext) throws InterruptedException {
+    public void playHandler(String[] sentences, double pauseSec) throws InterruptedException {
 
         String et_TextToSpeech_startFromIndxText = et_TextToSpeech_startFromIndx.getText().toString();
         if (et_TextToSpeech_startFromIndxText.length() > 0 && currentSentenceIndex.get() == 0) {
@@ -349,7 +362,6 @@ public class TextToSpeechActivity extends AppCompatActivity {
                     runOnMainUITread(() -> tv_textToSpeakHelperPrev.setText(sentences[currentSentenceIndex.get() - 1]));
                 }
 
-
             }
 
             while (textToSpeechUtil.isSpeaking()) {
@@ -360,6 +372,11 @@ public class TextToSpeechActivity extends AppCompatActivity {
                 currentSentenceIndex.set(0);
                 isStopButtonPushed = false;
                 break;
+            } else if (isReplayButtonPushed) {
+                isReplayButtonPushed = false;
+                Thread.sleep(2*1000L);
+            } else if (isRepeatButtonPushed) {
+                Thread.sleep(2*1000L);
             } else if (isPauseButtonPushed) {
                 isPauseButtonPushed = false;
                 break;
